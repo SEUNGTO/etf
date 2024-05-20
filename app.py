@@ -59,8 +59,8 @@ def findChange(bas_dt, target_date, codeList, resultDict) :
                                 )
                 chgData['변화분'] = chgData['주식수(계약수)_y'] - chgData['주식수(계약수)_x']
                 chgData.fillna(0, inplace = True)
-                chgStocks = chgData[chgData['변화분'] != 0][['종목코드', '변화분']]
-                chgStocks['ETF'] = code
+                _chgStocks = chgData[chgData['변화분'] != 0][['종목코드', '변화분']]
+                _chgStocks['ETF'] = code
             else :
                 basData = resultDict[code][bas_dt]
                 targetData = resultDict[code][target_date]
@@ -75,17 +75,17 @@ def findChange(bas_dt, target_date, codeList, resultDict) :
                 tmp = tmp[tmp['변화분'] != 0][['종목코드','구성종목명', '변화분']]
                 tmp['ETF'] = code
 
-                chgStocks = pd.concat([chgStocks, tmp])
+                _chgStocks = pd.concat([_chgStocks, tmp])
         except :
             continue
 
 
     ETFcodeName = codeList[['단축코드', '한글종목약명']]
     ETFcodeName.columns = ['ETF', 'ETF종목명']
-    chgStocks = pd.merge(chgStocks, ETFcodeName, how = 'left', on = 'ETF')
-    chgStocks = chgStocks[['ETF', 'ETF종목명', '종목코드', '구성종목명', '변화분']]
+    _chgStocks = pd.merge(_chgStocks, ETFcodeName, how = 'left', on = 'ETF')
+    _chgStocks = _chgStocks[['ETF', 'ETF종목명', '종목코드', '구성종목명', '변화분']]
 
-    return chgStocks
+    return _chgStocks
 
 
 if __name__ == '__main__' :

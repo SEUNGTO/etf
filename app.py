@@ -103,5 +103,6 @@ if __name__ == '__main__' :
     inputData()
 
     if code != "" and bas_dt != "" and target_date != "" :
+        st.write('# start')
         with st.spinner('데이터를 불러오는 중입니다.'):
             changes = findChange(bas_dt, target_date, codeList, resultDict)

@@ -11,6 +11,7 @@ code = ""
 target_date = ""
 bas_dt = ""
 chgData = pd.DataFrame([])
+changes = pd.DataFrame([])
 
 def header():
     st.write("# ETF 검색")
@@ -103,13 +104,12 @@ if __name__ == '__main__' :
     inputData()
 
     confirm = st.button('입력 완료')
-    search = st.button('검색')
+    # search = st.button('검색')
 
     if confirm :
-
         changes = findChange(bas_dt, target_date, codeList, resultDict)
 
-    if search :
+    # if search :
         st.markdown('---------')
         st.write('### 전체 내역')
         st.dataframe(changes.sort_values('변화분', ascending = False))

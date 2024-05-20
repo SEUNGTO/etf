@@ -7,12 +7,14 @@ import io
 
 
 
-def header():
-    st.write("# Hello")
-
 code = ""
 target_date = ""
 bas_dt = ""
+_chgStocks = []
+
+def header():
+    st.write("# Hello")
+
 
 def inputData():
     global code, target_date, bas_dt
@@ -44,6 +46,8 @@ def codeListing():
 
 
 def findChange(bas_dt, target_date, codeList, resultDict) :
+
+    global _chgStocks
 
     for idx, code in enumerate(codeList['단축코드']) :
         try :

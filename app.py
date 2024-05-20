@@ -102,7 +102,9 @@ if __name__ == '__main__' :
     header()
     inputData()
     confirm = st.button('확인')
+
     if confirm :
-        st.write('# start')
+
         with st.spinner('데이터를 불러오는 중입니다.'):
             changes = findChange(bas_dt, target_date, codeList, resultDict)
+            st.dataframe(changes.sort_values('변화분'))

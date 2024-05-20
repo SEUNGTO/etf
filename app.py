@@ -5,31 +5,33 @@ import requests
 import pandas as pd
 import io
 
-code = ""
-target_date = ""
-bas_dt = ""
-
-def inputData():
-    code = st.text_input("검색하고자 하는 종목코드를 입력하세요.")
-    target_date = st.text_input("기준일자를 선택하세요(yyyymmdd형식).")
-    bas_dt = st.text_input("비교일자를 선택하세요(yyyymmdd형식).")
 
 
 def header():
     st.write("# Hello")
 
+code = ""
+target_date = ""
+bas_dt = ""
+
+def inputData():
+    global code, target_date, bas_dt
+    code = st.text_input("검색하고자 하는 종목코드를 입력하세요.")
+    target_date = st.text_input("기준일자를 선택하세요(yyyymmdd형식).")
+    bas_dt = st.text_input("비교일자를 선택하세요(yyyymmdd형식).")
+
+
 @st.cache_data()
-def loadData(self):
-    if self.code != "" and self.target_date != "" and self.bas_dt != "" :
-        url = 'https://raw.githubusercontent.com/SEUNGTO/botdata/main/resultDict.json'
-        response = requests.get(url)
-        resultDict = response.json()
+def loadData():
+    url = 'https://raw.githubusercontent.com/SEUNGTO/botdata/main/resultDict.json'
+    response = requests.get(url)
+    resultDict = response.json()
 
-        for code in resultDict.keys():
-            for date in resultDict[code].keys():
-                resultDict[code][date] = pd.DataFrame(resultDict[code][date])
+    for code in resultDict.keys():
+        for date in resultDict[code].keys():
+            resultDict[code][date] = pd.DataFrame(resultDict[code][date])
 
-        return resultDict
+    return resultDict
 
 @st.cache_resource()
 def codeListing():

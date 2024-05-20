@@ -18,8 +18,8 @@ class main() :
         # self.data = self.loadData()
         # self.chgStock = self.searchData()
 
-        codeList = self.codeListing()
-        codeList
+        self.codeListing()
+
         # codeList[(codeList['기초시장분류'] == '국내') & (codeList['기초자산분류'] == '주식')]
 
 
@@ -51,6 +51,7 @@ class main() :
 
     @st.cache
     def codeListing(self):
+
         otp_url = 'http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd'
         otp_params = {
             'locale': 'ko_KR',

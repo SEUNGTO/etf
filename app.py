@@ -16,9 +16,8 @@ def header():
     st.write("# Hello")
 
 
-def inputData():
-    global code, target_date, bas_dt
-    code = st.text_input("검색하고자 하는 종목코드를 입력하세요.")
+def inputDate():
+    global target_date, bas_dt
     target_date = st.text_input("기준일자를 선택하세요(yyyymmdd형식).")
     bas_dt = st.text_input("비교일자를 선택하세요(yyyymmdd형식).")
 
@@ -100,18 +99,23 @@ if __name__ == '__main__' :
     resultDict = loadData()
 
     header()
-    inputData()
-    confirm = st.button('검색')
+    inputDate()
+    confirm = st.button('전체 데이터 조회')
 
     if confirm :
 
         with st.spinner('데이터를 불러오는 중입니다.'):
             changes = findChange(bas_dt, target_date, codeList, resultDict)
+            st.write('이건 사라지나?')
 
         st.markdown('---------')
-        st.write('# 전체 내역')
+        st.write('### 전체 내역')
         st.dataframe(changes.sort_values('변화분'))
 
-        st.markdown('---------')
-        st.write('# 해당 종목 내역')
-        st.dataframe(changes[changes['종목코드'] == code])
+        code = st.text_input("검색할 종목코드를 선택하세요.")
+        search = st.button('검색')
+
+        if search :
+            st.markdown('---------')
+            st.write('# 해당 종목 내역')
+            st.dataframe(changes[changes['종목코드'] == code])

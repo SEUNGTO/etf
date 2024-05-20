@@ -50,25 +50,24 @@ class main() :
 
     @st.cache
     def codeListing(self):
-        if self.code != "" and self.target_date != "" and self.bas_dt != "" :
-            otp_url = 'http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd'
-            otp_params = {
-                'locale': 'ko_KR',
-                'share': '1',
-                'csvxls_isNo': 'false',
-                'name': 'fileDown',
-                'url': 'dbms/MDC/STAT/standard/MDCSTAT04601'
-            }
-            headers = {'Referer': 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader'}
-            otp = requests.post(otp_url, params=otp_params, headers=headers).text
+        otp_url = 'http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd'
+        otp_params = {
+            'locale': 'ko_KR',
+            'share': '1',
+            'csvxls_isNo': 'false',
+            'name': 'fileDown',
+            'url': 'dbms/MDC/STAT/standard/MDCSTAT04601'
+        }
+        headers = {'Referer': 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader'}
+        otp = requests.post(otp_url, params=otp_params, headers=headers).text
 
-            down_url = 'http://data.krx.co.kr/comm/fileDn/download_csv/download.cmd'
-            down_params = {'code': otp}
-            response = requests.post(down_url, params=down_params, headers=headers)
+        down_url = 'http://data.krx.co.kr/comm/fileDn/download_csv/download.cmd'
+        down_params = {'code': otp}
+        response = requests.post(down_url, params=down_params, headers=headers)
 
-            data = pd.read_csv(io.BytesIO(response.content), encoding='euc-kr', dtype={'단축코드': 'string'})
+        data = pd.read_csv(io.BytesIO(response.content), encoding='euc-kr', dtype={'단축코드': 'string'})
 
-            return data
+        return data
 
     @st.cache
     def searchData(self):

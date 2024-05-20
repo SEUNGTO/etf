@@ -45,8 +45,6 @@ def codeListing():
 
 def findChange(bas_dt, target_date, codeList, resultDict) :
 
-    global _chgStocks
-
     for idx, code in enumerate(codeList['단축코드']) :
         try :
             if idx == 0 :
@@ -93,14 +91,13 @@ def findChange(bas_dt, target_date, codeList, resultDict) :
 if __name__ == '__main__' :
 
 
-    with st.spinner('데이터를 불러오는 중입니다.') :
-        codeList = codeListing()
-        codeList = codeList[(codeList['기초시장분류'] == '국내') & (codeList['기초자산분류'] == '주식')]
-        resultDict = loadData()
-        changes = findChange(bas_dt, target_date, codeList, resultDict)
+    codeList = codeListing()
+    codeList = codeList[(codeList['기초시장분류'] == '국내') & (codeList['기초자산분류'] == '주식')]
+    resultDict = loadData()
 
     header()
     inputData()
 
     if code != "" and bas_dt != "" and target_date != "" :
-        st.wrtie(f'{code}, {bas_dt}, {target_date}')
+        with st.spinner('데이터를 불러오는 중입니다.'):
+            changes = findChange(bas_dt, target_date, codeList, resultDict)

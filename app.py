@@ -15,18 +15,18 @@ class main() :
         self.header()
         self.inputData()
 
-
-
         self.data = self.loadData()
         self.chgStock = self.searchData()
-        st.dataframe(self.chgStock[self.chgStock['종목코드'] == self.code])
+
+        if self.code != "" :
+            st.dataframe(self.chgStock[self.chgStock['종목코드'] == self.code])
 
 
     def header(self):
         st.write("# Hello")
 
     def inputData(self):
-        self.code = st.text_input("검색하고자 하는 ETF 코드를 입력하세요.")
+        self.code = st.text_input("검색하고자 하는 종목코드를 입력하세요.")
         self.target_date = st.text_input("기준일자를 선택하세요(yyyymmdd형식).")
         self.bas_dt = st.text_input("비교일자를 선택하세요(yyyymmdd형식).")
 

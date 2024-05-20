@@ -97,9 +97,8 @@ if __name__ == '__main__' :
         st.write('start')
 
         codeList = codeListing()
-        codeList
-        # codeList = codeList[(codeList['기초시장분류'] == '국내') & (codeList['기초자산분류'] == '주식')]
-        # resultDict = loadData()
-        # chgStocks = findChange(bas_dt, target_date, codeList, resultDict)
-        #
-        # chgStocks
+        codeList = codeList[(codeList['기초시장분류'] == '국내') & (codeList['기초자산분류'] == '주식')]
+        resultDict = loadData()
+        chgStocks = findChange(bas_dt, target_date, codeList, resultDict)
+
+        chgStocks

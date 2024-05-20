@@ -115,4 +115,4 @@ if __name__ == '__main__' :
         st.dataframe(changes.sort_values('변화분', ascending = False))
         st.markdown('---------')
         st.write('### 해당 종목 내역')
-        st.dataframe(changes[changes['종목코드'] == code].sort_values('변화분', ascending = False)))
+        st.dataframe(changes[changes['종목코드'] == code].sort_values('변화분', ascending = False))

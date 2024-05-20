@@ -44,7 +44,7 @@ def codeListing():
 
     return pd.DataFrame(codeList)
 
-
+@st.cache_data()
 def findChange(bas_dt, target_date, codeList, resultDict) :
 
     global chgData
@@ -110,6 +110,7 @@ if __name__ == '__main__' :
     if confirm :
         with st.spinner('데이터를 불러오는 중입니다.'):
             changes = findChange(bas_dt, target_date, codeList, resultDict)
+        st.success('데이터 로딩 완료')
 
     if search_all :
         st.markdown('---------')

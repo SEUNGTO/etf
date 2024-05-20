@@ -44,6 +44,7 @@ def codeListing():
 
 
 def findChange(bas_dt, target_date, codeList, resultDict) :
+    global _chgStocks
 
     for idx, code in enumerate(codeList['단축코드']) :
         try :

@@ -36,24 +36,11 @@ def loadData():
 @st.cache_resource()
 def codeListing():
 
-    otp_url = 'http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd'
-    otp_params = {
-        'locale': 'ko_KR',
-        'share': '1',
-        'csvxls_isNo': 'false',
-        'name': 'fileDown',
-        'url': 'dbms/MDC/STAT/standard/MDCSTAT04601'
-    }
-    headers = {'Referer': 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader'}
-    otp = requests.post(otp_url, params=otp_params, headers=headers).text
+    url = 'https://raw.githubusercontent.com/SEUNGTO/botdata/main/codeList.json'
+    response = requests.get(url)
+    codeList = response.json()
 
-    down_url = 'http://data.krx.co.kr/comm/fileDn/download_csv/download.cmd'
-    down_params = {'code': otp}
-    response = requests.post(down_url, params=down_params, headers=headers)
-
-    data = pd.read_csv(io.BytesIO(response.content), encoding='euc-kr', dtype={'단축코드': 'string'})
-
-    return data
+    return pd.DataFrame(codeList)
 
 
 def findChange(bas_dt, target_date, codeList, resultDict) :

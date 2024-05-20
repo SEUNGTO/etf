@@ -10,7 +10,7 @@ import io
 code = ""
 target_date = ""
 bas_dt = ""
-chgData = pd.Dataframe([])
+chgData = pd.DataFrame([])
 
 def header():
     st.write("# Hello")

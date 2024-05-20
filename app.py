@@ -10,7 +10,7 @@ import io
 code = ""
 target_date = ""
 bas_dt = ""
-
+chgData = pd.Dataframe([])
 
 def header():
     st.write("# Hello")
@@ -46,6 +46,8 @@ def codeListing():
 
 
 def findChange(bas_dt, target_date, codeList, resultDict) :
+
+    global chgData
 
     for idx, code in enumerate(codeList['단축코드']) :
         try :

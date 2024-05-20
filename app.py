@@ -103,13 +103,16 @@ if __name__ == '__main__' :
     inputData()
 
     confirm = st.button('입력 완료')
+    search = st.button('검색')
 
     if confirm :
-        with st.spinner('데이터를 불러오는 중입니다.'):
-            changes = findChange(bas_dt, target_date, codeList, resultDict)
-            st.markdown('---------')
-            st.write('### 전체 내역')
-            st.dataframe(changes.sort_values('변화분', ascending = False))
-            st.markdown('---------')
-            st.write('### 해당 종목 내역')
-            st.dataframe(changes[changes['종목코드'] == code])
+
+        changes = findChange(bas_dt, target_date, codeList, resultDict)
+
+    if search :
+        st.markdown('---------')
+        st.write('### 전체 내역')
+        st.dataframe(changes.sort_values('변화분', ascending = False))
+        st.markdown('---------')
+        st.write('### 해당 종목 내역')
+        st.dataframe(changes[changes['종목코드'] == code].sort_values('변화분', ascending = False)))

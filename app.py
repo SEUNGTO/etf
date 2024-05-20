@@ -13,13 +13,18 @@ class main() :
         self.bas_dt = ""
 
         self.header()
-        self.inputData()
+        # self.inputData()
 
-        self.data = self.loadData()
-        self.chgStock = self.searchData()
+        # self.data = self.loadData()
+        # self.chgStock = self.searchData()
 
-        if self.code != "" :
-            st.dataframe(self.chgStock[self.chgStock['종목코드'] == self.code])
+        codeList = self.codeListing()
+        codeList[(codeList['기초시장분류'] == '국내') & (codeList['기초자산분류'] == '주식')]
+
+
+
+        # if self.code != "" :
+        #     st.dataframe(self.chgStock[self.chgStock['종목코드'] == self.code])
 
 
     def header(self):
@@ -68,7 +73,9 @@ class main() :
     @st.cache
     def searchData(self):
         if self.code != "" and self.target_date != "" and self.bas_dt != "" :
+
             codeList = self.codeListing()
+            codeList = codeList[(codeList['기초시장분류'] == '국내') & (codeList['기초자산분류'] == '주식')]
 
             for idx, code in enumerate(codeList['단축코드']):
                 try:

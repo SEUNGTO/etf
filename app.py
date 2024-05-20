@@ -19,7 +19,8 @@ class main() :
         # self.chgStock = self.searchData()
 
         codeList = self.codeListing()
-        codeList[(codeList['기초시장분류'] == '국내') & (codeList['기초자산분류'] == '주식')]
+        codeList
+        # codeList[(codeList['기초시장분류'] == '국내') & (codeList['기초자산분류'] == '주식')]
 
 
 

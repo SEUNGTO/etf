@@ -47,7 +47,8 @@ def main():
                 if data:
                     st.write("조회 결과:")
                     st.write(data)
-                    if st.button('닫기')
+                    if st.button('닫기') :
+                        st.write("end")
 
 
 if __name__ == "__main__":

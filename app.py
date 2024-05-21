@@ -40,17 +40,25 @@ def main():
     database = st.text_input("MySQL 데이터베이스")
 
     if st.button("MySQL 연결"):
+        
         connection = connect_to_mysql(host, user, password, database)
 
         if connection:
             query = st.text_area("쿼리 입력")
-
-            if st.button("데이터 조회"):
-                data = fetch_data(connection, query)
+            if st.button("조회") :
+                cursor = connection.cursor()
+                cursor.execute(query)
+                for row in cursor :
+                    st.write(row)
+                    time.sleep(2)
+    #         data = fetch_data(connection, query)
+            
+    #         if st.button("데이터 조회"):
+    #             data = fetch_data(connection, query)
                 
-                if data :
-                    st.write("조회 결과:")
-    st.write(data)
+    #             if data :
+    #                 st.write("조회 결과:")
+    # st.write(data)
 
 if __name__ == "__main__":
     main()

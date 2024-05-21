@@ -40,15 +40,13 @@ def main():
 
     if st.button("MySQL 연결"):
         connection = connect_to_mysql(host, user, password, database)
-        if connection:
-            query = st.text_area("쿼리 입력")
-            if st.button("데이터 조회"):
-                data = fetch_data(connection, query)
+        
+        query = 'select * from tb_etf'
+        
+        data = fetch_data(connection, query)
                 
-                st.write("조회 결과:")
-                st.write(data)
-                if st.button('닫기') :
-                    st.write("end")
+        st.write("조회 결과:")
+        st.write(data)
 
 
 if __name__ == "__main__":

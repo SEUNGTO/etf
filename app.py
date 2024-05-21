@@ -50,8 +50,7 @@ def main():
                 
                 if data :
                     st.write("조회 결과:")
-                    st.write(data)
-                
+    st.write(data)
 
 if __name__ == "__main__":
     main()

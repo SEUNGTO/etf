@@ -46,10 +46,11 @@ def main():
             query = st.text_area("쿼리 입력")
 
             if st.button("데이터 조회"):
-                st.write("조회 결과:")
-                time.sleep(3)
-                st.write("-----")
-                st.write(data)
+                data = fetch_data(connection, query)
+                
+                if data :
+                    st.write("조회 결과:")
+                    st.write(data)
                 
 
 if __name__ == "__main__":

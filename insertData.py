@@ -75,6 +75,7 @@ if __name__ == "__main__" :
     date = '20240519'
     data = pd.read_csv('')
 
+
     drop_table(date)
     create_table(date)
     insert_date(date, data)

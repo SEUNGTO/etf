@@ -45,6 +45,7 @@ def main():
 
         if connection:
             query = st.text_area("쿼리 입력")
+            st.write('hello')
             if st.button("조회") :
                 cursor = connection.cursor()
                 cursor.execute(query)

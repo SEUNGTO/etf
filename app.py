@@ -1,6 +1,6 @@
 import streamlit as st
 import mysql.connector
-import time
+
 # MySQL 연결
 def connect_to_mysql(host, user, password, database):
     try:
@@ -19,15 +19,14 @@ def connect_to_mysql(host, user, password, database):
 
 # 데이터베이스에서 데이터 가져오기
 def fetch_data(connection, query):
-    # try:
-    cursor = connection.cursor()
-    cursor.execute(query)
-    data = cursor.fetchall()
-    return data
-
-    # except Exception as e:
-    #     st.write("데이터를 가져오는 데 실패했습니다.", e)
-    #     return None
+    try:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        data = cursor.fetchall()
+        return data
+    except Exception as e:
+        st.write("데이터를 가져오는 데 실패했습니다.", e)
+        return None
 
 # Streamlit 앱
 def main():
@@ -40,26 +39,16 @@ def main():
     database = st.text_input("MySQL 데이터베이스")
 
     if st.button("MySQL 연결"):
-        
         connection = connect_to_mysql(host, user, password, database)
-
         if connection:
             query = st.text_area("쿼리 입력")
-            st.write('hello')
-            if st.button("조회") :
-                cursor = connection.cursor()
-                cursor.execute(query)
-                for row in cursor :
-                    st.write(row)
-                    time.sleep(2)
-    #         data = fetch_data(connection, query)
-            
-    #         if st.button("데이터 조회"):
-    #             data = fetch_data(connection, query)
-                
-    #             if data :
-    #                 st.write("조회 결과:")
-    # st.write(data)
+            if st.button("데이터 조회"):
+                data = fetch_data(connection, query)
+                if data:
+                    st.write("조회 결과:")
+                    st.write(data)
+                    if st.button('닫기')
+
 
 if __name__ == "__main__":
     main()

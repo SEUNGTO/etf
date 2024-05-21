@@ -19,15 +19,15 @@ def connect_to_mysql(host, user, password, database):
 
 # 데이터베이스에서 데이터 가져오기
 def fetch_data(connection, query):
-    try:
-        cursor = connection.cursor()
-        cursor.execute(query)
-        data = cursor.fetchall()
-        return data
+    # try:
+    cursor = connection.cursor()
+    cursor.execute(query)
+    data = cursor.fetchall()
+    return data
 
-    except Exception as e:
-        st.write("데이터를 가져오는 데 실패했습니다.", e)
-        return None
+    # except Exception as e:
+    #     st.write("데이터를 가져오는 데 실패했습니다.", e)
+    #     return None
 
 # Streamlit 앱
 def main():

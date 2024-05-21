@@ -22,10 +22,9 @@ def fetch_data(connection, query):
     try:
         cursor = connection.cursor()
         cursor.execute(query)
-        # data = cursor.fetchall()
-        # return data
-        for row in cursor :
-            st.write(row)
+        data = cursor.fetchall()
+        return data
+
     except Exception as e:
         st.write("데이터를 가져오는 데 실패했습니다.", e)
         return None
@@ -46,7 +45,7 @@ def main():
             query = st.text_area("쿼리 입력")
             if st.button("데이터 조회"):
                 st.write("조회 결과:")
-                fetch_data(connection, query)
+                data = fetch_data(connection, query)
 
 if __name__ == "__main__":
     main()

@@ -20,7 +20,7 @@ if st.button('검색'):
     tmp = df[['종목코드', '종목명', '평가금액']].set_index('종목코드').join(df2[['종목코드', '평가금액']].set_index('종목코드'), 
                                                                              how = 'inner', lsuffix = 'T', rsuffix = 'C')
     tmp['차이'] = tmp['평가금액T'].astype(int) - tmp['평가금액C'].astype(int)
-    tmp.columns = ['종목명', '기준일 평가금액', '비교일 평가금액', '차액']
+    tmp.columns = ['종목명', '기준일 평가금액', '비교일 평가금액', '차이']
 
     st.write(f'### 2. {etf_code}는 최근 아래 종목의 비중을 늘렸어요.')
     st.dataframe(tmp[tmp['차이'] > 0].sort_values('차이', ascending = False).head(10))

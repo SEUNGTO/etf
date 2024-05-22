@@ -27,7 +27,7 @@ if st.button('검색'):
     df2['비중'] = df2['평가금액'].astype(int)/df2['평가금액'].astype(int).sum()*100
     tmp = df[['종목코드', '종목명', '비중']].set_index('종목코드').join(df2[['종목코드', '비중']].set_index('종목코드'), 
                                                                              how = 'inner', lsuffix = 'T', rsuffix = 'C')
-    tmp['차이'] = tmp['비중T'].astype(int) - tmp['비중C'].astype(int)
+    tmp['차이'] = tmp['비중T'] - tmp['비중C']
     tmp.columns = ['종목명', '기준일 비중', '비교일 비중', '차이']
 
     st.write(f'### 3. {stocks[etf_code]}는 최근 아래 종목의 비중을 늘렸어요.')

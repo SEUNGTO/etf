@@ -22,7 +22,8 @@ st.write('- timefolio Kstock 액티브(385720)')
 etf_code = st.text_input('ETF코드를 입력해주세요.')
 if st.button('검색'):
     # 전체 내역 조회
-    df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)    
+    df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)
+    df = df.style.set_precision(2)
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
     df['비중'] = df['평가금액'].astype(int)/df['평가금액'].astype(int).sum() * 100, 2
@@ -37,7 +38,7 @@ if st.button('검색'):
         fig.update_layout(template='plotly_white')
         st.plotly_chart(fig, theme = "streamlit", use_container_width = True)
     with tab2:
-        st.dataframe(df.sort_values('평가금액', ascending = False).set_index('종목코드').set_precision(2), use_container_width = True)
+        st.dataframe(df.sort_values('평가금액', ascending = False).set_index('종목코드'), use_container_width = True)
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
     plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22').reset_index()

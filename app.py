@@ -10,13 +10,13 @@ st.dataframe(test, column_config={
 # --- 테스트 공간
 if 'keyword' not in st.session_state :
     st.session_state['keyword'] = ""
-if 'button1' not in st.session_state :
-    st.session_state['button1'] = False
+if 'b1' not in st.session_state :
+    st.session_state['b1'] = False
 keyword = st.text_input('search')
 if keyword :
     st.session_state['keyword'] = keyword
-button1 = st.button('검색어 입력', key = 'button1')
-if button1 :
+b1 = st.button('검색어 입력', key = 'b1')
+if b1 :
     st.write(f'{keyword}를 입력했습니다.')
     if st.button('확인') :
         tmp = test[test['url'].str.contains(st.session_state['keyword'])]

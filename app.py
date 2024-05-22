@@ -15,7 +15,8 @@ if 'b1' not in st.session_state :
 keyword = st.text_input('search')
 if keyword :
     st.session_state['keyword'] = keyword
-b1 = st.button('검색어 입력', key = 'b1')
+b1 = st.button('검색어 입력')
+st.session_state['b1'] = b1
 if b1 :
     st.write(f'{keyword}를 입력했습니다.')
     if st.button('확인') :

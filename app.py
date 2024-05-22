@@ -28,7 +28,7 @@ if st.button('검색'):
     fig = px.pie(ratio, values = '비중', names = '종목명', title = '상위 10개 종목의 비중')
     fig.update_layout(template='plotly')
     st.plotly_chart(fig, use_container_width = True)
-    st.dataframe(df.sort_values('평가금액', ascending = False)).sort_values('종목코드')
+    st.dataframe(df.sort_values('평가금액', ascending = False).sort_values('종목코드'))
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
     

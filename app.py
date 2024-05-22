@@ -1,6 +1,7 @@
 import streamlit as st
 import FinanceDataReader as fdr
 import plotly.express as px
+import plotly.graph_objs as go
 
 stocks = {'102110' : 'TIGER200', '069500' : 'KODEX 200', '463050' : 'timefolio K바이오액티브', '482030' : 'Koact 테크핵심소재공급망액티브', '385720' : 'timefolio Kstock 액티브'}
 
@@ -33,8 +34,20 @@ if st.button('검색'):
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
     
     plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22').reset_index()
-    fig1 = px.line(plotData, x = 'Date', y = 'Close')
-    st.plotly_chart(fig1, use_container_width=True)
+    
+    fig = go.Figure(data=[go.Candlestick(x=plotData['Date'],
+                open=plotData['Open'],
+                high=plotData['High'],
+                low=plotData['Low'],
+                close=plotData['Close'])])
+    fig.update_layout(
+    title='캔들스틱 차트 예제',
+    xaxis_title='날짜',
+    yaxis_title='가격',
+    xaxis_rangeslider_visible=False
+)
+    fig.show()
+    # st.plotly_chart(fig1, use_container_width=True)
  
     # 최근 내역 비교
     df2 = conn.query(f'SELECT * from etf_20240518 where etf_code = {etf_code};', ttl=600)

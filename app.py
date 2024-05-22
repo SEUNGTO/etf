@@ -65,6 +65,7 @@ if st.button('검색'):
                                                                              how = 'inner', lsuffix = 'T', rsuffix = 'C')
     tmp['차이'] = tmp['비중T'] - tmp['비중C']
     tmp.columns = ['종목명', '기준일 비중', '비교일 비중', '차이']
+    tmp.reset_index(inplace = True)
     tmp = tmp.set_index('종목명').drop('종목코드', axis = 1)
 
     st.write(f'### 3. {stocks[etf_code]}는 최근 아래 종목의 비중이 늘었어요.')

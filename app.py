@@ -4,8 +4,8 @@ import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
 test = pd.DataFrame({'name' : ['naver', 'google', 'daum'],  'url' : ['https://www.naver.com', 'https://www.google.com/', 'www.daum.net']})
-st.dataframe(test, column_config={
-        "url": # st.column_config.LinkColumn(display_text = '\U0001F517')
+# st.dataframe(test, column_config={
+        "url": st.column_config.LinkColumn(display_text = '\U0001F517')
     })
 # --- 테스트 공간
 if 'keyword' not in st.session_state :

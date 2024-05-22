@@ -22,10 +22,10 @@ if st.button('검색'):
     tmp['차이'] = tmp['평가금액T'].astype(int) - tmp['평가금액C'].astype(int)
     tmp.columns = ['종목명', '기준일 평가금액', '비교일 평가금액', '차액']
 
-    st.write(f'### 2. {etf}는 최근 아래 종목의 비중을 늘렸어요.')
+    st.write(f'### 2. {etf_code}는 최근 아래 종목의 비중을 늘렸어요.')
     st.dataframe(tmp[tmp['차이'] > 0].sort_values('차이', ascending = False).head(10))
 
-    st.write(f'### 2. {etf}는 최근 아래 종목의 비중을 줄였어요.')
+    st.write(f'### 2. {etf_code}는 최근 아래 종목의 비중을 줄였어요.')
     st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending = True).head(10))
 
     

@@ -43,6 +43,7 @@ if st.button('검색'):
     fig.update_layout(
     xaxis_title='날짜',
     yaxis_title='가격',
+    margin = {'t' : 10},
     xaxis_rangeslider_visible=False
 )
     

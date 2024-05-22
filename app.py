@@ -1,5 +1,7 @@
 import streamlit as st
 import FinanceDataReader as fdr
+import plotly.express as px
+
 stocks = {'102110' : 'TIGER200', '069500' : 'KODEX 200'}
 
 conn = st.connection('mysql', type='sql')
@@ -17,8 +19,11 @@ if st.button('검색'):
     st.dataframe(df.sort_values('평가금액', ascending = False))
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
+    
     plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22')
-    st.line_chart(plotData['Close'])
+    fig = px.line(plotData['Close'])
+    st.plotly_chart(fig, use_container_width=True)
+    # st.line_chart(plotData['Close'])
 
     # 최근 내역 비교
     df2 = conn.query(f'SELECT * from etf_20240518 where etf_code = {etf_code};', ttl=600)

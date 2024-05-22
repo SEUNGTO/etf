@@ -22,6 +22,8 @@ if st.button('검색'):
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
     df['비중'] = df['평가금액'].astype(int)/df['평가금액'].astype(int).sum() * 100
+    fig = plotly_pie(df, values = '비중', names = '종목명')
+    st.plotly_chart(fig, use_container_width = True)
     st.dataframe(df.sort_values('평가금액', ascending = False))
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')

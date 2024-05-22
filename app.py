@@ -5,7 +5,7 @@ import plotly.graph_objs as go
 import pandas as pd
 test = pd.DataFrame({'name' : ['naver'],  'url' : ['https://www.naver.com']})
 st.dataframe(test, column_config={
-        "url": st.column_config.LinkColumn(display_text = ''U0001F517')
+        "url": st.column_config.LinkColumn(display_text = 'U0001F517')
     })
 stocks = {'102110' : 'TIGER200', '069500' : 'KODEX 200', '463050' : 'timefolio K바이오액티브', '482030' : 'Koact 테크핵심소재공급망액티브', '385720' : 'timefolio Kstock 액티브'}
 

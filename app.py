@@ -19,9 +19,8 @@ b1 = st.button('검색어 입력')
 st.session_state['b1'] = b1
 if b1 :
     st.write(f'{keyword}를 입력했습니다.')
-    if st.button('확인') :
-        tmp = test[test['url'].str.contains(st.session_state['keyword'])]
-        st.dataframe(tmp)
+    test[test['url'].str.contains(st.session_state['keyword'])]
+    st.dataframe(tmp)
 
 
 stocks = {'102110' : 'TIGER200', '069500' : 'KODEX 200', '463050' : 'timefolio K바이오액티브', '482030' : 'Koact 테크핵심소재공급망액티브', '385720' : 'timefolio Kstock 액티브'}

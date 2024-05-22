@@ -27,17 +27,10 @@ if st.button('검색'):
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
     
     plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22').reset_index()
-    fig = px.line(plotData, x = 'Date', y = 'Close')
-    fig.add_bar(x = plotData['Date'],y = plotData['Volume'], yaxis = 'y2', name = 'volume')
-    fig.update_layout(
-        yaxis=dict(
-            title='Close Price'),
-        yaxis2=dict(
-            title='Volume',
-            overlaying='y',
-            side='right')
-        )
-    st.plotly_chart(fig, use_container_width=True)
+    fig1 = px.line(plotData, x = 'Date', y = 'Close')
+    st.plotly_chart(fig1, use_container_width=True)
+    fig2 = px.bar(plotData, x = 'Date', y = 'Volume')
+    st.plotly_chart(fig2, use_container_width=True)
     # st.line_chart(plotData['Close'])
 
     # 최근 내역 비교

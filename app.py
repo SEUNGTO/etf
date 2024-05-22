@@ -47,7 +47,7 @@ if st.button('검색'):
     xaxis_rangeslider_visible=False
 )
     # fig.show()
-    st.plotly_chart(fig1, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True)
  
     # 최근 내역 비교
     df2 = conn.query(f'SELECT * from etf_20240518 where etf_code = {etf_code};', ttl=600)

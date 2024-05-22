@@ -31,6 +31,7 @@ if st.button('검색'):
     
     plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22').reset_index()
     fig1 = px.line(plotData, x = 'Date', y = 'Close')
+    fig1.update_layout(template = 'seaborn')
     st.plotly_chart(fig1, use_container_width=True)
     # st.line_chart(plotData['Close'])
 

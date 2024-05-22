@@ -46,7 +46,7 @@ if st.button('검색'):
     yaxis_title='가격',
     xaxis_rangeslider_visible=False
 )
-    # fig.show()
+    
     st.plotly_chart(fig, use_container_width=True)
  
     # 최근 내역 비교

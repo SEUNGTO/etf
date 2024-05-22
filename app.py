@@ -31,7 +31,7 @@ if st.button('검색'):
     tab1, tab2 = st.tabs(["상위 10개 종목의 비중", "보유 종목과 비중"])
     with tab1:
         ratio = df.sort_values('비중', ascending = False)[['종목명', '비중']].head(10)
-        ratio.loc['other', :] = ['기타', 100-sum(ratio['비중'])]
+        ratio.loc['other', :] = ['기타', f{100-sum(ratio['비중'])%:.2f}]
         fig = px.pie(ratio, values = '비중', names = '종목명', title = '상위 10개 종목의 비중')
         fig.update_layout(template='plotly_white')
         st.plotly_chart(fig, theme = "streamlit", use_container_width = True)

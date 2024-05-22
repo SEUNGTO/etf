@@ -29,14 +29,14 @@ if st.button('검색'):
     st.write(f'### 1. {stocks[etf_code]}의 보유 종목과 비중이에요.')
     
     tab1, tab2 = st.tabs(["상위 10개 종목의 비중", "보유 종목과 비중"])
-        with tab1:
-                ratio = df.sort_values('비중', ascending = False)[['종목명', '비중']].head(10)
-                ratio.loc['other', :] = ['기타', 100-sum(ratio['비중'])]
-                fig = px.pie(ratio, values = '비중', names = '종목명', title = '상위 10개 종목의 비중')
-                fig.update_layout(template='plotly_white')
-                st.plotly_chart(fig, theme = "streamlit", use_container_width = True)
-        with tab2:
-                st.dataframe(df.sort_values('평가금액', ascending = False).set_index('종목코드'))
+    with tab1:
+        ratio = df.sort_values('비중', ascending = False)[['종목명', '비중']].head(10)
+        ratio.loc['other', :] = ['기타', 100-sum(ratio['비중'])]
+        fig = px.pie(ratio, values = '비중', names = '종목명', title = '상위 10개 종목의 비중')
+        fig.update_layout(template='plotly_white')
+        st.plotly_chart(fig, theme = "streamlit", use_container_width = True)
+    with tab2:
+        st.dataframe(df.sort_values('평가금액', ascending = False).set_index('종목코드'))
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
     plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22').reset_index()

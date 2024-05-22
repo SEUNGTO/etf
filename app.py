@@ -23,15 +23,14 @@ if st.button('검색'):
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
     df['비중'] = df['평가금액'].astype(int)/df['평가금액'].astype(int).sum() * 100
     fig = px.pie(df.head(10), values = '비중', names = '종목명', title = '상위 10개 종목의 비중')
-    fig.update_layout(template='seaborn')
+    fig.update_layout(template='plotly')
     st.plotly_chart(fig, use_container_width = True)
     st.dataframe(df.sort_values('평가금액', ascending = False))
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
     
     plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22').reset_index()
-    fig1 = px.line(plotData, x = 'Date', y = 'Close')
-    fig1.update_layout(template = 'simple_dark')
+    fig1 = px.line(plotData, x = 'Date', y = 'Close', names = '종가')
     st.plotly_chart(fig1, use_container_width=True)
     # st.line_chart(plotData['Close'])
 

@@ -33,7 +33,7 @@ if st.button('검색'):
         ratio = df.sort_values('비중', ascending = False)[['종목명', '비중']].head(10)
         ratio.loc['other', :] = ['기타', 100-sum(ratio['비중'])]
         
-        fig = px.pie(ratio, values = '비중', names = '종목명', title = '상위 10개 종목의 비중')
+        fig = px.pie(ratio, values = '비중', names = '종목명')
         fig.update_layout(template='plotly_white')
         st.plotly_chart(fig, theme = "streamlit", use_container_width = True)
     with tab2:
@@ -50,7 +50,7 @@ if st.button('검색'):
     fig.update_layout(
                     xaxis_title='날짜',
                     yaxis_title='가격',
-                    margin = {'t' : 10},
+                    margin = {'t' : 10, 'b':10},
                     xaxis_rangeslider_visible=False
     )
     

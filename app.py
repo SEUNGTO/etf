@@ -30,7 +30,7 @@ if st.button('검색'):
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
     
     plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22').reset_index()
-    fig1 = px.line(plotData, x = 'Date', y = 'Close', names = '종가')
+    fig1 = px.line(plotData, x = 'Date', y = 'Close')
     st.plotly_chart(fig1, use_container_width=True)
     # st.line_chart(plotData['Close'])
 

@@ -10,7 +10,7 @@ st.dataframe(test, column_config={
 # --- 테스트 공간
 if 'keyword' not in st.session_state :
     st.session_state['keyword'] = ""
-keyword = st.input_text('search')
+keyword = st.text_input('search')
 if keyword :
     st.session_state['keyword'] = keyword
 if st.button('검색어 입력') :

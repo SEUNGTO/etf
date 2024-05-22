@@ -3,3 +3,4 @@ mysqlclient
 SQLAlchemy
 finance-datareader
 bs4
+plotly

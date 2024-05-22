@@ -26,9 +26,9 @@ if st.button('검색'):
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
     
-    plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22')
-    fig = px.line(plotData['Close'])
-    fig.add_bar(plotData['Volume'], yaxis = 'volume')
+    plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22').reset_index()
+    fig = px.line(plotData, x = 'Date', y = 'Close')
+    fig.add_bar(x = plotData['Date'],y = plotData['Volume'], yaxis = 'volume')
     fig.update_layout(
         yaxis=dict(
             title='Close Price'),

@@ -67,10 +67,10 @@ if st.button('검색'):
     tmp.columns = ['종목명', '기준일 비중', '비교일 비중', '차이']
 
     st.write(f'### 3. {stocks[etf_code]}는 최근 아래 종목의 비중이 늘었어요.')
-    st.dataframe(tmp[tmp['차이'] > 0].sort_values('차이', ascending = False).head(10))
+    st.dataframe(tmp[tmp['차이'] > 0].sort_values('차이', ascending = False).head(10), use_container_width = True)
 
     st.write(f'### 4. {stocks[etf_code]}는 최근 아래 종목의 비중이 줄었어요.')
-    st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending = True).head(10))
+    st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending = True).head(10), use_container_width = True)
 
     
 stock_code = st.text_input('종목코드를 입력해주세요.')

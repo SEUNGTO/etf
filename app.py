@@ -68,10 +68,10 @@ if st.button('검색'):
     tmp.reset_index(inplace = True)
     tmp = tmp.set_index('종목명').drop('종목코드', axis = 1)
 
-    st.write(f'### 3. {stocks[etf_code]}는 최근 아래 종목의 비중이 늘었어요.')
+    st.write(f'### 3. 최근 {stocks[etf_code]}에서 가장 비중이 늘어난 종목들이에요.')
     st.dataframe(tmp[tmp['차이'] > 0].sort_values('차이', ascending = False).head(10), use_container_width = True)
 
-    st.write(f'### 4. {stocks[etf_code]}는 최근 아래 종목의 비중이 줄었어요.')
+    st.write(f'### 4. 최근 {stocks[etf_code]}에서 가장 비중이 줄어든 종목들이에요.')
     st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending = True).head(10), use_container_width = True)
 
     

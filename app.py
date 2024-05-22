@@ -28,7 +28,7 @@ if st.button('검색'):
     
     plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22').reset_index()
     fig = px.line(plotData, x = 'Date', y = 'Close')
-    fig.add_bar(x = plotData['Date'],y = plotData['Volume'], yaxis = 'y2')
+    fig.add_bar(x = plotData['Date'],y = plotData['Volume'], yaxis = 'y2', name = 'volume')
     fig.update_layout(
         yaxis=dict(
             title='Close Price'),

@@ -28,6 +28,15 @@ if st.button('검색'):
     
     plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22')
     fig = px.line(plotData['Close'])
+    fig.add_bar(plotData['Volume'] yaxis = 'volume')
+    fig.update_layout(
+        yaxis=dict(
+            title='Close Price'),
+        yaxis2=dict(
+            title='Volume',
+            overlaying='y',
+            side='right')
+        )
     st.plotly_chart(fig, use_container_width=True)
     # st.line_chart(plotData['Close'])
 

@@ -3,10 +3,23 @@ import FinanceDataReader as fdr
 import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
-test = pd.DataFrame({'name' : ['naver', 'google'],  'url' : ['https://www.naver.com', 'https://www.google.com/']})
+test = pd.DataFrame({'name' : ['naver', 'google', 'daum'],  'url' : ['https://www.naver.com', 'https://www.google.com/', 'www.daum.net']})
 st.dataframe(test, column_config={
-        "url": st.column_config.LinkColumn(display_text = '\U0001F517')
+        "url": # st.column_config.LinkColumn(display_text = '\U0001F517')
     })
+# --- 테스트 공간
+if 'keyword' not in st.session_state :
+    st.session_state['keyword'] = ""
+keyword = st.input_text('search')
+if keyword :
+    st.session_state['keyword'] = keyword
+if st.button('검색어 입력') :
+    st.write(f'{keyword}를 입력했습니다.')
+    if st.button('확인') :
+        tmp = test[test['url'].str.contains(st.session_state['keyword'])]
+        st.dataframe(tmp)
+
+
 stocks = {'102110' : 'TIGER200', '069500' : 'KODEX 200', '463050' : 'timefolio K바이오액티브', '482030' : 'Koact 테크핵심소재공급망액티브', '385720' : 'timefolio Kstock 액티브'}
 
 conn = st.connection('mysql', type='sql')

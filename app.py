@@ -32,7 +32,7 @@ if st.button('검색'):
     ratio.loc['other', :] = ['기타', 100-sum(ratio['비중'])]
     fig = px.pie(ratio, values = '비중', names = '종목명', title = '상위 10개 종목의 비중')
     fig.update_layout(template='plotly_white')
-    st.plotly_chart(fig, use_container_width = True)
+    st.plotly_chart(fig, theme = "streamlit", use_container_width = True)
     st.dataframe(df.sort_values('평가금액', ascending = False).set_index('종목코드'))
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
@@ -45,13 +45,13 @@ if st.button('검색'):
                 low=plotData['Low'],
                 close=plotData['Close'])])
     fig.update_layout(
-    xaxis_title='날짜',
-    yaxis_title='가격',
-    margin = {'t' : 10},
-    xaxis_rangeslider_visible=False
-)
+                    xaxis_title='날짜',
+                    yaxis_title='가격',
+                    margin = {'t' : 10},
+                    xaxis_rangeslider_visible=False
+    )
     
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, theme = "streamlit" ,use_container_width=True)
  
     # 최근 내역 비교
     df2 = conn.query(f'SELECT * from etf_20240518 where etf_code = {etf_code};', ttl=600)

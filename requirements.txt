@@ -2,3 +2,4 @@ streamlit
 mysqlclient
 SQLAlchemy
 finance-datareader
+bs4

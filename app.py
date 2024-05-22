@@ -7,7 +7,13 @@ stocks = {'102110' : 'TIGER200', '069500' : 'KODEX 200', '463050' : 'timefolio K
 conn = st.connection('mysql', type='sql')
 
 st.title('ETF 검색기')
-st.write('ETF는 TIGER 200(102110), KODEX 200(069500), timefolio K바이오액티브(482030), Koact 테크핵심소재공급망액티브(385720), timefolio Kstock 액티브(385720)만 등만 검색 가능')
+st.write('검색가능한 ETF')
+st.write('1. TIGER 200(102110)')
+st.write('KODEX 200(069500)')
+st.wrtie('timefolio K바이오액티브(482030)')
+st.wrtie('Koact 테크핵심소재공급망액티브(385720)')
+st.wrtie('timefolio Kstock 액티브(385720)')
+
 etf_code = st.text_input('ETF코드를 입력해주세요.')
 if st.button('검색'):
     # 전체 내역 조회

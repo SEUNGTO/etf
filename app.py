@@ -41,7 +41,6 @@ if st.button('검색'):
                 low=plotData['Low'],
                 close=plotData['Close'])])
     fig.update_layout(
-    title='캔들스틱 차트 예제',
     xaxis_title='날짜',
     yaxis_title='가격',
     xaxis_rangeslider_visible=False

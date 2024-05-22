@@ -3,7 +3,7 @@ import FinanceDataReader as fdr
 import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
-test = pd.DataFrame({'name' : ['naver'],  'url' : ['https://www.naver.com']})
+test = pd.DataFrame({'name' : ['naver', 'google'],  'url' : ['https://www.naver.com', 'https://www.google.com/']})
 st.dataframe(test, column_config={
         "url": st.column_config.LinkColumn(display_text = '\U0001F517')
     })

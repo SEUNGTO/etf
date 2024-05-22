@@ -33,7 +33,7 @@ if st.button('검색'):
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
     
-    plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22').dropna().reset_index()
+    plotData = fdr.DataReader(etf_code, start ='2024-04-20', end = '2024-05-22').reset_index()
     
     fig = go.Figure(data=[go.Candlestick(x=plotData['Date'],
                 open=plotData['Open'],

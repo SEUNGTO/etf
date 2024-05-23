@@ -57,7 +57,7 @@ if st.button('검색'):
         tmp2 = research.loc[row, ['종목코드', '리포트 제목', '의견', '게시일자', '증권사', '링크']]
 
         tmp = tmp.join(tmp2.set_index('종목코드'), how='left')
-        tmp = round(tmp['비중'], 2, skipna = True)
+        tmp = tmp['비중'].round(2, skipna = True)
         tmp = tmp.reset_index().set_index('종목명')
         
         tmp['목표가(가중평균)'] = round(tmp['목표가(가중평균)'])

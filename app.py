@@ -28,9 +28,10 @@ if st.button('검색'):
     # 전체 내역 조회
     df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)
     price = fdr.DataReader(etf_code, start='2024-04-20', end='2024-05-21').reset_index()
-    research = conn.query('SELECT * EXCEPT nid FROM research', ttl=600)
-    research.columns = ['종목명', '종목코드', '리포트 제목', '목표가', '의견', '게시일자', '증권사', '링크']
-    research[['종목코드', '종목명']].set_index('종목코드').groupby('종목코드').count().sort_values('종목명', ascending = True)
+    research = conn.query('SELECT * FROM research', ttl=600)
+    research.columns = ['종목명', '종목코드', '리포트 제목','nid' ,'목표가', '의견', '게시일자', '증권사', '링크']
+    tmp = research[['종목코드', '종목명']].set_index('종목코드').groupby('종목코드').count().sort_values('종목명', ascending = True)
+    st.dataframe(tmp)
 
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']

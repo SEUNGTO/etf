@@ -114,8 +114,9 @@ if st.button('검색'):
     #                mode = 'lines',
     #                name = '목표가')
     # )
-
-
+    last_price = price['Close'].tail(0).values
+    st.write(last_price)
+    st.metric(label = '목표가', value = f'{target_price}', delta = f'{target_price/1000}')
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
     # 최근 내역 비교

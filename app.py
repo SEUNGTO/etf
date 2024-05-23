@@ -4,7 +4,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
 import re
-
+st.image('img.png')
 if 'search' not in st.session_state :
     st.session_state['search'] = True
 if 'etf_code' not in st.session_state :

@@ -91,6 +91,19 @@ if st.button('검색'):
     tmp3['시총'] = tmp3['목표가(가중평균)'] * tmp3['보유량']
     target_price = tmp3['시총'].dropna().sum()/50000
 
+    text_pos = price['High'].max()*1.1
+
+    fig.add_trace(
+        go.Scatter(
+            x=df['Date'],
+            y= text_pos,
+            mode='text',
+            text=[f'{target_price:.2f}'],  # 표시할 텍스트
+            textposition="top center",
+            name='Annotations'
+        )
+    )
+
     fig.add_trace(
         go.Scatter(x = price['Date'],
                    y = [target_price] * len(price['Date']),

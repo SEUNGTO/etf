@@ -38,6 +38,9 @@ if st.button('검색'):
     research['목표가'] = research['목표가'].astype(int)
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
+    
+    
+    
 
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
@@ -57,10 +60,11 @@ if st.button('검색'):
     with tab2:
         tmp = df.set_index('종목코드')
         tmp = tmp.join(target, on = 'inner')
-        tmp.reset_index(inplace = True)
-        
-        st.dataframe(tmp.drop('종목코드', axis=1).sort_values('평가금액', ascending=False).set_index('종목명'),
-                     use_container_width=True)
+        st.dataframe(tmp)
+        # tmp.reset_index(inplace = True)
+
+        # st.dataframe(tmp.drop('종목코드', axis=1).sort_values('평가금액', ascending=False).set_index('종목명'),
+        #              use_container_width=True)
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 

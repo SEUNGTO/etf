@@ -90,6 +90,7 @@ if st.button('검색'):
     sichong = tmp3['시총'].dropna().sum()
     st.dataframe(tmp3)
     st.write(sichong)
+    st.write(tmp3['평가금액'].dropna().sum())
 
     # sichong = sum(tmp3['목표가(가중평균)'] * tmp3['보유량'])
     # st.write(sichong)

@@ -26,8 +26,8 @@ st.write('- timefolio Kstock 액티브(385720)')
 etf_code = st.session_state['etf_code']
 search = st.session_state['search']
 
-etf_code = st.text_input('ETF코드를 입력해주세요.', value = '102110', key = 'etf_code')
-search = st.button('검색', key = 'search')
+# etf_code = st.text_input('ETF코드를 입력해주세요.', value = '102110', key = 'etf_code')
+# search = st.button('검색', key = 'search')
 
 if search :
     # 전체 내역 조회

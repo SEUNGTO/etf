@@ -97,7 +97,7 @@ if st.button('검색'):
 
     fig.add_trace(
         go.Scatter(
-            x = price['Date'],
+            x = price['Date'].max(),
             y = text_pos,
             mode='text',
             text=[f'{target_price:.2f}'],  # 표시할 텍스트

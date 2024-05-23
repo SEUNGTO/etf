@@ -38,17 +38,6 @@ if st.button('검색'):
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 
-    # df = pd.read_excel('data/etf_20240521.xlsx', dtype = str)
-    # df = df[df['ETF코드'] == '102110']
-    # df.set_index('종목코드', inplace = True)
-    # df = df.join(target, how = 'left')
-    # tmp = data.drop('목표가(가중평균)', axis = 1)
-    # data['게시일자'] = pd.to_datetime(data['게시일자'])
-    # row = data.reset_index().groupby('종목코드')['게시일자'].idxmax()
-    # data.reset_index().loc[row, :]
-    # tmp.columns
-    # data.columns
-    # df.join(data.drop('목표가(가중평균)', axis = 1), how = 'inner')
 
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
@@ -78,12 +67,7 @@ if st.button('검색'):
         tmp['목표가(가중평균)'] = round(tmp['목표가(가중평균)'])
         st.dataframe(tmp.sort_values('비중', ascending=False), column_config={
             "링크": st.column_config.LinkColumn(display_text='\U0001F517')})
-        # tmp2 = research.groupby('')
-        # st.dataframe(tmp)
-        # tmp.reset_index(inplace = True)
 
-        # st.dataframe(tmp.drop('종목코드', axis=1).sort_values('평가금액', ascending=False).set_index('종목명'),
-        #              use_container_width=True)
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 
@@ -103,7 +87,7 @@ if st.button('검색'):
     
     
     tmp3 = df[['종목코드', '평가금액', '보유량']]
-    tmp3.set_index('종목코드')
+    tmp3 = tmp3.set_index('종목코드')
     tmp3 = tmp3.join(target, how = 'left')
     st.dataframe(tmp3)
     

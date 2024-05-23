@@ -4,13 +4,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
 import re
-import numpy as np
 
-test = pd.DataFrame(
-    {'name': ['naver', 'google', 'daum'], 'url': ['https://www.naver.com', 'https://www.google.com/', 'www.daum.net']})
-st.dataframe(test, column_config={
-    "url": st.column_config.LinkColumn(display_text='\U0001F517')
-})
 
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
           '385720': 'timefolio Kstock 액티브'}
@@ -95,7 +89,7 @@ if st.button('검색'):
     real_PQ = tmp3['평가금액'].dropna().sum()
     idx = real_PQ/target_PQ
 
-    st.metric(label = '목표가 대비 현재 가격', value = f'{idx*100:.2f}%', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
+    st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
     # 최근 내역 비교

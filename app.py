@@ -31,13 +31,12 @@ if st.button('검색'):
     df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)
     price = fdr.DataReader(etf_code, start='2024-04-20', end='2024-05-21').reset_index()
     research = conn.query('SELECT * FROM research', ttl=600)
-    research.columns = ['종목명', '종목코드', '리포트 제목','nid' ,'목표가', '의견', '게시일자', '증권사', '링크']
-    research['목표가'] = [re.sub('\D','', t) for t in research['목표가']]
+    research.columns = ['종목명', '종목코드', '리포트 제목', 'nid', '목표가', '의견', '게시일자', '증권사', '링크']
+    research['목표가'] = [re.sub('\D', '', t) for t in research['목표가']]
     research = research[research['목표가'] != ""]
     research['목표가'] = research['목표가'].astype(int)
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
-
 
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
@@ -56,22 +55,19 @@ if st.button('검색'):
 
     with tab2:
         tmp = df.set_index('종목코드')
-        tmp = tmp.join(target, how = 'left')
+        tmp = tmp.join(target, how='left')
 
         tmp2 = research[['종목코드', '리포트 제목', '의견', '게시일자', '증권사', '링크']]
         tmp2['게시일자'] = pd.to_datetime(tmp2['게시일자'])
         row = tmp2.groupby('종목코드')['게시일자'].idxmax()
         tmp2 = research.loc[row, ['종목코드', '리포트 제목', '의견', '게시일자', '증권사', '링크']]
 
-        tmp = tmp.join(tmp2.set_index('종목코드'), how = 'left')
+        tmp = tmp.join(tmp2.set_index('종목코드'), how='left')
         tmp['목표가(가중평균)'] = round(tmp['목표가(가중평균)'])
         st.dataframe(tmp.sort_values('비중', ascending=False), column_config={
             "링크": st.column_config.LinkColumn(display_text='\U0001F517')})
 
-
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
-
-
 
     fig = go.Figure(data=[go.Candlestick(x=price['Date'],
                                          open=price['Open'],
@@ -84,13 +80,16 @@ if st.button('검색'):
         margin={'t': 10, 'b': 10},
         xaxis_rangeslider_visible=False
     )
-    
-    
+
     tmp3 = df[['종목코드', '평가금액', '보유량']]
     tmp3 = tmp3.set_index('종목코드')
-    tmp3 = tmp3.join(target, how = 'left')
-    st.dataframe(tmp3)
+    tmp3 = tmp3.join(target, how='left')
+    tmp3['종가'] = tmp3['평가금액']/tmp3['보유량']
+    ind = tmp3['목표가(가중평균'] == np.nan
     
+    # tmp3['가격'] = np.where(tmp3['목표가(가중평균)'] == np.nan, tmp3['종가'], tmp3['목표가(가중평균'])
+    st.dataframe(tmp3.loc[ind, :])
+
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
     # 최근 내역 비교

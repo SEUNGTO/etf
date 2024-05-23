@@ -92,7 +92,7 @@ if st.button('검색'):
     target_price = tmp3['시총'].dropna().sum()/50000
 
     text_pos = price[['High']].max()*1.1
-    x_pos = price['Date'].max()
+    x_pos = price[['Date']].max()
     st.write(x_pos)
     st.write(text_pos)
 

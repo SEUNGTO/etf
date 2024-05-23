@@ -96,17 +96,17 @@ if st.button('검색'):
     st.write(x_pos)
     st.write(text_pos)
 
-    fig.add_trace(
-        go.Scatter(
-            x = x_pos,
-            y = text_pos,
-            mode='text',
-            text=[f'목표가 : {target_price:.2f}'],  # 표시할 텍스트
-            # textposition="top center",
-            textfont = dict(size = 20),
-            name='목표가'
-        )
-    )
+    # fig.add_trace(
+    #     go.Scatter(
+    #         x = x_pos,
+    #         y = text_pos,
+    #         mode='text',
+    #         text=[f'목표가 : {target_price:.2f}'],  # 표시할 텍스트
+    #         # textposition="top center",
+    #         textfont = dict(size = 20),
+    #         name='목표가'
+    #     )
+    # )
 
     # fig.add_trace(
     #     go.Scatter(x = price['Date'].max(),
@@ -114,9 +114,9 @@ if st.button('검색'):
     #                mode = 'lines',
     #                name = '목표가')
     # )
-    last_price = price['Close'].tail(0).values
+    last_price = price['Close'].tail(1).values
     st.write(last_price)
-    st.metric(label = '목표가', value = f'{target_price}', delta = f'{target_price/1000}')
+    st.metric(label = '목표가', value = f'{int(target_price)}', delta = f'{target_price/1000}')
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
     # 최근 내역 비교

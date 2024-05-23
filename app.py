@@ -38,9 +38,20 @@ if st.button('검색'):
     research['목표가'] = research['목표가'].astype(int)
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
-    
-    
-    
+
+    # df = pd.read_excel('data/etf_20240521.xlsx', dtype = str)
+    # df = df[df['ETF코드'] == '102110']
+    # df.set_index('종목코드', inplace = True)
+    # df = df.join(target, how = 'left')
+    # tmp = data.drop('목표가(가중평균)', axis = 1)
+    # data['게시일자'] = pd.to_datetime(data['게시일자'])
+    # row = data.reset_index().groupby('종목코드')['게시일자'].idxmax()
+    # data.reset_index().loc[row, :]
+    # tmp.columns
+    # data.columns
+    # df.join(data.drop('목표가(가중평균)', axis = 1), how = 'inner')
+
+
 
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
@@ -60,7 +71,16 @@ if st.button('검색'):
     with tab2:
         tmp = df.set_index('종목코드')
         tmp = tmp.join(target, on = 'inner')
+        
+        tmp2 = research[['종목코드', '리포트 제목', '의견', '게시일자', '증권사', '링크']]
+        tmp2['게시일자'] = pd.to_datetime(tmp2['게시일자'])
+        row = tmp2.groupby('종목코드')['게시일자'].idxmax()
+        tmp2 = research.loc[row, ['종목코드', '리포트 제목', '의견', '게시일자', '증권사', '링크']]
+        
+        tmp = tmp.join(tmp2, how = 'inner')
         st.dataframe(tmp)
+        # tmp2 = research.groupby('')
+        # st.dataframe(tmp)
         # tmp.reset_index(inplace = True)
 
         # st.dataframe(tmp.drop('종목코드', axis=1).sort_values('평가금액', ascending=False).set_index('종목명'),

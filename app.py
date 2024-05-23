@@ -81,21 +81,21 @@ if st.button('검색'):
         xaxis_rangeslider_visible=False
     )
 
+
     tmp3 = df[['종목코드', '평가금액', '보유량']]
     tmp3 = tmp3.set_index('종목코드')
     tmp3 = tmp3.join(target, how='left')
     tmp3['종가'] = tmp3['평가금액']/tmp3['보유량']
     tmp3['목표가(가중평균)'].fillna(tmp3['종가'], inplace = True)
     tmp3['시총'] = tmp3['목표가(가중평균)'] * tmp3['보유량']
-    sichong = tmp3['시총'].dropna().sum()
-    st.dataframe(tmp3)
-    st.write(sichong)
-    st.write(tmp3['평가금액'].dropna().sum())
+    target_price = tmp3['시총'].dropna().sum()/50000
 
-    # sichong = sum(tmp3['목표가(가중평균)'] * tmp3['보유량'])
-    # st.write(sichong)
-
-    # tmp3['가격'] = np.where(tmp3['목표가(가중평균)'] == np.nan, tmp3['종가'], tmp3['목표가(가중평균'])
+    fig.add_trace(
+        go.Scatter(x = price['Date'],
+                   y = target_price,
+                   mode = 'lines',
+                   name = '목표가')
+    )
 
 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)

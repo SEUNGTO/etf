@@ -102,7 +102,8 @@ if st.button('검색'):
             mode='text',
             text=[f'{target_price:.2f}'],  # 표시할 텍스트
             textposition="top center",
-            name='Annotations'
+            textfont = dict(size = 20),
+            name='목표가'
         )
     )
 

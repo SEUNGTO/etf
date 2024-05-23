@@ -95,8 +95,8 @@ if st.button('검색'):
 
     fig.add_trace(
         go.Scatter(
-            x = price['Date'][-1],
-            y= text_pos,
+            x = price['Date'],
+            y = text_pos,
             mode='text',
             text=[f'{target_price:.2f}'],  # 표시할 텍스트
             textposition="top center",
@@ -104,12 +104,12 @@ if st.button('검색'):
         )
     )
 
-    fig.add_trace(
-        go.Scatter(x = price['Date'],
-                   y = [target_price] * len(price['Date']),
-                   mode = 'lines',
-                   name = '목표가')
-    )
+    # fig.add_trace(
+    #     go.Scatter(x = price['Date'].max(),
+    #                y = [target_price] * len(price['Date']),
+    #                mode = 'lines',
+    #                name = '목표가')
+    # )
 
 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)

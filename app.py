@@ -114,8 +114,3 @@ if st.button('검색'):
 
     st.write(f'### 4. 최근 {stocks[etf_code]}에서 가장 비중이 줄어든 종목들이에요.')
     st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending=True).head(10), use_container_width=True)
-
-stock_code = st.text_input('종목코드를 입력해주세요.')
-if st.button('종목검색'):
-    df = conn.query(f'SELECT * from etf_20240518 where stock_code = {stock_code};', ttl=600)
-    st.dataframe(df)

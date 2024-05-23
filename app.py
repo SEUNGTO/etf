@@ -95,7 +95,7 @@ if st.button('검색'):
     real_PQ = tmp3['평가금액'].dropna().sum()
     idx = real_PQ/target_PQ
 
-    st.metric(label = '목표가 대비 현재 가격', value = f'{idx*100:.2f}', delta = f'{1-(1/idx) * 100:.2f}% 더 올라야 해요.')
+    st.metric(label = '목표가 대비 현재 가격', value = f'{idx*100:.2f}', delta = f'{(1-(1/idx)) * 100:.2f}% 가능')
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
     # 최근 내역 비교

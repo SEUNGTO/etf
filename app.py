@@ -6,6 +6,12 @@ import pandas as pd
 import re
 import numpy as np
 
+test = pd.DataFrame(
+    {'name': ['naver', 'google', 'daum'], 'url': ['https://www.naver.com', 'https://www.google.com/', 'www.daum.net']})
+st.dataframe(test, column_config={
+    "url": st.column_config.LinkColumn(display_text='\U0001F517')
+})
+
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
           '385720': 'timefolio Kstock 액티브'}
 
@@ -83,10 +89,13 @@ if st.button('검색'):
     tmp3['종가'] = tmp3['평가금액']/tmp3['보유량']
     tmp3['목표가(가중평균)'].fillna(tmp3['종가'], inplace = True)
     tmp3['시총'] = tmp3['목표가(가중평균)'] * tmp3['보유량']
-    target_price = tmp3['시총'].dropna().sum()/50000
-    last_price = price['Close'].tail(1).values[0]
-
-    st.metric(label = '목표가', value = f'{int(target_price)}', delta = f'{round((target_price/last_price-1) * 100, 2)}%')
+    
+    
+    target_PQ = tmp3['시총'].dropna().sum()
+    real_PQ = tmp3['평가금액'].dropna().sum()
+    idx = round(target_PQ/real_PQ * 100, 2)
+    
+    st.metric(label = '목표가 대비 현재 가격', value = f'{idx}', delta = f'{idx - 100}%')
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
     # 최근 내역 비교

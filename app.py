@@ -19,7 +19,7 @@ st.write('- timefolio K바이오액티브(463050)')
 st.write('- Koact 테크핵심소재공급망액티브(482030)')
 st.write('- timefolio Kstock 액티브(385720)')
 
-etf_code = st.text_input('ETF코드를 입력해주세요.')
+etf_code = st.text_input('ETF코드를 입력해주세요.', value = '102110')
 if st.button('검색'):
     # 전체 내역 조회
     df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)

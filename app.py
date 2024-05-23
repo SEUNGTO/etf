@@ -64,7 +64,7 @@ if st.button('검색'):
         st.dataframe(tmp.drop(['종목코드','보유량','평가금액'], axis = 1).sort_values('비중', ascending=False).rename(columns = {'목표가(가중평균)':'목표가(wAvg)'}), column_config={
             "링크": st.column_config.LinkColumn(display_text='\U0001F517'),
 "리포트 제목" : st.column_config.TextColumn(width = 'middle')})
-st.write('* wAvg : 가중평균')
+    st.write('* wAvg : 가중평균')
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 

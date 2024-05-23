@@ -114,7 +114,7 @@ if st.button('검색'):
     #                mode = 'lines',
     #                name = '목표가')
     # )
-    last_price = price['Close'].tail(1).values
+    last_price = price['Close'].tail(1).values[0]
     st.write(last_price)
     st.metric(label = '목표가', value = f'{int(target_price)}', delta = f'{round(target_price/last_price * 100, 2)}%')
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)

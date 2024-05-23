@@ -63,7 +63,7 @@ if st.button('검색'):
         tmp['목표가(가중평균)'] = round(tmp['목표가(가중평균)'])
         st.dataframe(tmp.drop(['종목코드','보유량','평가금액'], axis = 1).sort_values('비중', ascending=False), column_config={
             "링크": st.column_config.LinkColumn(display_text='\U0001F517'),
-"리포트 제목" : st.column_config.TextColumn(width = 'middle')})
+"리포트 제목" : st.column_config.TextColumn(width = 'small')})
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 

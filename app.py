@@ -83,7 +83,7 @@ if st.button('검색'):
         tmp = tmp.join(tmp2.set_index('종목코드'), how = 'left')
         tmp['목표가(가중평균)'] = round(tmp['목표가(가중평균)'])
         st.dataframe(tmp, column_config={
-            "링크": st.column_config.LinkColumn(display_text='\U0001F517'})
+            "링크": st.column_config.LinkColumn(display_text='\U0001F517')})
         # tmp2 = research.groupby('')
         # st.dataframe(tmp)
         # tmp.reset_index(inplace = True)

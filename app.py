@@ -86,11 +86,13 @@ if st.button('검색'):
     tmp3 = tmp3.join(target, how='left')
     tmp3['종가'] = tmp3['평가금액']/tmp3['보유량']
     tmp3['목표가(가중평균)'].fillna(tmp3['종가'], inplace = True)
-    sichong = sum(tmp3['목표가(가중평균)'] * tmp3['보유량'], skipna = True)/50000
+    st.dataframe(tmp3)
+
+    sichong = sum(tmp3['목표가(가중평균)'] * tmp3['보유량'])
     st.write(sichong)
 
     # tmp3['가격'] = np.where(tmp3['목표가(가중평균)'] == np.nan, tmp3['종가'], tmp3['목표가(가중평균'])
-    st.dataframe(tmp3)
+    
 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 

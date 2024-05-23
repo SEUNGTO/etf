@@ -20,7 +20,7 @@ conn = st.connection('mysql', type='sql')
 st.title('ETF 검색기')
 
 image = Image.open('img.png')
-st.image(image)
+st.image(image, use_container_width = True)
 
 st.write('검색가능한 ETF')
 st.write('- TIGER 200(102110)')

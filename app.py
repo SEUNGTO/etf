@@ -29,7 +29,6 @@ etf_code = st.text_input('ETF코드를 입력해주세요.')
 if st.button('검색'):
     # 전체 내역 조회
     df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)
-
     price = fdr.DataReader(etf_code, start='2024-04-20', end='2024-05-21').reset_index()
     research = conn.query('SELECT * FROM research', ttl=600)
     research.columns = ['종목명', '종목코드', '리포트 제목','nid' ,'목표가', '의견', '게시일자', '증권사', '링크']
@@ -50,8 +49,6 @@ if st.button('검색'):
     # tmp.columns
     # data.columns
     # df.join(data.drop('목표가(가중평균)', axis = 1), how = 'inner')
-
-
 
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
@@ -91,6 +88,7 @@ if st.button('검색'):
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 
 
+
     fig = go.Figure(data=[go.Candlestick(x=price['Date'],
                                          open=price['Open'],
                                          high=price['High'],
@@ -102,7 +100,13 @@ if st.button('검색'):
         margin={'t': 10, 'b': 10},
         xaxis_rangeslider_visible=False
     )
-
+    
+    
+    tmp3 = df[['종목코드', '평가금액', '보유량']]
+    tmp3.set_index('종목코드')
+    tmp3 = tmp3.join(target, how = 'left')
+    st.dataframe(tmp3)
+    
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
     # 최근 내역 비교

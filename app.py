@@ -91,8 +91,8 @@ if st.button('검색'):
     tmp3['시총'] = tmp3['목표가(가중평균)'] * tmp3['보유량']
     target_price = tmp3['시총'].dropna().sum()/50000
 
-    text_pos = price['High'].max()*1.1
-    st.write(price['Date'])
+    text_pos = price[['High']].max()*1.1
+    st.write(price[['Date']].loc[-1, 'Date'])
     st.write(text_pos)
 
     fig.add_trace(

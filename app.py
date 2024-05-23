@@ -92,7 +92,7 @@ if st.button('검색'):
     target_price = tmp3['시총'].dropna().sum()/50000
     last_price = price['Close'].tail(1).values[0]
 
-    st.metric(label = '목표가', value = f'{int(target_price)}', delta = f'{round((1-target_price/last_price) * 100, 2)}%')
+    st.metric(label = '목표가', value = f'{int(target_price)}', delta = f'{round((target_price/last_price-1) * 100, 2)}%')
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
     # 최근 내역 비교

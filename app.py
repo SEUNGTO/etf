@@ -92,7 +92,7 @@ if st.button('검색'):
 
     fig.add_trace(
         go.Scatter(x = price['Date'],
-                   y = target_price,
+                   y = [target_price] * len(price['Date']),
                    mode = 'lines',
                    name = '목표가')
     )

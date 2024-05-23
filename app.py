@@ -91,8 +91,8 @@ if st.button('검색'):
     tmp3['시총'] = tmp3['목표가(가중평균)'] * tmp3['보유량']
     target_price = tmp3['시총'].dropna().sum()/50000
 
-    text_pos = price[['High']].max()*1.1
-    x_pos = price[['Date']].max()
+    text_pos = price[['High']].max() + 10
+    x_pos = price[['Date']].median()
     st.write(x_pos)
     st.write(text_pos)
 
@@ -101,8 +101,8 @@ if st.button('검색'):
             x = x_pos,
             y = text_pos,
             mode='text',
-            text=[f'{target_price:.2f}'],  # 표시할 텍스트
-            textposition="top center",
+            text=[f'목표가 : {target_price:.2f}'],  # 표시할 텍스트
+            # textposition="top center",
             textfont = dict(size = 20),
             name='목표가'
         )

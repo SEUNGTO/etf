@@ -73,7 +73,8 @@ if st.button('검색'):
                                          open=price['Open'],
                                          high=price['High'],
                                          low=price['Low'],
-                                         close=price['Close'])])
+                                         close=price['Close'],
+                                         name = f'{stocks[etf_code]}')])
     fig.update_layout(
         xaxis_title='날짜',
         yaxis_title='가격',

@@ -4,7 +4,6 @@ import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
 import re
-from PIL import Image
 
 
 if 'search' not in st.session_state :
@@ -18,10 +17,6 @@ stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바
 conn = st.connection('mysql', type='sql')
 
 st.title('ETF 검색기')
-
-image = Image.open('img.png')
-st.image(image, use_container_width = True)
-
 st.write('검색가능한 ETF')
 st.write('- TIGER 200(102110)')
 st.write('- KODEX 200(069500)')

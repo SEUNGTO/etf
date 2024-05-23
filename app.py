@@ -3,6 +3,8 @@ import FinanceDataReader as fdr
 import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
+import re
+import numpy as np
 
 test = pd.DataFrame(
     {'name': ['naver', 'google', 'daum'], 'url': ['https://www.naver.com', 'https://www.google.com/', 'www.daum.net']})
@@ -27,11 +29,15 @@ etf_code = st.text_input('ETF코드를 입력해주세요.')
 if st.button('검색'):
     # 전체 내역 조회
     df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)
+
     price = fdr.DataReader(etf_code, start='2024-04-20', end='2024-05-21').reset_index()
     research = conn.query('SELECT * FROM research', ttl=600)
     research.columns = ['종목명', '종목코드', '리포트 제목','nid' ,'목표가', '의견', '게시일자', '증권사', '링크']
-    tmp = research[['종목코드', '종목명']].set_index('종목코드').groupby('종목코드').count().sort_values('종목명', ascending = True)
-    st.dataframe(tmp)
+    research['목표가'] = [re.sub('\D','', t) for t in research['목표가']]
+    research = research[research['목표가'] != ""]
+    research['목표가'] = research['목표가'].astype(int)
+    target = research[['종목코드', '목표가']].groupby('종목코드').mean()
+    target.columns = ['목표가(가중평균)']
 
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
@@ -49,7 +55,11 @@ if st.button('검색'):
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
     with tab2:
-        st.dataframe(df.drop('종목코드', axis=1).sort_values('평가금액', ascending=False).set_index('종목명'),
+        tmp = df.set_index('종목코드')
+        tmp = tmp.join(target, on = 'inner')
+        tmp.reset_index(inplace = True)
+        
+        st.dataframe(tmp.drop('종목코드', axis=1).sort_values('평가금액', ascending=False).set_index('종목명'),
                      use_container_width=True)
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')

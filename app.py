@@ -71,13 +71,16 @@ if st.button('검색'):
     with tab2:
         tmp = df.set_index('종목코드')
         tmp = tmp.join(target, how = 'left')
+        
+        st.dataframe(tmp)
 
         tmp2 = research[['종목코드', '리포트 제목', '의견', '게시일자', '증권사', '링크']]
         tmp2['게시일자'] = pd.to_datetime(tmp2['게시일자'])
         row = tmp2.groupby('종목코드')['게시일자'].idxmax()
         tmp2 = research.loc[row, ['종목코드', '리포트 제목', '의견', '게시일자', '증권사', '링크']]
+        st.dataframe(tmp2)
 
-        tmp = tmp.join(tmp2, how = 'inner')
+        tmp = tmp.join(tmp2.set_index('종목코드'), how = 'inner')
         st.dataframe(tmp)
         # tmp2 = research.groupby('')
         # st.dataframe(tmp)

@@ -61,7 +61,7 @@ if st.button('검색'):
         tmp = tmp.reset_index().set_index('종목명')
         
         tmp['목표가(가중평균)'] = round(tmp['목표가(가중평균)'])
-        st.dataframe(tmp.drop(['종목코드','보유량','평가금액'], axis = 1).sort_values('비중', ascending=False).rename(columns = {'목표가(가중평균)':'목표가\n(가중평균)'}), column_config={
+        st.dataframe(tmp.drop(['종목코드','보유량','평가금액'], axis = 1).sort_values('비중', ascending=False).rename(columns = {'목표가(가중평균)':'목표가(wAvg)'}), column_config={
             "링크": st.column_config.LinkColumn(display_text='\U0001F517'),
 "리포트 제목" : st.column_config.TextColumn(width = 'middle')})
 

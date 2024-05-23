@@ -92,12 +92,13 @@ if st.button('검색'):
     target_price = tmp3['시총'].dropna().sum()/50000
 
     text_pos = price[['High']].max()*1.1
-    st.write(price[['Date']].tail(1).values)
+    x_pos = price['Date'].max()
+    st.write(x_pos)
     st.write(text_pos)
 
     fig.add_trace(
         go.Scatter(
-            x = price['Date'].max(),
+            x = x_pos,
             y = text_pos,
             mode='text',
             text=[f'{target_price:.2f}'],  # 표시할 텍스트

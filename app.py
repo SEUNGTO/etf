@@ -30,7 +30,7 @@ if st.button('검색'):
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
     df['비중'] = df['평가금액'].astype(int)/df['평가금액'].astype(int).sum() * 100
 
-    research = conn.query('SELECT * FROM RESEARCH', ttl = 600)
+    research = conn.query('SELECT * FROM research', ttl = 600)
     st.dataframe(research.head())
     st.write(f'### 1. {stocks[etf_code]}의 보유 종목과 비중이에요.')
     

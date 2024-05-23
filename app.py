@@ -11,6 +11,8 @@ stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바
 
 conn = st.connection('mysql', type='sql')
 
+st.sidebar.markdown('![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=https://share.streamlit.io/your_deployed_app_link&label=VisitorsCount&labelColor=000000&logo=GitHub&logoColor=FFFFFF&color=1D70B8&style=for-the-badge)')
+
 st.title('ETF 검색기')
 st.write('검색가능한 ETF')
 st.write('- TIGER 200(102110)')

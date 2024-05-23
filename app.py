@@ -90,33 +90,9 @@ if st.button('검색'):
     tmp3['목표가(가중평균)'].fillna(tmp3['종가'], inplace = True)
     tmp3['시총'] = tmp3['목표가(가중평균)'] * tmp3['보유량']
     target_price = tmp3['시총'].dropna().sum()/50000
-
-    text_pos = price[['High']].max() + 10
-    x_pos = price[['Date']].median()
-    st.write(x_pos)
-    st.write(text_pos)
-
-    # fig.add_trace(
-    #     go.Scatter(
-    #         x = x_pos,
-    #         y = text_pos,
-    #         mode='text',
-    #         text=[f'목표가 : {target_price:.2f}'],  # 표시할 텍스트
-    #         # textposition="top center",
-    #         textfont = dict(size = 20),
-    #         name='목표가'
-    #     )
-    # )
-
-    # fig.add_trace(
-    #     go.Scatter(x = price['Date'].max(),
-    #                y = [target_price] * len(price['Date']),
-    #                mode = 'lines',
-    #                name = '목표가')
-    # )
     last_price = price['Close'].tail(1).values[0]
-    st.write(last_price)
-    st.metric(label = '목표가', value = f'{int(target_price)}', delta = f'{round(target_price/last_price * 100, 2)}%')
+
+    st.metric(label = '목표가', value = f'{int(target_price)}', delta = f'{round((1-target_price/last_price) * 100, 2)}%')
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
     # 최근 내역 비교

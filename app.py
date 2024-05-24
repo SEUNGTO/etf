@@ -49,13 +49,11 @@ st.write(codeList[codeList['Name'] == etf_name]['Symbol'].values[0])
 
 if etf_name :
     etf_code_update(etf_name)
-    # st.write(f"실행됨 :{codeList[codeList['Name'] == etf_name]['Symbol'].values[0]}")
-    # st.session_state['eft_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
 
 st.session_state['search'] = st.button(label = '검색')
 
 # 바로 실행하고 싶다면, st.session_state['search']를 부정해서 넣을 것 (~st.session_state['search'])
-search = st.session_state['search']
+search = ~st.session_state['search']
 etf_code = st.session_state['etf_code']
 
 st.write(st.session_state['etf_code'])

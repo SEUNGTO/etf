@@ -105,7 +105,7 @@ if search :
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 
-    fig = go.Figure(data=[go.Candlestick(x=price['Date'],
+    fig = go.Figure(data=[go.Candlestick(x=price['Date'].apply(lambda x : x.strftime('%Y-%m-%d')),
                                          open=price['Open'],
                                          high=price['High'],
                                          low=price['Low'],

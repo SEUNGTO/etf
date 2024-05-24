@@ -5,6 +5,7 @@ import plotly.graph_objs as go
 import pandas as pd
 import re
 from fuzzywuzzy import process
+from streamlit_searchbar import streamlit_searchbar
 
 st.set_page_config(
     page_title="ETFace",
@@ -32,6 +33,8 @@ with col3 :
 
 
 st.title('ETF 관상가')
+
+value = streamlit_searchbar()
 
 codeList = fdr.StockListing('ETF/KR')
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',

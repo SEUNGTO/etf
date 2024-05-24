@@ -35,27 +35,15 @@ st.write('- Koact 테크핵심소재공급망액티브(482030)')
 st.write('- timefolio Kstock 액티브(385720)')
 
 
-# 검색 키워드 입력 받기
-
-# keyword = 'tiger'
-# st.dataframe(codeList)
-# st.write(codeList['Name'].tolist())
-# st.session_state.search_results = process.extract(keyword, codeList['Name'], limit=50)
-# st.session_state.search_results
-
 codeList = fdr.StockListing('ETF/KR')
-st.session_state.search_result = codeList['Name'].tolist()
-
-# for i in st.session_state.search_result[:5] :
-#     st.write(i)
-
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
           '385720': 'timefolio Kstock 액티브'}
 
-conn = st.connection('mysql', type='sql')
 
 etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist())
+st.write(codeList[codeList['Name'] == etf_name]['Symbol'].values[0])
 if etf_name :
+    st.write(f"실행됨 :{codeList[codeList['Name'] == etf_name]['Symbol'].values[0]}")
     st.session_state['eft_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
 # st.session_state['etf_name'] = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist())
 
@@ -69,7 +57,7 @@ etf_code = st.session_state['etf_code']
 st.write(st.session_state['etf_code'])
 st.write(st.session_state['search'])
          
-
+conn = st.connection('mysql', type='sql')
 if search :
     # 전체 내역 조회
     

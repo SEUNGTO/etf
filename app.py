@@ -43,21 +43,16 @@ stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바
           '385720': 'timefolio Kstock 액티브'}
 
 
-etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'etf_name')
-st.write(etf_name)
-st.write(codeList[codeList['Name'] == etf_name]['Symbol'].values[0])
+col1, col2 = st.columns(2)
+with col1 :
+    etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'etf_name')
+    if etf_name :
+        etf_code_update(etf_name)
+with col2 : 
+    st.session_state['search'] = st.button(label = '검색')
 
-if etf_name :
-    etf_code_update(etf_name)
-
-st.session_state['search'] = st.button(label = '검색')
-
-# 바로 실행하고 싶다면, st.session_state['search']를 부정해서 넣을 것 (~st.session_state['search'])
 search = ~st.session_state['search']
 etf_code = st.session_state['etf_code']
-
-st.write(st.session_state['etf_code'])
-st.write(st.session_state['search'])
          
 conn = st.connection('mysql', type='sql')
 if search :

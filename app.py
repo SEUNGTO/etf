@@ -54,8 +54,10 @@ stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바
 
 conn = st.connection('mysql', type='sql')
 
-st.session_state['etf_name'] = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist())
-st.session_state['eft_code'] = codeList[codeList['Name'] == st.session_state.etf_name]['Symbol'].values[0]
+etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist())
+if etf_name :
+    st.session_state['eft_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
+# st.session_state['etf_name'] = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist())
 
 st.session_state['search'] = st.button(label = '검색')
 # etf_code = st.session_state['etf_code']

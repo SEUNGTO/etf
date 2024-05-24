@@ -27,7 +27,7 @@ if 'etf_name' not in st.session_state :
 
 st.title('ETF 관상가')
 
-with st.expander("검색가능한 ETF"):
+with st.expander("### 검색가능한 ETF"):
     st.dataframe({'종목명' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브']
                  ,'종목코드' : ['102110', '069500', '463050', '482030', '385720']})
 

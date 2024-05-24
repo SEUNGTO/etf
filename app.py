@@ -138,12 +138,12 @@ try :
             close = price['Close'].tail(1).values[0]
             high = price['High'].max()
             delta = close - high
-            st.metric(label = '종가(고점 대비)', value = close,  delta = delta)
+            st.metric(label = '종가(고점 대비)', value = close,  delta = f'{delta}')
         with col3 :
             high = price['High'].max()
             low = price['Low'].min()
             delta = high - low
-            st.metric(label = '최고점(저점 대비)', value = high, delta = delta)
+            st.metric(label = '최고점(저점 대비)', value = high, delta = f'{delta}')
             
         
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)

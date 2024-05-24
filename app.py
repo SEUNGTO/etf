@@ -27,8 +27,7 @@ if 'etf_code' not in st.session_state :
     st.session_state['etf_code'] = '102110'
 
 # 검색 키워드 입력 받기
-keyword = st.text_input("관심가는 종목명을 검색해주세요
-")
+keyword = st.text_input("관심가는 종목명을 검색해주세요")
 
 if keyword:
     # 유사도 기반 검색 (FuzzyWuzzy 사용)

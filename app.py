@@ -17,7 +17,7 @@ if 'search' not in st.session_state :
     st.session_state['search'] = True
 if 'etf_code' not in st.session_state :
     st.session_state['etf_code'] = '102110'
-if search_results not in st.session_state : 
+if 'search_results' not in st.session_state : 
     st.session_state['search_results'] = []
 
 st.title('ETF 관상가')

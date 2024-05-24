@@ -9,21 +9,16 @@ from fuzzywuzzy import process
 st.set_page_config(
     page_title="Hello",
     page_icon="👋"
-    
 )
 
 # 검색 키워드 입력 받기
 
-if 'search_results' not in st.session_state:
-    st.session_state.search_results = []
-if 'selected_stock' not in st.session_state:
-    st.session_state.selected_stock = None
 if 'search' not in st.session_state :
     st.session_state['search'] = True
 if 'etf_code' not in st.session_state :
-    st.session_state['etf_code'] = ''
-if 'keyword' not in st.session_state :
-    st.session_state['keyword'] = 'TIGER'
+    st.session_state['etf_code'] = '102110'
+if search_results not in st.session_state : 
+    st.session_state['search_results'] = []
 
 st.title('ETF 관상가')
 
@@ -36,36 +31,21 @@ st.write('- timefolio Kstock 액티브(385720)')
 
 
 # 검색 키워드 입력 받기
-keyword = st.session_state['keyword']
-keyword = st.text_input("관심가는 종목명을 검색해주세요.")
 codeList = fdr.StockListing('ETF/KR')
-if keyword:
-    # 유사도 기반 검색 (FuzzyWuzzy 사용)
-    st.session_state.search_results = process.extract(keyword, codeList['Name'], limit=50)
-if st.session_state.search_results:
-    
-    # 검색 결과 중 선택
-    selected_stock = st.selectbox("Select a stock from the results:", [name for name, tmp, score in st.session_state.search_results])
-    
-    if selected_stock:
-        # 선택된 주식의 코드를 찾기
-        st.session_state.selected_stock = selected_stock
-        st.session_state['eft_code'] = codeList[codeList['Name'] == st.session_state.selected_stock]['Symbol'].values[0]
-        
-        st.write(st.session_state['etf_code'])
+st.session_state.search_results = process.extract(keyword, codeList['Name'], limit=50)
 
-st.write(f'선택한 코드')
-st.write(st.session_state['etf_code'])
-st.write(f'{st.session_state["keyword"]}')
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
           '385720': 'timefolio Kstock 액티브'}
 
 conn = st.connection('mysql', type='sql')
 
-st.session_state['search'] = st.button(label = '검색')
+st.session_state['etf_code'] = st.selectbox("종목명을 검색해주세요", [name for name, tmp, score in st.session_state.search_results])
+st.session_state['eft_code'] = codeList[codeList['Name'] == st.session_state.selected_stock]['Symbol'].values[0]
 
+
+st.session_state['search'] = st.button(label = '검색')
 etf_code = st.session_state['etf_code']
-search = st.session_state['search']
+search = ~st.session_state['search']
 
 
 if search :

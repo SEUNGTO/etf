@@ -34,6 +34,7 @@ st.write('- timefolio Kstock 액티브(385720)')
 
 # 검색 키워드 입력 받기
 codeList = fdr.StockListing('ETF/KR')
+keyword = st.session_state['keyword'] = 'tiger'
 # st.dataframe(codeList)
 # st.write(codeList['Name'].tolist())
 # st.session_state.search_result = codeList['Name'].tolist()

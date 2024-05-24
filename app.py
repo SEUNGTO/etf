@@ -56,7 +56,10 @@ st.session_state['eft_code'] = codeList[codeList['Name'] == st.session_state.etf
 
 st.session_state['search'] = st.button(label = '검색')
 # etf_code = st.session_state['etf_code']
-search = ~st.session_state['search']
+
+# 바로 실행하고 싶다면, st.session_state['search']를 부정해서 넣을 것
+search = st.session_state['search']
+etf_code = st.session_state['etf_code']
 
 st.write(st.session_state['etf_code'])
 st.write(st.session_state['search'])
@@ -64,7 +67,7 @@ st.write(st.session_state['search'])
 
 if search :
     # 전체 내역 조회
-    etf_code = st.session_state['etf_code']
+    
     df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)
     price = fdr.DataReader(etf_code, start='2024-04-20', end='2024-05-21').reset_index()
     research = conn.query('SELECT * FROM research', ttl=600)

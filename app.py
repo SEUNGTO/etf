@@ -49,6 +49,7 @@ with col1 :
     if etf_name :
         etf_code_update(etf_name)
 with col2 : 
+    st.write(" ") # blank
     st.session_state['search'] = st.button(label = '검색')
 
 search = ~st.session_state['search']

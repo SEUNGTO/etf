@@ -21,7 +21,7 @@ if 'selected_stock' not in st.session_state:
 if 'search' not in st.session_state :
     st.session_state['search'] = True
 if 'etf_code' not in st.session_state :
-    st.session_state['etf_code'] = '102110'
+    st.session_state['etf_code'] = ''
 
 st.title('ETF 관상가')
 
@@ -34,11 +34,11 @@ st.write('- timefolio Kstock 액티브(385720)')
 
 
 # 검색 키워드 입력 받기
-keyword = st.text_input("관심가는 종목명을 검색해주세요")
+keyword = st.text_input("관심가는 종목명을 검색해주세요.")
 codeList = fdr.StockListing('ETF/KR')
 if keyword:
     # 유사도 기반 검색 (FuzzyWuzzy 사용)
-    st.session_state.search_results = process.extract(keyword, codeList['Name'], limit=20)
+    st.session_state.search_results = process.extract(keyword, codeList['Name'], limit=50)
 if st.session_state.search_results:
     
     # 검색 결과 중 선택
@@ -58,7 +58,6 @@ stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바
 
 conn = st.connection('mysql', type='sql')
 
-# st.session_state['etf_code'] = st.text_input('ETF코드를 입력해주세요.', value = '102110')
 st.session_state['search'] = st.button(label = '검색')
 
 etf_code = st.session_state['etf_code']

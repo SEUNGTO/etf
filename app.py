@@ -49,7 +49,7 @@ if st.session_state.search_results:
         st.session_state.selected_stock = selected_stock
         selected_code = codeList[codeList['Name'] == st.session_state.selected_stock]['Symbol'].values[0]
         st.session_state['eft_code'] = selected_code
-        st.write(st.session_state['etf_code']
+        st.write(st.session_state['etf_code'])
 
 
 

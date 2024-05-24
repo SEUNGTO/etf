@@ -18,9 +18,12 @@ if 'search' not in st.session_state :
 if 'etf_code' not in st.session_state :
     st.session_state['etf_code'] = '102110'
 if 'search_results' not in st.session_state : 
-    st.session_state['search_results'] = ['TIGER 200']
-if 'keyword' not in st.session_state :
-    st.session_state['keyword'] = 'tiger'
+    st.session_state['search_results'] = []
+if 'etf_name' not in st.session_state :
+    st.session_state['etf_name'] = 'TIGER 200'
+
+# if 'keyword' not in st.session_state :
+#     st.session_state['keyword'] = 'tiger'
 
 st.title('ETF 관상가')
 
@@ -51,13 +54,13 @@ stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바
 
 conn = st.connection('mysql', type='sql')
 
-st.session_state['etf_code'] = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist())
-st.session_state['eft_code'] = codeList[codeList['Name'] == st.session_state.etf_code]['Symbol'].values[0]
+st.session_state['etf_name'] = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist())
+st.session_state['eft_code'] = codeList[codeList['Name'] == st.session_state.etf_name]['Symbol'].values[0]
 
 st.session_state['search'] = st.button(label = '검색')
 # etf_code = st.session_state['etf_code']
 
-# 바로 실행하고 싶다면, st.session_state['search']를 부정해서 넣을 것
+# 바로 실행하고 싶다면, st.session_state['search']를 부정해서 넣을 것 (~st.session_state['search'])
 search = st.session_state['search']
 etf_code = st.session_state['etf_code']
 

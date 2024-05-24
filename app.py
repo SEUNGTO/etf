@@ -58,6 +58,7 @@ try :
         
         df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)
         price = fdr.DataReader(etf_code, start='2024-04-20', end='2024-05-21').reset_index()
+        st.dataframe(price)
         research = conn.query('SELECT * FROM research', ttl=600)
         research.columns = ['종목명', '종목코드', '리포트 제목', 'nid', '목표가', '의견', '게시일자', '증권사', '링크']
         research['목표가'] = [re.sub('\D', '', t) for t in research['목표가']]

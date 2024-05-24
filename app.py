@@ -61,7 +61,7 @@ conn = st.connection('mysql', type='sql')
 st.session_state['search'] = st.button(label = '검색')
 
 etf_code = st.session_state['etf_code']
-search = ~st.session_state['search']
+search = st.session_state['search']
 
 
 if search :

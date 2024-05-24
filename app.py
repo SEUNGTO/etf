@@ -22,7 +22,8 @@ if 'search' not in st.session_state :
     st.session_state['search'] = True
 if 'etf_code' not in st.session_state :
     st.session_state['etf_code'] = ''
-
+if 'keyword' not in st.session_state :
+    st.session_state['keyword'] = 'TIGER'
 
 st.title('ETF 관상가')
 
@@ -35,6 +36,7 @@ st.write('- timefolio Kstock 액티브(385720)')
 
 
 # 검색 키워드 입력 받기
+keyword = st.session_state['keyword']
 keyword = st.text_input("관심가는 종목명을 검색해주세요.")
 codeList = fdr.StockListing('ETF/KR')
 if keyword:

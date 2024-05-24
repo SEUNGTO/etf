@@ -46,7 +46,6 @@ with col1 :
 with col2 : 
     st.write(" ") # blank
     st.write(" ") # blank
-    st.write(" ") # blank
     st.session_state['search'] = st.button(label = '검색')
 
 

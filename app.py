@@ -5,7 +5,7 @@ import plotly.graph_objs as go
 import pandas as pd
 import re
 from fuzzywuzzy import process
-from streamlit_searchbar import streamlit_searchbar
+from streamlit_searchbar import st_searchbox
 
 st.set_page_config(
     page_title="ETFace",
@@ -40,9 +40,8 @@ codeList = fdr.StockListing('ETF/KR')
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
           '385720': 'timefolio Kstock 액티브'}
 
-def search_codeList(searchterm: str) -> List[any] :
-    return searchterm if searchterm in codeList['Name'].tolist() else []
-value = streamlit_searchbar(search_codeList, key ='codeList')
+
+value = st_searchbox(codeList['Name'].tolist(), key ='codeList')
 
 
 col1, col2 = st.columns(2)

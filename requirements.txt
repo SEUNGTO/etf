@@ -5,4 +5,4 @@ finance-datareader
 bs4
 plotly
 fuzzywuzzy
-streamlit-searchbar
+streamlit-searchbox

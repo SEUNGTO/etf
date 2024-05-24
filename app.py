@@ -14,8 +14,7 @@ st.set_page_config(
 def etf_code_update(etf_name) :
     st.session_state['etf_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
 
-# 검색 키워드 입력 받기
-
+# session 정의
 if 'search' not in st.session_state :
     st.session_state['search'] = True
 if 'etf_code' not in st.session_state :
@@ -25,23 +24,17 @@ if 'search_results' not in st.session_state :
 if 'etf_name' not in st.session_state :
     st.session_state['etf_name'] = 'TIGER 200'
 
-# if 'keyword' not in st.session_state :
-#     st.session_state['keyword'] = 'tiger'
 
 st.title('ETF 관상가')
 
-st.write('검색가능한 ETF')
-st.write('- TIGER 200(102110)')
-st.write('- KODEX 200(069500)')
-st.write('- timefolio K바이오액티브(463050)')
-st.write('- Koact 테크핵심소재공급망액티브(482030)')
-st.write('- timefolio Kstock 액티브(385720)')
+with st.expander("검색가능한 ETF"):
+    st.dataframe({'종목명' : ['TIGER 200', 'KODEX 200', ';timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브']
+                 ,'종목코드' : ['102110', '069500', '463050', '482030', '385720']})
 
 
 codeList = fdr.StockListing('ETF/KR')
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
           '385720': 'timefolio Kstock 액티브'}
-
 
 col1, col2 = st.columns(2)
 with col1 :

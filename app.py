@@ -149,4 +149,4 @@ try :
         st.write(f'### 4. 최근 {stocks[etf_code]}에서 가장 비중이 줄어든 종목들이에요.')
         st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending=True).head(10), use_container_width=True)
 except :
-    st.failure('종목명을 입력해주세요.')
+    st.error('종목명을 입력해주세요.')

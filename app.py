@@ -58,6 +58,9 @@ st.session_state['search'] = st.button(label = '검색')
 # etf_code = st.session_state['etf_code']
 search = ~st.session_state['search']
 
+st.write(st.session_state['etf_code'])
+st.write(st.session_state['search'])
+         
 
 if search :
     # 전체 내역 조회

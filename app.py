@@ -23,6 +23,7 @@ if 'search' not in st.session_state :
 if 'etf_code' not in st.session_state :
     st.session_state['etf_code'] = ''
 
+
 st.title('ETF 관상가')
 
 st.write('검색가능한 ETF')
@@ -47,8 +48,8 @@ if st.session_state.search_results:
     if selected_stock:
         # 선택된 주식의 코드를 찾기
         st.session_state.selected_stock = selected_stock
-        selected_code = codeList[codeList['Name'] == st.session_state.selected_stock]['Symbol'].values[0]
-        st.session_state['eft_code'] = selected_code
+        st.session_state['eft_code'] = codeList[codeList['Name'] == st.session_state.selected_stock]['Symbol'].values[0]
+        
         st.write(st.session_state['etf_code'])
 
 st.write(f'선택한 코드')

@@ -142,7 +142,7 @@ try :
         with col3 :
             high = price['High'].max()
             low = price['low'].min()
-            delta = close - low
+            delta = high - low
             st.metric(label = '최고가', value = high, delta = f'최저점 대비 {delta}')
             
         

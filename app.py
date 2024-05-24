@@ -58,8 +58,6 @@ if search :
     
     df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)
     price = fdr.DataReader(etf_code, start='2024-04-20', end='2024-05-21').reset_index()
-    price['Date'] = price['Date'].apply(lambda x: x.strftime('%Y-%m-%d'))
-    st.dataframe(price)
     research = conn.query('SELECT * FROM research', ttl=600)
     research.columns = ['종목명', '종목코드', '리포트 제목', 'nid', '목표가', '의견', '게시일자', '증권사', '링크']
     research['목표가'] = [re.sub('\D', '', t) for t in research['목표가']]
@@ -117,6 +115,7 @@ if search :
         xaxis_title='날짜',
         yaxis_title='가격',
         margin={'t': 10, 'b': 10},
+        xaxis=dict(type='category'),
         xaxis_rangeslider_visible=False
     )
 

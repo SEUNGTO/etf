@@ -37,16 +37,16 @@ codeList = fdr.StockListing('ETF/KR')
 keyword = 'tiger'
 # st.dataframe(codeList)
 # st.write(codeList['Name'].tolist())
-# st.session_state.search_result = codeList['Name'].tolist()
-st.session_state.search_results = process.extract(keyword, codeList['Name'], limit=50)
-st.session_state.search_results
+st.session_state.search_result = codeList['Name'].tolist()
+# st.session_state.search_results = process.extract(keyword, codeList['Name'], limit=50)
+# st.session_state.search_results
 
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
           '385720': 'timefolio Kstock 액티브'}
 
 conn = st.connection('mysql', type='sql')
 
-st.session_state['etf_code'] = st.selectbox("종목명을 검색해주세요", [name for name, tmp, score in st.session_state.search_results])
+st.session_state['etf_code'] = st.selectbox("종목명을 검색해주세요", st.session_state.search_results)
 st.session_state['eft_code'] = codeList[codeList['Name'] == st.session_state.selected_stock]['Symbol'].values[0]
 
 

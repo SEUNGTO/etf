@@ -24,17 +24,20 @@ if 'search_results' not in st.session_state :
 if 'etf_name' not in st.session_state :
     st.session_state['etf_name'] = 'TIGER 200'
 
+col1, col2, col3, col4 = st.columns(4)
+with col4 : 
+    with st.expander("### 검색가능한 ETF"):
+        st.dataframe({'종목명' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브']
+                 ,'종목코드' : ['102110', '069500', '463050', '482030', '385720']})
+
 
 st.title('ETF 관상가')
-
-
-
 
 codeList = fdr.StockListing('ETF/KR')
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
           '385720': 'timefolio Kstock 액티브'}
 
-col1, col2, col3 = st.columns(3)
+col1, col2 = st.columns(2)
 with col1 :
     etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'etf_name')
     if etf_name :
@@ -43,10 +46,6 @@ with col2 :
     st.write(" ") # blank
     st.session_state['search'] = st.button(label = '검색')
 
-with col3 : 
-    with st.expander("### 검색가능한 ETF"):
-        st.dataframe({'종목명' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브']
-                 ,'종목코드' : ['102110', '069500', '463050', '482030', '385720']})
 
 search = ~st.session_state['search']
 etf_code = st.session_state['etf_code']

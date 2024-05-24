@@ -139,7 +139,7 @@ if search :
         close = price['Close'].tail(1).values[0]
         high = price['High'].max()
         delta = close - high
-        st.metric(label = '종가(고점 대비)', value = f{close:,},  delta = f'{delta}')
+        st.metric(label = '종가(고점 대비)', value = f'{close:,}',  delta = f'{delta}')
     with col3 :
         high = price['High'].max()
         low = price['Low'].min()

@@ -7,8 +7,8 @@ import re
 from fuzzywuzzy import process
 
 st.set_page_config(
-    page_title="Hello",
-    page_icon="👋"
+    page_title="ETFace",
+    page_icon="😎"
 )
 
 # 검색 키워드 입력 받기

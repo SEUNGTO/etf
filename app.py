@@ -131,8 +131,21 @@ try :
         real_PQ = tmp3['평가금액'].dropna().sum()
         idx = real_PQ/target_PQ
 
-        st.metric(label = '최고가', value = price['High'].max())
-        st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
+        col1, col2, col3, col4 = st.columns(4)
+        with col1 : 
+            st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
+        with col2 :
+            close = price['Close'].tail(1).values[0]
+            high = price['High'].max()
+            delta = high - close
+            st.metric(label = '종가', value = close,  delta = f'최고가 대비 {high - close}')
+        with col3 :
+            high = price['High'].max()
+            low = price['low'].min()
+            delta = close - low
+            st.metric(label = '최고가', value = high, delta = f'최저점 대비 {delta}')
+            
+        
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
     
         # 최근 내역 비교

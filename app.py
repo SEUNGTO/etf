@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 def etf_code_update(etf_name) :
-    st.session_state['etf_name'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
+    st.session_state['etf_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
 
 # 검색 키워드 입력 받기
 
@@ -46,14 +46,13 @@ stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바
 etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'etf_name')
 st.write(etf_name)
 st.write(codeList[codeList['Name'] == etf_name]['Symbol'].values[0])
+
 if etf_name :
     etf_code_update(etf_name)
     # st.write(f"실행됨 :{codeList[codeList['Name'] == etf_name]['Symbol'].values[0]}")
     # st.session_state['eft_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
-# st.session_state['etf_name'] = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist())
 
 st.session_state['search'] = st.button(label = '검색')
-# etf_code = st.session_state['etf_code']
 
 # 바로 실행하고 싶다면, st.session_state['search']를 부정해서 넣을 것 (~st.session_state['search'])
 search = st.session_state['search']

@@ -11,6 +11,9 @@ st.set_page_config(
     page_icon="😎"
 )
 
+def etf_code_update(etf_name) :
+    st.session_state['etf_name'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
+
 # 검색 키워드 입력 받기
 
 if 'search' not in st.session_state :
@@ -21,9 +24,6 @@ if 'search_results' not in st.session_state :
     st.session_state['search_results'] = []
 if 'etf_name' not in st.session_state :
     st.session_state['etf_name'] = 'TIGER 200'
-
-def etf_code_update(etf_name) :
-    st.session_state['etf_name'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
 
 # if 'keyword' not in st.session_state :
 #     st.session_state['keyword'] = 'tiger'
@@ -44,7 +44,7 @@ stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바
 
 
 etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'etf_name')
-
+st.write(etf_name)
 st.write(codeList[codeList['Name'] == etf_name]['Symbol'].values[0])
 if etf_name :
     etf_code_update(etf_name)

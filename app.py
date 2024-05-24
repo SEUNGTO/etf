@@ -5,7 +5,7 @@ import plotly.graph_objs as go
 import pandas as pd
 import re
 from fuzzywuzzy import process
-from streamlit_searchbar import st_searchbox
+from streamlit_searchbox  import st_searchbox
 
 st.set_page_config(
     page_title="ETFace",

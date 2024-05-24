@@ -1,3 +1,7 @@
 streamlit
 mysqlclient
 SQLAlchemy
+finance-datareader
+bs4
+plotly
+fuzzywuzzy

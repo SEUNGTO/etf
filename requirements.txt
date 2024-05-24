@@ -4,3 +4,4 @@ SQLAlchemy
 finance-datareader
 bs4
 plotly
+fuzzywuzzy

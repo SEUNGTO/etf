@@ -137,11 +137,11 @@ try :
         with col2 :
             close = price['Close'].tail(1).values[0]
             high = price['High'].max()
-            delta = high - close
-            st.metric(label = '종가', value = close,  delta = f'최고가 대비 {high - close}')
+            delta = close - high
+            st.metric(label = '종가', value = close,  delta = f'최고점 대비 {high - close}')
         with col3 :
             high = price['High'].max()
-            low = price['low'].min()
+            low = price['Low'].min()
             delta = high - low
             st.metric(label = '최고가', value = high, delta = f'최저점 대비 {delta}')
             

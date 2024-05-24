@@ -41,7 +41,7 @@ stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바
           '385720': 'timefolio Kstock 액티브'}
 
 def search_codeList(searchterm: str) -> List[any] :
-    return searchterm if searchterm in codeList['Name'].tolist()
+    return searchterm if searchterm in codeList['Name'].tolist() else []
 value = streamlit_searchbar(search_codeList, key ='codeList')
 
 

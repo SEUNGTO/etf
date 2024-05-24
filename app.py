@@ -42,14 +42,15 @@ st.write('- timefolio Kstock 액티브(385720)')
 
 codeList = fdr.StockListing('ETF/KR')
 st.session_state.search_result = codeList['Name'].tolist()
-for i in st.session_state.search_result[:5] :
-    st.write(i)
+# for i in st.session_state.search_result[:5] :
+#     st.write(i)
+
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
           '385720': 'timefolio Kstock 액티브'}
 
 conn = st.connection('mysql', type='sql')
 
-st.session_state['etf_code'] = st.selectbox("종목명을 검색해주세요", st.session_state.search_results)
+st.session_state['etf_code'] = st.selectbox("종목명을 검색해주세요", [st.session_state.search_results])
 st.session_state['eft_code'] = codeList[codeList['Name'] == st.session_state.selected_stock]['Symbol'].values[0]
 
 st.session_state['search'] = st.button(label = '검색')

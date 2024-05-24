@@ -130,7 +130,8 @@ try :
         target_PQ = tmp3['시총'].dropna().sum()
         real_PQ = tmp3['평가금액'].dropna().sum()
         idx = real_PQ/target_PQ
-    
+
+        st.metric(label = '최고가', value = price['High'].max())
         st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
     

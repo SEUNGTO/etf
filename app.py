@@ -35,10 +35,10 @@ st.write('- timefolio Kstock 액티브(385720)')
 
 # 검색 키워드 입력 받기
 keyword = st.text_input("관심가는 종목명을 검색해주세요")
-
+codeList = fdr.StockListing('ETF/KR')
 if keyword:
     # 유사도 기반 검색 (FuzzyWuzzy 사용)
-    st.session_state.search_results = process.extract(keyword, data['Name'], limit=20)
+    st.session_state.search_results = process.extract(keyword, codeList['Name'], limit=20)
 if st.session_state.search_results:
     
     # 검색 결과 중 선택
@@ -47,7 +47,7 @@ if st.session_state.search_results:
     if selected_stock:
         # 선택된 주식의 코드를 찾기
         st.session_state.selected_stock = selected_stock
-        selected_code = data[data['Name'] == st.session_state.selected_stock]['Symbol'].values[0]
+        selected_code = codeList[codeList['Name'] == st.session_state.selected_stock]['Symbol'].values[0]
         st.session_state['eft_code'] = selected_code
 
 

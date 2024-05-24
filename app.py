@@ -105,7 +105,7 @@ if search :
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 
-    fig = go.Figure(data=[go.Candlestick(x=price['Date'].apply(lambda x : x.strftime('%mm-%d')),
+    fig = go.Figure(data=[go.Candlestick(x=price['Date'].apply(lambda x : x.strftime('%m-%d')),
                                          open=price['Open'],
                                          high=price['High'],
                                          low=price['Low'],
@@ -115,7 +115,7 @@ if search :
         xaxis_title='날짜',
         yaxis_title='가격',
         margin={'t': 10, 'b': 10},
-        xaxis=dict(type='category'),
+        xaxis=dict(type='category', tickangle=45),
         xaxis_rangeslider_visible=False
     )
 

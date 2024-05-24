@@ -51,7 +51,7 @@ if st.session_state.search_results:
         st.session_state['eft_code'] = selected_code
         st.write(st.session_state['etf_code'])
 
-st.write(st.session_state['etf_code'])
+st.write(f'선택한 코드 : {st.session_state['etf_code'}')
 
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
           '385720': 'timefolio Kstock 액티브'}

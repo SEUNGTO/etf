@@ -178,10 +178,16 @@ if search and type == 'ETF':
     st.write(f'### 4. 최근 {stocks[etf_code]}에서 가장 비중이 줄어든 종목들이에요.')
     st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending=True).head(10), use_container_width=True)
 
+
 elif search and type == 'Stock' :
+
     st.write('개별주식에 대한 요약을 보여주는 section')
-    df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)
+    df = conn.query(f'SELECT * from etf_20240521 where stock_code = {etf_code};', ttl=600)
+    df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
+    df.columns = ['종목코드', '종목명', '보유량', '평가금액']
+
     price = fdr.DataReader(etf_code, start='2024-04-20', end='2024-05-21').reset_index()
+
     research = conn.query('SELECT * FROM research', ttl=600)
     research.columns = ['종목명', '종목코드', '리포트 제목', 'nid', '목표가', '의견', '게시일자', '증권사', '링크']
     research['목표가'] = [re.sub('\D', '', t) for t in research['목표가']]
@@ -192,7 +198,7 @@ elif search and type == 'Stock' :
 
 
 
-    st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
+    st.write(f'### 1. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 
     fig = go.Figure(data=[go.Candlestick(x=price['Date'].apply(lambda x : x.strftime('%m-%d')),
                                          open=price['Open'],

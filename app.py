@@ -196,6 +196,9 @@ elif search and type == 'Stock' :
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 
+    st.write(f'### 1. {stocks[etf_code]} 관련 리포트에요.')
+    st.dataframe(research.set_index('종목명').drop('종목코드', axis = 1))
+
 
 
     st.write(f'### 1. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')

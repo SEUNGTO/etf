@@ -255,13 +255,15 @@ elif search and type == 'Stock' :
     df2 = conn.query(f'SELECT * from etf_20240518 where stock_code = {etf_code};', ttl=600)
     df2 = df2.loc[:, ['etf_code', 'stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df2.columns = ['ETF코드', '종목코드', '종목명', '보유량', '평가금액']
-    df2['비중'] = df2['평가금액'].astype(int) / df2['평가금액'].astype(int).sum() * 100
+    df2['비중'] = round(df2['평가금액'].astype(int) / df2['평가금액'].astype(int).sum() * 100, 2)
 
-    st.dataframe(df)
-    st.dataframe(df2)
+    st.dataframe(df).set_index('ETF코드')
+    st.dataframe(df2).set_index('ETF코드')
 
     tmp = df[['ETF코드', '종목명', '비중']].set_index('ETF코드').join(df2[['ETF코드', '비중']].set_index('ETF코드'),
                                                            how='inner', lsuffix='T', rsuffix='C')
+    st.dataframe(tmp)
+
     tmp['차이'] = tmp['비중T'] - tmp['비중C']
     tmp.columns = ['기준일 비중', '비교일 비중', '차이']
     tmp.reset_index(inplace=True)

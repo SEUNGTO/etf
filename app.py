@@ -274,7 +274,8 @@ elif search and type == 'Stock' :
         telegram_msgs.columns = ['메세지', '링크']
 
         st.write(f'**{name}**([링크 \U0001F517]({tele_url}))')
-        st.dataframe(telegram_msgs.set_index('메세지'), column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
+        st.dataframe(telegram_msgs.set_index('메세지'), column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517')},
+                     use_container_width = True)
 
     st.write(f'## 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 

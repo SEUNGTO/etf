@@ -226,7 +226,7 @@ elif search and type == 'Stock' :
             'X-Naver-Client-Id' : st.secrets["clientid"],
             'X-Naver-Client-Secret' : st.secrets["clientsecret"]}
 
-        response = requests.get(url, headers = headers)
+        response = requests.get(url, params = params, headers = headers)
         newsData = pd.DataFrame(response.json()['items'])[['title', 'pubDate', 'link']]
 
         newsData['title'] = newsData['title'].apply(lambda x : x.replace('<b>', '').replace('</b>', ''))

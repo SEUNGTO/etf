@@ -197,7 +197,8 @@ elif search and type == 'Stock' :
     target.columns = ['목표가(가중평균)']
 
     st.write(f'### 1. {stocks[etf_code]} 관련 리포트에요.')
-    st.dataframe(research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False))
+    tmp = research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False)
+    st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')})
 
 
 

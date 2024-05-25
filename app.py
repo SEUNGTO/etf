@@ -233,7 +233,9 @@ elif search and type == 'Stock' :
         newsData['pubDate'] = pd.to_datetime(newsData['pubDate'])
         newsData['pubDate'] = newsData['pubDate'].apply(lambda x : x.strftime('%Y-%m-%d'))
 
-        st.dataframe(newsData)
+        newsData.columns = ['기사 제목', '날짜', '링크']
+
+        st.dataframe(newsData, column_config = {"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
 
     with tab3 :
         st.write('SNS에 대해 넣는 영역')

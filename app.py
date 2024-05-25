@@ -242,7 +242,6 @@ elif search and type == 'Stock' :
         st.dataframe(newsData.set_index('기사 제목'), column_config = {"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
 
     with tab3 :
-        st.write('SNS에 대해 넣는 영역')
 
         telegram_msgs = {
             'msg': []
@@ -274,8 +273,8 @@ elif search and type == 'Stock' :
         telegram_msgs = pd.DataFrame(telegram_msgs)
         telegram_msgs.columns = ['메세지', '링크']
 
-        st.write(f'{name}[\U0001F517]({tele_url})')
-        st.dataframe(telegram_msgs, column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
+        st.write(f'**{name}**([링크 \U0001F517]({tele_url}))')
+        st.dataframe(telegram_msgs.set_index('메세지'), column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
 
     st.write(f'## 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 

@@ -225,7 +225,7 @@ elif search and type == 'Stock' :
                      use_container_width=True)
     with tab2 :
 
-        st.write(f'네이버 뉴스에서 방금 {stocks[etf_code]}를 검색한 결과에요.')
+        st.write(f'**네이버 뉴스**에서 방금 {stocks[etf_code]}를 검색한 결과에요.')
 
         url = f'https://openapi.naver.com/v1/search/news.json'
         params = {'query' : stocks[etf_code],

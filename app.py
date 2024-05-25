@@ -5,6 +5,8 @@ import plotly.graph_objs as go
 import pandas as pd
 import requests
 import re
+from bs4 import BeautifulSoup
+
 
 
 st.set_page_config(
@@ -219,7 +221,7 @@ elif search and type == 'Stock' :
                      use_container_width=True)
     with tab2 :
 
-        st.write(f'네이버 뉴스에서 {stocks[etf_code]}를 방금 검색한 결과에요.')
+        st.write(f'네이버 뉴스에서 방금 {stocks[etf_code]}를 검색한 결과에요.')
 
         url = f'https://openapi.naver.com/v1/search/news.json'
         params = {'query' : stocks[etf_code],
@@ -242,6 +244,38 @@ elif search and type == 'Stock' :
     with tab3 :
         st.write('SNS에 대해 넣는 영역')
 
+        telegram_msgs = {
+            'msg': []
+            , 'url': []
+        }
+
+        name = '주식 급등일보🚀급등테마·대장주 탐색기 (텔레그램)'
+        tele_url = 'https://t.me/s/FastStockNews'
+
+        query = f'{tele_url}?q={stocks[etf_code]}'
+        response = requests.get(query)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        for msg in soup.find_all('div', class_='tgme_widget_message_bubble'):
+
+            msg.find('a').decompose()
+            try:
+                msg = msg.find('div', class_='tgme_widget_message_text js-message_text').text
+                telegram_msgs['msg'].append(msg)
+
+            except:
+                msg = None
+                telegram_msgs['msg'].append(msg)
+
+        for msg in soup.find_all('a', class_='tgme_widget_message_date'):
+            url = soup.find('a', class_='tgme_widget_message_date').attrs['href']
+            telegram_msgs['url'].append(url)
+
+        telegram_msgs = pd.DataFrame(telegram_msgs)
+        telegram_msgs.columns = ['메세지', '링크']
+
+        st.write(f'{name}[\U0001F517]({tele_url})')
+        st.dataframe(telegram_msgs, column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
 
     st.write(f'## 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 
@@ -365,3 +399,42 @@ elif search and type == 'Stock' :
 
         drop.loc['평균', :] = drop.mean()
         st.dataframe(drop, use_container_width=True)
+
+
+
+
+
+etf_code = '005930'
+
+telegram_msgs = {
+   'msg': []
+    , 'url': []
+}
+
+name = '주식 급등일보🚀급등테마·대장주 탐색기 (텔레그램)'
+tele_url = 'https://t.me/s/FastStockNews'
+
+query = f'{tele_url}?q={stocks[etf_code]}'
+response = requests.get(query)
+soup = BeautifulSoup(response.content, 'html.parser')
+
+for msg in soup.find_all('div', class_='tgme_widget_message_bubble'):
+
+    msg.find('a').decompose()
+    try:
+        msg = msg.find('div', class_='tgme_widget_message_text js-message_text').text
+        telegram_msgs['msg'].append(msg)
+
+    except:
+        msg = None
+        telegram_msgs['msg'].append(msg)
+
+for msg in soup.find_all('a', class_='tgme_widget_message_date') :
+    url = soup.find('a', class_='tgme_widget_message_date').attrs['href']
+    telegram_msgs['url'].append(url)
+
+telegram_msgs = pd.DataFrame(telegram_msgs)
+telegram_msgs.columns = ['메세지', '링크']
+
+st.write(f'{name}[\U0001F517]({tele_url})')
+st.dataframe(telegram_msgs, column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517')})

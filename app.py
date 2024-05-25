@@ -315,7 +315,7 @@ elif search and type == 'Stock' :
         st.write(f'- 가장 크게 비중을 늘린 ETF는 {new.index[new["보유 비중"].argmax()]}의 {new["보유 비중"].max():,.2f}%이에요.')
         st.write(f'- 가장 큰 금액을 산 ETF는 {new.index[new["매수 금액"].argmax()]}의 {new["매수 금액"].max():,.0f}원이에요.')
 
-        new.loc['계', :] = new.mean()
+        new.loc['평균', :] = new.mean()
 
         st.dataframe(new, use_container_width=True)
 
@@ -333,4 +333,5 @@ elif search and type == 'Stock' :
         st.write(f'- 가장 크게 비중을 줄인 ETF는 {drop.index[drop["원래 비중"].argmax()]}의 {drop["원래 비중"].max():,.2f}%이에요.')
         st.write(f'- 가장 큰 금액을 판 ETF는 {drop.index[drop["매도 금액"].argmax()]}의 {drop["매도 금액"].max():,.0f}원이에요.')
 
+        drop.loc['평균', :] = drop.mean()
         st.dataframe(drop, use_container_width=True)

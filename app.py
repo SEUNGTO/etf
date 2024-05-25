@@ -3,8 +3,8 @@ import FinanceDataReader as fdr
 import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
+import requests
 import re
-from PyNaver import NaverCloudPlatform
 
 
 st.set_page_config(
@@ -220,12 +220,13 @@ elif search and type == 'Stock' :
     with tab2 :
         st.write('뉴스에 대해 넣는 영역')
 
-        api = NaverCloudPlatform(st.secrets["clientid"], st.secrets["clientsecret"])
+        url = f'https://openapi.naver.com/v1/search/news.json?query={stocks[etf_code]}'
+        headers = {
+            'X-Naver-Client-Id' : st.secrets["clientid"],
+            'X-Naver-Client-Secret' : st.secrets["clientsecret"]}
 
-        query = stocks[etf_code]
-        display = 10
-        sort = "sim"  # date
-        newsData = api.search_news(query, display = display, sort = sort)
+        response = requests.get(url, headers = headers)
+        newsData = pd.DataFrame(response.json()['items'])
         st.dataframe(newsData)
 
     with tab3 :

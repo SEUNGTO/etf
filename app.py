@@ -226,8 +226,9 @@ elif search and type == 'Stock' :
             'X-Naver-Client-Secret' : st.secrets["clientsecret"]}
 
         response = requests.get(url, headers = headers)
-        newsData = pd.DataFrame(response.json()['items'])[['title', 'link', 'pubDate']]
-        newsData['pubDate'] = pd.to_datetime(newsData['pubDate'])
+        newsData = pd.DataFrame(response.json()['items'])[['title', 'pubDate', 'link']]
+        newsData['pubDate'] = pd.to_datetime(newsData['pubDate'], '%Y-%m-%d')
+
         st.dataframe(newsData)
 
     with tab3 :

@@ -205,6 +205,8 @@ elif search and type == 'Stock' :
     tmp = research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False)
     st.write(f'- 총 {len(tmp["목표가"])}개의 리포트가 있어요.')
     st.write(f'- 증권사의 평균 목표가는 {tmp["목표가"].mean():,.0f}원이에요.')
+    st.write(f'\t- 가장 높은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].max()]["증권사"].values[0]}의 {tmp["목표가"].max()}원이에요.')
+    st.write(f'\t- 가장 낮은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].min()]["증권사"].values[0]}의 {tmp["목표가"].min()}원이에요.')
     st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
                  use_container_width=True)
 
@@ -299,3 +301,5 @@ elif search and type == 'Stock' :
         decrease = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10)
         st.write(f'총 **{len(decrease)}**개의 ETF에서 비중을 늘렸어요.')
         st.dataframe(decrease.head(10), use_container_width=True,)
+
+

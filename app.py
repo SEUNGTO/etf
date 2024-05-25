@@ -203,7 +203,7 @@ elif search and type == 'Stock' :
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 
-    st.write(f'## 1. {stocks[etf_code]}에 대해, 사람들은 이렇게 생각해요.')
+    st.write(f'## 1. {stocks[etf_code]}에 대해, 이런 이야기들이 있어요.')
 
     tab1, tab2, tab3 = st.tabs(['증권사 리포트', '뉴스', 'SNS'])
 
@@ -219,7 +219,9 @@ elif search and type == 'Stock' :
                      use_container_width=True)
     with tab2 :
 
-        url = f'https://openapi.naver.com/v1/search/news.json?query={stocks[etf_code]}'
+        url = f'https://openapi.naver.com/v1/search/news.json'
+        params = {'query' : stocks[etf_code],
+                  'display' : '50'}
         headers = {
             'X-Naver-Client-Id' : st.secrets["clientid"],
             'X-Naver-Client-Secret' : st.secrets["clientsecret"]}

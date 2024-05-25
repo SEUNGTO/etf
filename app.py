@@ -291,7 +291,6 @@ elif search and type == 'Stock' :
         st.write(f'총 **{len(increase)}**개의 ETF에서 비중을 늘렸어요.')
         st.dataframe(increase.head(10), use_container_width=True)
 
-
     with col2 :
 
         st.write(f'### 📉 최근 {stocks[etf_code]}의 비중을 줄였어요.')
@@ -300,9 +299,10 @@ elif search and type == 'Stock' :
         st.write(f'총 **{len(decrease)}**개의 ETF에서 비중을 늘렸어요.')
         st.dataframe(decrease.head(10), use_container_width=True,)
 
+
     col3, col4 = st.columns(2)
     with col3 :
-        st.write(f'### 📈 최근 {stocks[etf_code]}를 새로 포트폴리오에 넣었어요.')
+        st.write(f'### 🆕 최근 {stocks[etf_code]}를 새로 포트폴리오에 넣었어요.')
 
         new = pd.DataFrame({'ETF' : ['KODEX 200', 'TIGER 200', 'HANARO 200'],
                             '보유 비중' : [20.00, 30.00, 10.00],
@@ -322,7 +322,7 @@ elif search and type == 'Stock' :
 
     with col4 :
 
-        st.write(f'### 최근 {stocks[etf_code]}를 포트폴리오에서 제외했어요.')
+        st.write(f'### 🔚 최근 {stocks[etf_code]}를 포트폴리오에서 제외했어요.')
         drop = pd.DataFrame({'ETF' : ['timefolio', 'HANARO 200'],
                             '원래 비중' : [20.00, 30.00],
                             '매도 금액' : [10000, 20000]})

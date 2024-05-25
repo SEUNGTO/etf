@@ -164,7 +164,7 @@ if search and type == 'ETF':
     df2 = conn.query(f'SELECT * from etf_20240518 where etf_code = {etf_code};', ttl=600)
     df2 = df2.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df2.columns = ['종목코드', '종목명', '보유량', '평가금액']
-    df2['비중'] = df2['평가금액'].astype(int) / df2['평가금액'].astype(int).sum() * 100
+    df2['비중'] = round(df2['평가금액'].astype(int) / df2['평가금액'].astype(int).sum() * 100, 2)
     tmp = df[['종목코드', '종목명', '비중']].set_index('종목코드').join(df2[['종목코드', '비중']].set_index('종목코드'),
                                                            how='inner', lsuffix='T', rsuffix='C')
     tmp['차이'] = tmp['비중T'] - tmp['비중C']
@@ -269,7 +269,7 @@ elif search and type == 'Stock' :
     tmp = tmp.set_index('ETF')
 
     with st.expander('수정 예정 사항(24.5.25.)') :
-        st.write(f'(memo) {stocks[etf_code]}를 포함한 애들끼리만 모아서 비중을 계산해서 오류 있음(df1, df2 모두)')
+        st.write(f'{stocks[etf_code]}를 포함한 애들끼리만 모아서 비중을 계산해서 오류 있음(df1, df2 모두)')
         st.write(f'DB 내에 미리 비중을 계산해두어야 함')
         st.dataframe(tmp)
 

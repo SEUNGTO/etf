@@ -4,7 +4,6 @@ import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
 import re
-from fuzzywuzzy import process
 
 st.set_page_config(
     page_title="ETFace",
@@ -13,6 +12,7 @@ st.set_page_config(
 
 def etf_code_update(etf_name) :
     st.session_state['etf_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
+    st.session_state['type'] = codeList[codeList['Name'] == etf_name]['Type'].values[0]
 
 # session 정의
 if 'search' not in st.session_state :
@@ -23,9 +23,11 @@ if 'search_results' not in st.session_state :
     st.session_state['search_results'] = []
 if 'etf_name' not in st.session_state :
     st.session_state['etf_name'] = 'TIGER 200'
+if 'type' not in st.session_state :
+    st.session_state['type'] = 'ETF'
 
-col1, col2, col3 = st.columns(3)
-with col3 : 
+col1, col2 = st.columns(2)
+with col2 :
     with st.expander("검색가능한 ETF"):
         st.dataframe({'종목명' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브']
                  ,'종목코드' : ['102110', '069500', '463050', '482030', '385720']})
@@ -33,7 +35,12 @@ with col3 :
 
 st.title('ETF 관상가')
 
-codeList = fdr.StockListing('ETF/KR')
+# codeList = fdr.StockListing('ETF/KR')
+codeList = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브', '삼성전자', '삼성전기'],
+                         'Symbol' : ['102110', '069500', '463050', '482030', '385720', '005930', '009150'],
+                         'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF', 'Stock', 'Stock']})
+
+
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
           '385720': 'timefolio Kstock 액티브'}
 
@@ -50,10 +57,12 @@ with col2 :
 
 search = ~st.session_state['search']
 etf_code = st.session_state['etf_code']
-         
+type = st.session_state['type']
+
+
 conn = st.connection('mysql', type='sql')
 
-if search :
+if search and type == 'ETF':
     # 전체 내역 조회
     
     df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)
@@ -166,3 +175,6 @@ if search :
 
     st.write(f'### 4. 최근 {stocks[etf_code]}에서 가장 비중이 줄어든 종목들이에요.')
     st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending=True).head(10), use_container_width=True)
+
+elif search and type == 'Stock' :
+    st.wrtie('개별주식에 대한 요약을 보여주는 section')

@@ -312,5 +312,7 @@ elif search and type == 'Stock' :
                                  '기준일 비중' : [50.00, 20.00],
                                  '비교일 비중' : [30.00, 10.00],
                                  '차이' : [-20.00, -10.00]})
+        decrease = decrease.style.applymap(lambda x : 'background-color : blue' if x < 0 else '', subset=['차이'])
+        st.dataframe(decrease)
         st.write(f'총 **{len(decrease)}**개의 ETF에서 비중을 늘렸어요.')
-        st.dataframe(decrease.head(10), use_container_width=True)
+        st.dataframe(decrease.head(10), use_container_width=True,)

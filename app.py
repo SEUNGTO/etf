@@ -188,7 +188,7 @@ elif search and type == 'Stock' :
 
     price = fdr.DataReader(etf_code, start='2024-04-20', end='2024-05-21').reset_index()
 
-    research = conn.query('SELECT * FROM research', ttl=600)
+    research = conn.query(f'SELECT * FROM research where stock_code = {etf_code} ', ttl=600)
     research.columns = ['종목명', '종목코드', '리포트 제목', 'nid', '목표가', '의견', '게시일자', '증권사', '링크']
     research['목표가'] = [re.sub('\D', '', t) for t in research['목표가']]
     research = research[research['목표가'] != ""]
@@ -197,7 +197,7 @@ elif search and type == 'Stock' :
     target.columns = ['목표가(가중평균)']
 
     st.write(f'### 1. {stocks[etf_code]} 관련 리포트에요.')
-    st.dataframe(research.set_index('종목명').drop('종목코드', axis = 1))
+    st.dataframe(research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False))
 
 
 

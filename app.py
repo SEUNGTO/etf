@@ -35,7 +35,7 @@ codeList = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이�
 col1, col2 = st.columns(2)
 with col2 :
     with st.expander("검색가능한 ETF"):
-        st.dataframe(codeList.rename({{'Name' : '종목명', 'Symbol' : '종목코드', 'Type' : 'ETF/Stock'}}))
+        st.dataframe(codeList.rename({'Name' : '종목명', 'Symbol' : '종목코드', 'Type' : 'ETF/Stock'}))
 
 
 st.title('ETF 관상가')

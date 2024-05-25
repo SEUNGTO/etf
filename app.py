@@ -395,7 +395,7 @@ elif search and type == 'Stock' :
 
     with col4 :
 
-        st.write(f'### 🔚 포트폴리오에서 제외했어요.')
+        st.write(f'### ❎ 포트폴리오에서 제외했어요.')
         drop = pd.DataFrame({'ETF' : ['timefolio', 'HANARO 200'],
                             '원래 비중' : [20.00, 30.00],
                             '매도 금액' : [10000, 20000]})

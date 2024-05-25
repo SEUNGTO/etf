@@ -201,7 +201,7 @@ elif search and type == 'Stock' :
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 
-    st.write(f'### 1. {stocks[etf_code]} 관련 리포트에요.')
+    st.write(f'## 1. {stocks[etf_code]} 관련 리포트에요.')
     tmp = research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False)
 
     st.write(f' 총 **{len(tmp["목표가"])}**개의 리포트가 있어요.')
@@ -213,7 +213,7 @@ elif search and type == 'Stock' :
                  use_container_width=True)
 
 
-    st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
+    st.write(f'## 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 
     fig = go.Figure(data=[go.Candlestick(x=price['Date'].apply(lambda x : x.strftime('%m-%d')),
                                          open=price['Open'],
@@ -282,7 +282,7 @@ elif search and type == 'Stock' :
 
     # DB 변경 이후에 수정해야 함
 
-    st.write(f'### 3. {stocks[etf_code]}에 관심을 갖고 있는 ETF들이에요.')
+    st.write(f'## 3. {stocks[etf_code]}에 관심을 갖고 있는 ETF들이에요.')
 
     col1, col2 = st.columns(2)
     with col1 :
@@ -322,7 +322,7 @@ elif search and type == 'Stock' :
 
     with col4 :
 
-        st.write(f'### 📉 최근 {stocks[etf_code]}를 포트폴리오에서 제외했어요.')
+        st.write(f'### 최근 {stocks[etf_code]}를 포트폴리오에서 제외했어요.')
         drop = pd.DataFrame({'ETF' : ['timefolio', 'HANARO 200'],
                             '원래 비중' : [20.00, 30.00],
                             '매도 금액' : [10000, 20000]})

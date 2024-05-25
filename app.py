@@ -250,8 +250,9 @@ elif search and type == 'Stock' :
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
-    st.write(f'### 3. {stocks[etf_code]}의 비중을 늘린 ETF들이에요.')
 
+
+    ########### 비중 늘리고 줄인 ETF 계산 ##################
     df2 = conn.query(f'SELECT * from etf_20240518 where stock_code = {etf_code};', ttl=600)
     df2 = df2.loc[:, ['etf_code', 'stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df2.columns = ['ETF코드', '종목코드', '종목명', '보유량', '평가금액']
@@ -269,15 +270,12 @@ elif search and type == 'Stock' :
 
     st.write(f'(memo) {stocks[etf_code]}를 포함한 애들끼리만 모아서 비중을 계산해서 오류 있음(df1, df2 모두)')
     st.write(f'DB 내에 미리 비중을 계산해두어야 함')
-
     st.dataframe(tmp)
 
+    # DB 변경 이후에 수정해야 함
 
-    # DB 변경 이후에 있을 예정,
-
-    st.write(f'### 3. 최근 {stocks[etf_code]}에서 가장 비중이 늘어난 종목들이에요.')
-
+    st.write(f'### 3. {stocks[etf_code]}의 비중을 늘린 ETF들이에요.')
     st.dataframe(tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10), use_container_width=True)
 
-    st.write(f'### 3. {stocks[etf_code]}의 비중을 줄인 ETF들이에요.')
+    st.write(f'### 4. {stocks[etf_code]}의 비중을 줄인 ETF들이에요.')
     st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending=True).head(10), use_container_width=True)

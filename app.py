@@ -304,14 +304,23 @@ elif search and type == 'Stock' :
     with col3 :
         st.write(f'### 📈 최근 {stocks[etf_code]}를 새로 포트폴리오에 넣었어요.')
         new = pd.DataFrame({'ETF' : ['TIGER 200', 'KODEX 200'],
-                            '비중' : [20.00, 30.00]})
+                            '보유 비중' : [20.00, 30.00]})
         new = new.set_index('ETF')
+
+        st.write(f'총 **{len(new)}**개의 ETF에서 {stocks[etf_code]}를 담았어요.')
         st.dataframe(new, use_container_width=True)
 
     with col4 :
 
         st.write(f'### 📉 최근 {stocks[etf_code]}를 포트폴리오에서 모두 정리했어요.')
         drop = pd.DataFrame({'ETF' : ['timefolio', 'HANARO 200'],
-                            '이전 비중' : [20.00, 30.00]})
+                            '원래 비중' : [20.00, 30.00],
+                            '평가금액' : [10000, 20000]})
         drop = drop.set_index('ETF')
+
+        st.write(f'**{len(new)}**개의 ETF에서 {stocks[etf_code]}를 모두 정리했어요.')
+        st.write(f'- 평균 {drop["평가금액"].mean():,.0f}원만큼 팔았어요.')
+        st.write(f'- 가장 크게 비중을 줄인 ETF는 {drop[drop["이전 비중"].max()].index}의 {drop["이전 비중"].max():,.0f}원이에요.')
+        st.write(f'- 가장 금액으로 판매한 ETF는 {drop[drop["평가금액"].min()].index}의 {drop["평가금액"].min():,.0f}원이에요.')
+
         st.dataframe(drop, use_container_width=True)

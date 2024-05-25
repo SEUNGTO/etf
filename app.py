@@ -218,7 +218,6 @@ elif search and type == 'Stock' :
         st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
                      use_container_width=True)
     with tab2 :
-        st.write('뉴스에 대해 넣는 영역')
 
         url = f'https://openapi.naver.com/v1/search/news.json?query={stocks[etf_code]}'
         headers = {
@@ -227,7 +226,6 @@ elif search and type == 'Stock' :
 
         response = requests.get(url, headers = headers)
         newsData = pd.DataFrame(response.json()['items'])[['title', 'pubDate', 'link']]
-        st.write(newsData.info())
 
         newsData['title'] = newsData['title'].apply(lambda x : x.replace('<b>', '').replace('</b>', ''))
         newsData['pubDate'] = pd.to_datetime(newsData['pubDate'])
@@ -235,7 +233,7 @@ elif search and type == 'Stock' :
 
         newsData.columns = ['기사 제목', '날짜', '링크']
 
-        st.dataframe(newsData, column_config = {"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
+        st.dataframe(newsData.set_index('기사 제목'), column_config = {"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
 
     with tab3 :
         st.write('SNS에 대해 넣는 영역')

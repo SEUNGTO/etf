@@ -265,9 +265,9 @@ elif search and type == 'Stock' :
     st.dataframe(tmp)
 
     tmp['차이'] = tmp['비중T'] - tmp['비중C']
-    tmp.columns = ['ETF','기준일 비중', '비교일 비중', '차이']
-    tmp.reset_index(inplace=True)
-    tmp = tmp.set_index('ETF').drop('종목코드', axis=1)
+    tmp.columns = ['ETF', '기준일 비중', '비교일 비중', '차이']
+    tmp.reset_index(inplace=True, drop=True)
+    tmp = tmp.set_index('ETF')
 
     st.write(f'### 3. 최근 {stocks[etf_code]}에서 가장 비중이 늘어난 종목들이에요.')
     st.dataframe(tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10), use_container_width=True)

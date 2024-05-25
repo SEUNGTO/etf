@@ -300,8 +300,9 @@ elif search and type == 'Stock' :
         <div style='background-color: #f0f2f6; padding: 10px; border-radius: 5px;'>
             <h1>This is a header with background color</h1>
             <p>This is some text inside a div with background color.</p>
-        </div>
         ''', unsafe_allow_html=True)
         decrease = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10)
         st.write(f'총 **{len(decrease)}**개의 ETF에서 비중을 늘렸어요.')
         st.dataframe(decrease.head(10), use_container_width=True)
+
+        st.markdown('</div>')

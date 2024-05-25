@@ -261,15 +261,22 @@ elif search and type == 'Stock' :
                                                            how='inner', lsuffix='T', rsuffix='C')
     tmp['차이'] = tmp['비중T'] - tmp['비중C']
     tmp = tmp.join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'inner')
-    st.dataframe(tmp)
+
     tmp.columns = ['종목명', '기준일 비중', '비교일 비중', '차이', 'ETF']
     tmp.reset_index(inplace=True, drop=True)
     tmp = tmp.drop('종목명', axis = 1)
     tmp = tmp.set_index('ETF')
 
+    st.write(f'(memo) 비중 계산할 때 df, df2 모두 {stocks["etf_code"]}를 포함한 애들끼리 계산해서 오류 있음')
+    st.write(f'DB 내에 비중을 미리 계산해두어야 함')
+
+    st.dataframe(tmp)
+
 
     # DB 변경 이후에 있을 예정,
+
     st.write(f'### 3. 최근 {stocks[etf_code]}에서 가장 비중이 늘어난 종목들이에요.')
+
     st.dataframe(tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10), use_container_width=True)
 
     st.write(f'### 3. {stocks[etf_code]}의 비중을 줄인 ETF들이에요.')

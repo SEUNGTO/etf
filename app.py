@@ -202,15 +202,23 @@ elif search and type == 'Stock' :
     target.columns = ['목표가(가중평균)']
 
     st.write(f'## 1. {stocks[etf_code]} 관련 리포트에요.')
-    tmp = research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False)
+    tab1, tab2, tab3 = st.tabs(3)
 
-    st.write(f' 총 **{len(tmp["목표가"])}**개의 리포트가 있어요.')
+    with tab1('리포트') :
 
-    st.write(f' 증권사의 평균 목표가는 **{tmp["목표가"].mean():,.0f}**원이에요.')
-    st.write(f'- 가장 높은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].max()]["증권사"].values[0]}의 {tmp["목표가"].max():,.0f}원이에요.')
-    st.write(f'- 가장 낮은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].min()]["증권사"].values[0]}의 {tmp["목표가"].min():,.0f}원이에요.')
-    st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
-                 use_container_width=True)
+        tmp = research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False)
+        st.write(f' 총 **{len(tmp["목표가"])}**개의 리포트가 있어요.')
+
+        st.write(f' 증권사의 평균 목표가는 **{tmp["목표가"].mean():,.0f}**원이에요.')
+        st.write(f'- 가장 높은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].max()]["증권사"].values[0]}의 {tmp["목표가"].max():,.0f}원이에요.')
+        st.write(f'- 가장 낮은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].min()]["증권사"].values[0]}의 {tmp["목표가"].min():,.0f}원이에요.')
+        st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
+                     use_container_width=True)
+    with tab2('뉴스') :
+        st.write('뉴스에 대해 넣는 영역')
+
+    with tab3('SNS') :
+        st.write('SNS에 대해 넣는 영역')
 
 
     st.write(f'## 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
@@ -288,7 +296,7 @@ elif search and type == 'Stock' :
     with col1 :
         st.write(f'### 📈 최근 {stocks[etf_code]}의 비중을 늘렸어요.')
         increase = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False)
-        st.write(f'총 **{len(increase)}**개의 ETF에서 비중을 늘렸어요.')
+        st.write(f'**총 {len(increase)}개**의 ETF에서 비중을 늘렸어요.')
         st.dataframe(increase.head(10), use_container_width=True)
 
     with col2 :
@@ -296,7 +304,7 @@ elif search and type == 'Stock' :
         st.write(f'### 📉 최근 {stocks[etf_code]}의 비중을 줄였어요.')
 
         decrease = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10)
-        st.write(f'총 **{len(decrease)}**개의 ETF에서 비중을 늘렸어요.')
+        st.write(f'**총 {len(decrease)}개**의 ETF에서 비중을 늘렸어요.')
         st.dataframe(decrease.head(10), use_container_width=True,)
 
 

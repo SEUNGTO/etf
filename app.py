@@ -196,9 +196,13 @@ elif search and type == 'Stock' :
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 
-    st.write(f'### 1. {stocks[etf_code]} 관련 리포트에요.')
+    st.write(f'### 2. {stocks[etf_code]} 관련 리포트에요.')
+
     tmp = research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False)
-    st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')})
+    st.write(f'총 {len(tmp["목표가"])}개의 리포트가 있어요.')
+    st.write(f'증권사의 평균 목표가는 {tmp["목표가"].mean():.2f}에요.')
+    st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
+                 use_container_width=True)
 
 
 

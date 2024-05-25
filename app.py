@@ -185,8 +185,6 @@ elif search and type == 'Stock' :
     df = conn.query(f'SELECT * from etf_20240521 where stock_code = {etf_code};', ttl=600)
     df = df.loc[:, ['etf_code','stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['ETF코드','종목코드', '종목명', '보유량', '평가금액']
-    df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
-    df.columns = ['종목코드', '종목명', '보유량', '평가금액']
     df['비중'] = round(df['평가금액'].astype(int) / df['평가금액'].astype(int).sum() * 100, 2)
 
 

@@ -273,7 +273,7 @@ elif search and type == 'Stock' :
         telegram_msgs = pd.DataFrame(telegram_msgs)
         telegram_msgs.columns = ['메세지', '링크']
 
-        st.write(f'- {name}의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({tele_url})).')
+        st.write(f'- "{name}"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({tele_url})).')
         st.dataframe(telegram_msgs.set_index('메세지'),
                      column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small')},
                      use_container_width = True)

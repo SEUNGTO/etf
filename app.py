@@ -26,19 +26,21 @@ if 'etf_name' not in st.session_state :
 if 'type' not in st.session_state :
     st.session_state['type'] = 'ETF'
 
+
+# 기본 변수 세팅
+codeList = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브', '삼성전자', '삼성전기'],
+                         'Symbol' : ['102110', '069500', '463050', '482030', '385720', '005930', '009150'],
+                         'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF', 'Stock', 'Stock']})
+
 col1, col2 = st.columns(2)
 with col2 :
     with st.expander("검색가능한 ETF"):
-        st.dataframe({'종목명' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브']
-                 ,'종목코드' : ['102110', '069500', '463050', '482030', '385720']})
+        st.dataframe(codeList.rename({{'Name' : '종목명', 'Symbol' : '종목코드', 'Type' : 'ETF/Stock'}}))
 
 
 st.title('ETF 관상가')
 
 # codeList = fdr.StockListing('ETF/KR')
-codeList = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브', '삼성전자', '삼성전기'],
-                         'Symbol' : ['102110', '069500', '463050', '482030', '385720', '005930', '009150'],
-                         'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF', 'Stock', 'Stock']})
 
 
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
@@ -177,4 +179,4 @@ if search and type == 'ETF':
     st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending=True).head(10), use_container_width=True)
 
 elif search and type == 'Stock' :
-    st.wrtie('개별주식에 대한 요약을 보여주는 section')
+    st.write('개별주식에 대한 요약을 보여주는 section')

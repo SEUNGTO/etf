@@ -4,6 +4,8 @@ import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
 import re
+from PyNaver import NaverCloudPlatform
+
 
 st.set_page_config(
     page_title="ETFace",
@@ -216,7 +218,17 @@ elif search and type == 'Stock' :
         st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
                      use_container_width=True)
     with tab2 :
+        client_id = st.secrets["client_id"]
+        client_secret = st.secrets["client_secret"]
+
         st.write('뉴스에 대해 넣는 영역')
+        api = NaverCloudPlatform(client_id, client_secret)
+
+        query = stocks[etf_code]
+        display = 10
+        sort = "sim"  # date
+        newsData = api.search_news(query, display = display, sort = sort)
+        st.dataframe(newsData)
 
     with tab3 :
         st.write('SNS에 대해 넣는 영역')

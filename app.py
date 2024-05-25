@@ -257,18 +257,14 @@ elif search and type == 'Stock' :
     df2.columns = ['ETF코드', '종목코드', '종목명', '보유량', '평가금액']
     df2['비중'] = round(df2['평가금액'].astype(int) / df2['평가금액'].astype(int).sum() * 100, 2)
 
-    st.dataframe(df.set_index('ETF코드'))
-    st.dataframe(df2.set_index('ETF코드'))
-
     tmp = df[['ETF코드', '종목명', '비중']].set_index('ETF코드').join(df2[['ETF코드', '비중']].set_index('ETF코드'),
                                                            how='inner', lsuffix='T', rsuffix='C')
-    st.dataframe(tmp)
-
     tmp['차이'] = tmp['비중T'] - tmp['비중C']
     tmp = tmp.join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'inner')
     st.dataframe(tmp)
-    tmp.columns = ['ETF', '기준일 비중', '비교일 비중', '차이']
+    tmp.columns = ['종목명', '기준일 비중', '비교일 비중', '차이', 'ETF']
     tmp.reset_index(inplace=True, drop=True)
+    tmp = tmp.drop('종목명', axis = 1)
     tmp = tmp.set_index('ETF')
 
 

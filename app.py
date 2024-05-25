@@ -306,7 +306,7 @@ elif search and type == 'Stock' :
         new = pd.DataFrame({'ETF' : ['TIGER 200', 'KODEX 200'],
                             '비중' : [20.00, 30.00]})
         new = new.set_index('ETF')
-        st.dataframe(new)
+        st.dataframe(new, use_container_width=True)
 
     with col4 :
 
@@ -314,4 +314,4 @@ elif search and type == 'Stock' :
         drop = pd.DataFrame({'ETF' : ['timefolio', 'HANARO 200'],
                             '이전 비중' : [20.00, 30.00]})
         drop = drop.set_index('ETF')
-        st.dataframe(drop)
+        st.dataframe(drop, use_container_width=True)

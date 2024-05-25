@@ -315,6 +315,8 @@ elif search and type == 'Stock' :
         st.write(f'- 가장 크게 비중을 늘린 ETF는 {new.index[new["보유 비중"].argmax()]}의 {new["보유 비중"].max():,.2f}%이에요.')
         st.write(f'- 가장 큰 금액을 산 ETF는 {new.index[new["매수 금액"].argmax()]}의 {new["매수 금액"].max():,.0f}원이에요.')
 
+        new.loc['계', :] = new['보유 비중'].mean()
+
         st.dataframe(new, use_container_width=True)
 
 

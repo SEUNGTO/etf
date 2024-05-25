@@ -203,7 +203,9 @@ elif search and type == 'Stock' :
 
     st.write(f'### 1. {stocks[etf_code]} 관련 리포트에요.')
     tmp = research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False)
+
     st.write(f' 총 **{len(tmp["목표가"])}**개의 리포트가 있어요.')
+
     st.write(f' 증권사의 평균 목표가는 **{tmp["목표가"].mean():,.0f}**원이에요.')
     st.write(f'- 가장 높은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].max()]["증권사"].values[0]}의 {tmp["목표가"].max():,.0f}원이에요.')
     st.write(f'- 가장 낮은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].min()]["증권사"].values[0]}의 {tmp["목표가"].min():,.0f}원이에요.')
@@ -280,11 +282,7 @@ elif search and type == 'Stock' :
 
     # DB 변경 이후에 수정해야 함
 
-    st.write(f'### 3. {stocks[etf_code]}의 비중을 늘린 ETF들이에요.')
-    st.dataframe(tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10), use_container_width=True)
-
-    st.write(f'### 4. {stocks[etf_code]}의 비중을 줄인 ETF들이에요.')
-    st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending=True).head(10), use_container_width=True)
+    st.write(f'### 3. {stocks[etf_code]}에 관심을 갖고 있는 ETF들이에요.')
 
     col1, col2 = st.columns(2)
     with col1 :
@@ -302,4 +300,18 @@ elif search and type == 'Stock' :
         st.write(f'총 **{len(decrease)}**개의 ETF에서 비중을 늘렸어요.')
         st.dataframe(decrease.head(10), use_container_width=True,)
 
+    col3, col4 = st.columns(2)
+    with col3 :
+        st.write(f'### 📈 최근 {stocks[etf_code]}를 새로 포트폴리오에 넣었어요.')
+        new = pd.DataFrame({'ETF' : ['TIGER 200', 'KODEX 200'],
+                            '비중' : [20.00, 30.00]})
+        new = new.set_index('ETF')
+        st.dataframe(new)
 
+    with col4 :
+
+        st.write(f'### 📈 최근 {stocks[etf_code]}를 모두 청산했어요.')
+        drop = pd.DataFrame({'ETF' : ['timefolio', 'HANARO 200'],
+                            '이전 비중' : [20.00, 30.00]})
+        drop = drop.set_index('ETF')
+        st.dataframe(drop)

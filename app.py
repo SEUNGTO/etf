@@ -218,12 +218,13 @@ elif search and type == 'Stock' :
         st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
                      use_container_width=True)
     with tab2 :
+        st.write('뉴스에 대해 넣는 영역')
         st.write(st.secrets["client_id"])
         # client_id = st.secrets["client_id"]
         # client_secret = st.secrets["client_secret"]
         #
 
-        st.write('뉴스에 대해 넣는 영역')
+
         api = NaverCloudPlatform(client_id, client_secret)
 
         query = stocks[etf_code]

@@ -227,8 +227,11 @@ elif search and type == 'Stock' :
 
         response = requests.get(url, headers = headers)
         newsData = pd.DataFrame(response.json()['items'])[['title', 'pubDate', 'link']]
+        st.write(newsData.info())
+
+        newsData['title'] = newsData['title'].apply(lambda x : x.replace('<b>', '').replace('</b>', ''))
         newsData['pubDate'] = pd.to_datetime(newsData['pubDate'])
-        newsData['pubDate'] = newsData['pubDate'].strfdate('%Y-%m-%d')
+        newsData['pubDate'] = newsData['pubDate'].apply(lambda x : x.strftime('%Y-%m-%d'))
 
         st.dataframe(newsData)
 

@@ -219,7 +219,6 @@ elif search and type == 'Stock' :
                      use_container_width=True)
     with tab2 :
         st.write('뉴스에 대해 넣는 영역')
-        st.write(st.secrets['connections.mysql']['dialect'])
         st.write(st.secrets["clientsecret"])
         # client_id = st.secrets["client_id"]
         # client_secret = st.secrets["client_secret"]

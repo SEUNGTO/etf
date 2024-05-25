@@ -267,8 +267,8 @@ elif search and type == 'Stock' :
     tmp = tmp.drop('종목명', axis = 1)
     tmp = tmp.set_index('ETF')
 
-    st.write(f'(memo) 비중 계산할 때 df, df2 모두 {stocks["etf_code"]}를 포함한 애들끼리 계산해서 오류 있음')
-    st.write(f'DB 내에 비중을 미리 계산해두어야 함')
+    st.write(f'(memo) {stocks[etf_code]}를 포함한 애들끼리만 모아서 비중을 계산해서 오류 있음(df1, df2 모두)')
+    st.write(f'DB 내에 미리 비중을 계산해두어야 함')
 
     st.dataframe(tmp)
 

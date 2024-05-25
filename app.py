@@ -320,8 +320,8 @@ elif search and type == 'Stock' :
 
         st.write(f'**{len(new)}**개의 ETF에서 {stocks[etf_code]}를 모두 정리했어요.')
         st.write(f'- 평균 {drop["평가금액"].mean():,.0f}원만큼 팔았어요.')
-        st.write(drop[["이전 비중"]].argmax())
-        st.write(f'- 가장 크게 비중을 줄인 ETF는 {drop[drop["이전 비중"].max()].index}의 {drop["이전 비중"].max():,.0f}원이에요.')
-        st.write(f'- 가장 금액으로 판매한 ETF는 {drop[drop["평가금액"].min()].index}의 {drop["평가금액"].min():,.0f}원이에요.')
+        st.write(drop[["원래 비중"]].argmax())
+        st.write(f'- 가장 크게 비중을 줄인 ETF는 {drop.index[drop["원래 비중"].argmax()]}의 {drop["원래 비중"].max():,.0f}원이에요.')
+        st.write(f'- 가장 큰 금액을 판 ETF는 {drop.index[drop["평가 비중"].argmax()]}의 {drop["평가금액"].max():,.0f}원이에요.')
 
         st.dataframe(drop, use_container_width=True)

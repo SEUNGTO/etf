@@ -197,14 +197,11 @@ elif search and type == 'Stock' :
     target.columns = ['목표가(가중평균)']
 
     st.write(f'### 2. {stocks[etf_code]} 관련 리포트에요.')
-
     tmp = research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False)
     st.write(f'총 {len(tmp["목표가"])}개의 리포트가 있어요.')
-    st.write(f'증권사의 평균 목표가는 {tmp["목표가"].mean():.2f}에요.')
+    st.write(f'증권사의 평균 목표가는 {tmp["목표가"].mean():,}원이에요.')
     st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
                  use_container_width=True)
-
-
 
     st.write(f'### 1. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 
@@ -231,21 +228,21 @@ elif search and type == 'Stock' :
     tmp3['시총'] = tmp3['목표가(가중평균)'] * tmp3['보유량']
 
 
-    target_PQ = tmp3['시총'].dropna().sum()
-    real_PQ = tmp3['평가금액'].dropna().sum()
-    idx = real_PQ/target_PQ
+    close = price['Close'].tail(1).values[0]
+    highest = high = price['High'].max()
+    target = research['목표가'].mean()
+
+    idx = close/target
 
     col1, col2, col3, col4 = st.columns(4)
     with col1 :
         st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
     with col2 :
-        close = price['Close'].tail(1).values[0]
-        high = price['High'].max()
-        delta = close - high
+        delta = close - highest
         st.metric(label = '종가(고점 대비)', value = f'{close:,}',  delta = f'{delta:,}')
     with col3 :
         high = price['High'].max()
         low = price['Low'].min()
         delta = high - low
-        st.metric(label = '최고점(저점 대비)', value = f'{high:,}', delta = f'{delta:,}')
+        st.metric(label = '최고점(저점 대비)', value = f'{highest:,}', delta = f'{delta:,}')
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)

@@ -207,7 +207,7 @@ elif search and type == 'Stock' :
 
     st.write(f'## 1. {stocks[etf_code]}에 대해 이런 이야기들이 있어요.')
 
-    tab1, tab2, tab3 = st.tabs(['증권사 리포트', '뉴스', 'SNS'])
+    tab1, tab2, tab3 = st.tabs(['증권사 리포트', '뉴스', '텔레그램'])
 
     with tab1 :
 
@@ -273,8 +273,9 @@ elif search and type == 'Stock' :
         telegram_msgs = pd.DataFrame(telegram_msgs)
         telegram_msgs.columns = ['메세지', '링크']
 
-        st.write(f'**{name}**([\U0001F517]({tele_url}))')
-        st.dataframe(telegram_msgs.set_index('메세지'), column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517')},
+        st.write(f'**{name}**의 최근 메세지를 가져왔어요.(링크 : [\U0001F517]({tele_url}))')
+        st.dataframe(telegram_msgs.set_index('메세지'),
+                     column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517')},
                      use_container_width = True)
 
     st.write(f'## 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')

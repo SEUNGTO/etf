@@ -181,7 +181,7 @@ if search and type == 'ETF':
 
 elif search and type == 'Stock' :
 
-    st.write('개별주식에 대한 요약을 보여주는 section')
+
     df = conn.query(f'SELECT * from etf_20240521 where stock_code = {etf_code};', ttl=600)
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
@@ -240,3 +240,4 @@ elif search and type == 'Stock' :
         low = price['Low'].min()
         delta = high - low
         st.metric(label = '최고점(저점 대비)', value = f'{high:,}', delta = f'{delta:,}')
+    st.plotly_chart(fig, theme="streamlit", use_container_width=True)

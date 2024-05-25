@@ -44,7 +44,7 @@ st.title('ETF 관상가')
 
 
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
-          '385720': 'timefolio Kstock 액티브', '005930' : '삼성전자', '009510' : '삼성전기'}
+          '385720': 'timefolio Kstock 액티브', '005930' : '삼성전자', '009150' : '삼성전기'}
 
 col1, col2 = st.columns(2)
 with col1 :
@@ -173,11 +173,11 @@ if search and type == 'ETF':
     tmp = tmp.set_index('종목명').drop('종목코드', axis=1)
 
 
-    st.write(f'### 📈 최근 {stocks[etf_code]}에서 가장 비중이 늘어난 종목들이에요.')
+    st.write(f'### 3. 📈 최근 {stocks[etf_code]}에서 가장 비중이 늘어난 종목들이에요.')
     increase = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False)
     st.dataframe(increase.head(10), use_container_width=True)
 
-    st.write(f'### 📉 최근 {stocks[etf_code]}에서 가장 비중이 줄어든 종목들이에요')
+    st.write(f'### 4. 📉 최근 {stocks[etf_code]}에서 가장 비중이 줄어든 종목들이에요')
     decrease = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False)
     st.dataframe(decrease.head(10), use_container_width=True)
 
@@ -288,11 +288,11 @@ elif search and type == 'Stock' :
     with col1:
         st.write(f'### 📈 최근 {stocks[etf_code]}의 비중을 늘렸어요.')
         increase = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False)
-        st.write(f'총 {len(increase)}개의 ETF에서 비중을 늘렸어요.')
+        st.write(f'총 **{len(increase)}**개의 ETF에서 비중을 늘렸어요.')
         st.dataframe(increase.head(10), use_container_width=True)
 
     with col2:
         st.write(f'### 📉 최근 {stocks[etf_code]}의 비중을 줄였어요.')
         decrease = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10)
-        st.write(f'총 {len(decrease)}개의 ETF에서 비중을 늘렸어요.')
+        st.write(f'총 **{len(decrease)}**개의 ETF에서 비중을 늘렸어요.')
         st.dataframe(decrease.head(10), use_container_width=True)

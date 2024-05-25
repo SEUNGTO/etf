@@ -4,34 +4,58 @@ import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
 import re
+from fuzzywuzzy import process
 
-if 'search' not in st.session_state:
+st.set_page_config(
+    page_title="ETFace",
+    page_icon="😎"
+)
+
+def etf_code_update(etf_name) :
+    st.session_state['etf_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
+
+# session 정의
+if 'search' not in st.session_state :
     st.session_state['search'] = True
-if 'etf_code' not in st.session_state:
+if 'etf_code' not in st.session_state :
     st.session_state['etf_code'] = '102110'
+if 'search_results' not in st.session_state : 
+    st.session_state['search_results'] = []
+if 'etf_name' not in st.session_state :
+    st.session_state['etf_name'] = 'TIGER 200'
 
-stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
-          '385720': 'timefolio Kstock 액티브'}
+col1, col2, col3 = st.columns(3)
+with col3 : 
+    with st.expander("검색가능한 ETF"):
+        st.dataframe({'종목명' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브']
+                 ,'종목코드' : ['102110', '069500', '463050', '482030', '385720']})
 
-conn = st.connection('mysql', type='sql')
 
 st.title('ETF 관상가')
 
-st.write('검색가능한 ETF')
-st.write('- TIGER 200(102110)')
-st.write('- KODEX 200(069500)')
-st.write('- timefolio K바이오액티브(463050)')
-st.write('- Koact 테크핵심소재공급망액티브(482030)')
-st.write('- timefolio Kstock 액티브(385720)')
+codeList = fdr.StockListing('ETF/KR')
+stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브', '482030': 'Koact 테크핵심소재공급망액티브',
+          '385720': 'timefolio Kstock 액티브'}
 
-st.session_state['etf_code'] = st.text_input('ETF코드를 입력해주세요.', value='102110')
-st.session_state['search'] = st.button(label='검색')
+col1, col2 = st.columns(2)
+with col1 :
+    etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'etf_name', help = 'hi')
+    if etf_name :
+        etf_code_update(etf_name)
+with col2 : 
+    st.write(" ") # blank
+    st.write(" ") # blank
+    st.session_state['search'] = st.button(label = '검색')
 
-etf_code = st.session_state['etf_code']
+
 search = ~st.session_state['search']
+etf_code = st.session_state['etf_code']
+         
+conn = st.connection('mysql', type='sql')
 
-if search:
+if search :
     # 전체 내역 조회
+    
     df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)
     price = fdr.DataReader(etf_code, start='2024-04-20', end='2024-05-21').reset_index()
     research = conn.query('SELECT * FROM research', ttl=600)
@@ -67,46 +91,62 @@ if search:
         tmp2 = research.loc[row, ['종목코드', '리포트 제목', '의견', '게시일자', '증권사', '링크']]
 
         tmp = tmp.join(tmp2.set_index('종목코드'), how='left')
-
+        
         tmp = tmp.reset_index().set_index('종목명')
-
+        
         tmp['목표가(가중평균)'] = round(tmp['목표가(가중평균)'])
-        st.dataframe(tmp.drop(['종목코드', '보유량', '평가금액'], axis=1).sort_values('비중', ascending=False).rename(
-            columns={'목표가(가중평균)': '목표가(wAvg)'}), column_config={
+        st.dataframe(tmp.drop(['종목코드','보유량','평가금액'], axis = 1).sort_values('비중', ascending=False).rename(columns = {'목표가(가중평균)':'목표가(wAvg)'}), column_config={
             "링크": st.column_config.LinkColumn(display_text='\U0001F517'),
-            "리포트 제목": st.column_config.TextColumn(width='middle'),
-            "증권사": st.column_config.TextColumn(width='small'),
-            "게시일자": st.column_config.TextColumn(width='small'),
-            "목표가(wAvg)": st.column_config.NumberColumn(width="small")})
+"리포트 제목" : st.column_config.TextColumn(width = 'middle'),
+            "증권사" : st.column_config.TextColumn(width = 'small'),
+            "게시일자" : st.column_config.TextColumn(width = 'small'),
+        "목표가(wAvg)" : st.column_config.NumberColumn(width = "small")})
         st.write('\* wAvg : 가중평균')
 
     st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 
-    fig = go.Figure(data=[go.Candlestick(x=price['Date'],
+    fig = go.Figure(data=[go.Candlestick(x=price['Date'].apply(lambda x : x.strftime('%m-%d')),
                                          open=price['Open'],
                                          high=price['High'],
                                          low=price['Low'],
                                          close=price['Close'],
-                                         name=f'{stocks[etf_code]}')])
+                                         name = f'{stocks[etf_code]}')])
     fig.update_layout(
         xaxis_title='날짜',
         yaxis_title='가격',
         margin={'t': 10, 'b': 10},
+        xaxis=dict(type='category', tickangle=45),
         xaxis_rangeslider_visible=False
     )
+
 
     tmp3 = df[['종목코드', '평가금액', '보유량']]
     tmp3 = tmp3.set_index('종목코드')
     tmp3 = tmp3.join(target, how='left')
-    tmp3['종가'] = tmp3['평가금액'] / tmp3['보유량']
-    tmp3['목표가(가중평균)'].fillna(tmp3['종가'], inplace=True)
+    tmp3['종가'] = tmp3['평가금액']/tmp3['보유량']
+    tmp3['목표가(가중평균)'].fillna(tmp3['종가'], inplace = True)
     tmp3['시총'] = tmp3['목표가(가중평균)'] * tmp3['보유량']
+
 
     target_PQ = tmp3['시총'].dropna().sum()
     real_PQ = tmp3['평가금액'].dropna().sum()
-    idx = real_PQ / target_PQ
+    idx = real_PQ/target_PQ
 
-    st.metric(label='리포트 대비 현재 가격', value=f'{idx * 100:.2f}', delta=f'{((1 / idx) - 1) * 100:.2f}% 가능')
+    col1, col2, col3, col4 = st.columns(4)
+    with col1 : 
+        st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
+    with col2 :
+        close = price['Close'].tail(1).values[0]
+        high = price['High'].max()
+        delta = close - high
+        st.metric(label = '종가(고점 대비)', value = f'{close:,}',  delta = f'{delta:,}')
+    with col3 :
+        high = price['High'].max()
+        low = price['Low'].min()
+        delta = high - low
+        st.metric(label = '최고점(저점 대비)', value = f'{high:,}', delta = f'{delta:,}')
+        
+    
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
     # 최근 내역 비교

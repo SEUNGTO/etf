@@ -199,7 +199,7 @@ elif search and type == 'Stock' :
     st.write(f'### 2. {stocks[etf_code]} 관련 리포트에요.')
     tmp = research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False)
     st.write(f'총 {len(tmp["목표가"])}개의 리포트가 있어요.')
-    st.write(f'증권사의 평균 목표가는 {tmp["목표가"].mean():,.}원이에요.')
+    st.write(f'증권사의 평균 목표가는 {tmp["목표가"].mean():,.0f}원이에요.')
     st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
                  use_container_width=True)
 

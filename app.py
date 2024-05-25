@@ -303,24 +303,32 @@ elif search and type == 'Stock' :
     col3, col4 = st.columns(2)
     with col3 :
         st.write(f'### 📈 최근 {stocks[etf_code]}를 새로 포트폴리오에 넣었어요.')
-        new = pd.DataFrame({'ETF' : ['TIGER 200', 'KODEX 200'],
-                            '보유 비중' : [20.00, 30.00]})
+
+        new = pd.DataFrame({'ETF' : ['KODEX 200', 'TIGER 200', 'HANARO 200'],
+                            '보유 비중' : [20.00, 30.00, 10.00],
+                            '매수 금액' : [50000, 20000, 5000]})
         new = new.set_index('ETF')
 
         st.write(f'총 **{len(new)}**개의 ETF에서 {stocks[etf_code]}를 담았어요.')
+        st.write(f'**{len(new)}**개의 ETF에서 {stocks[etf_code]}를 모두 정리했어요.')
+        st.write(f'- 평균 {new["매수 금액"].mean():,.0f}원만큼 샀어요.')
+        st.write(f'- 가장 크게 비중을 늘린 ETF는 {new.index[new["보유 비중"].argmax()]}의 {new["보유 비중"].max():,.2f}%이에요.')
+        st.write(f'- 가장 큰 금액을 산 ETF는 {new.index[new["매수 금액"].argmax()]}의 {new["매수 금액"].max():,.0f}원이에요.')
+
         st.dataframe(new, use_container_width=True)
+
 
     with col4 :
 
-        st.write(f'### 📉 최근 {stocks[etf_code]}를 포트폴리오에서 모두 정리했어요.')
+        st.write(f'### 📉 최근 {stocks[etf_code]}를 포트폴리오에서 제외했어요.')
         drop = pd.DataFrame({'ETF' : ['timefolio', 'HANARO 200'],
                             '원래 비중' : [20.00, 30.00],
-                            '평가금액' : [10000, 20000]})
+                            '매도 금액' : [10000, 20000]})
         drop = drop.set_index('ETF')
 
         st.write(f'**{len(new)}**개의 ETF에서 {stocks[etf_code]}를 모두 정리했어요.')
         st.write(f'- 평균 {drop["평가금액"].mean():,.0f}원만큼 팔았어요.')
-        st.write(f'- 가장 크게 비중을 줄인 ETF는 {drop.index[drop["원래 비중"].argmax()]}의 {drop["원래 비중"].max():,.0f}원이에요.')
-        st.write(f'- 가장 큰 금액을 판 ETF는 {drop.index[drop["평가금액"].argmax()]}의 {drop["평가금액"].max():,.0f}원이에요.')
+        st.write(f'- 가장 크게 비중을 줄인 ETF는 {drop.index[drop["원래 비중"].argmax()]}의 {drop["원래 비중"].max():,.2f}%이에요.')
+        st.write(f'- 가장 큰 금액을 판 ETF는 {drop.index[drop["매도 금액"].argmax()]}의 {drop["매도 금액"].max():,.0f}원이에요.')
 
         st.dataframe(drop, use_container_width=True)

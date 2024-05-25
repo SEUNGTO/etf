@@ -243,7 +243,7 @@ elif search and type == 'Stock' :
 
         newsData.columns = ['기사 제목', '날짜', '링크']
 
-        st.dataframe(newsData('기사 제목'), column_config = {"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
+        st.dataframe(newsData, column_config = {"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
 
     with tab3 :
 

@@ -266,6 +266,7 @@ elif search and type == 'Stock' :
 
     tmp['차이'] = tmp['비중T'] - tmp['비중C']
     tmp = tmp.join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'inner')
+    st.dataframe(tmp)
     tmp.columns = ['ETF', '기준일 비중', '비교일 비중', '차이']
     tmp.reset_index(inplace=True, drop=True)
     tmp = tmp.set_index('ETF')

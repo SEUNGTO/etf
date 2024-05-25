@@ -309,11 +309,11 @@ elif search and type == 'Stock' :
                             '매수 금액' : [50000, 20000, 5000]})
         new = new.set_index('ETF')
 
-        st.write(f'**총 {len(new)}개의 ETF**에서 {stocks[etf_code]}를 담았어요.')
+        st.write(f'**총 {len(new)}개의 ETF**에서 {stocks[etf_code]}를 처음으로 담았어요.')
 
-        st.write(f'- 평균 {new["매수 금액"].mean():,.0f}원만큼 샀어요.')
-        st.write(f'- 가장 크게 비중을 늘린 ETF는 {new.index[new["보유 비중"].argmax()]}의 {new["보유 비중"].max():,.2f}%이에요.')
-        st.write(f'- 가장 큰 금액을 산 ETF는 {new.index[new["매수 금액"].argmax()]}의 {new["매수 금액"].max():,.0f}원이에요.')
+        st.write(f'- 평균 **{new["매수 금액"].mean():,.0f}**원만큼 샀어요.')
+        st.write(f'- 가장 크게 비중을 늘린 ETF는 **{new.index[new["보유 비중"].argmax()]}**의 **{new["보유 비중"].max():,.2f}**%이에요.')
+        st.write(f'- 가장 큰 금액을 산 ETF는 **{new.index[new["매수 금액"].argmax()]}**의 **{new["매수 금액"].max():,.0f}**원이에요.')
 
         new.loc['평균', :] = new.mean()
 
@@ -329,9 +329,9 @@ elif search and type == 'Stock' :
         drop = drop.set_index('ETF')
 
         st.write(f'**총 {len(drop)}개의 ETF**에서 {stocks[etf_code]}를 모두 정리했어요.')
-        st.write(f'- 평균 {drop["매도 금액"].mean():,.0f}원만큼 팔았어요.')
-        st.write(f'- 가장 크게 비중을 줄인 ETF는 {drop.index[drop["원래 비중"].argmax()]}의 {drop["원래 비중"].max():,.2f}%이에요.')
-        st.write(f'- 가장 큰 금액을 판 ETF는 {drop.index[drop["매도 금액"].argmax()]}의 {drop["매도 금액"].max():,.0f}원이에요.')
+        st.write(f'- 평균 **{drop["매도 금액"].mean():,.0f}**원만큼 팔았어요.')
+        st.write(f'- 가장 크게 비중을 줄인 ETF는 **{drop.index[drop["원래 비중"].argmax()]}**의 **{drop["원래 비중"].max():,.2f}**%이에요.')
+        st.write(f'- 가장 큰 금액을 판 ETF는 **{drop.index[drop["매도 금액"].argmax()]}**의 **{drop["매도 금액"].max():,.0f}**원이에요.')
 
         drop.loc['평균', :] = drop.mean()
         st.dataframe(drop, use_container_width=True)

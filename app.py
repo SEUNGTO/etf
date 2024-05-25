@@ -39,7 +39,7 @@ stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바
 
 col1, col2 = st.columns(2)
 with col1 :
-    etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'etf_name')
+    etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'etf_name', help = 'hi')
     if etf_name :
         etf_code_update(etf_name)
 with col2 : 

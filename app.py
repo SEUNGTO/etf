@@ -179,8 +179,8 @@ if search and type == 'ETF':
         increase = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10)
         st.write(f'총 {len(increase)}개의 ETF에서 비중을 늘렸어요.')
         st.dataframe(increase, use_container_width=True)
-    with col2 :
 
+    with col2 :
         st.write(f'### 📉 최근 {stocks[etf_code]}의 비중을 줄였어요.')
         decrease = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10)
         st.write(f'총 {len(decrease)}개의 ETF에서 비중을 늘렸어요.')
@@ -288,3 +288,16 @@ elif search and type == 'Stock' :
 
     st.write(f'### 4. {stocks[etf_code]}의 비중을 줄인 ETF들이에요.')
     st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending=True).head(10), use_container_width=True)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write(f'### 📈 최근 {stocks[etf_code]}의 비중을 늘렸어요.')
+        increase = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False)
+        st.write(f'총 {len(increase)}개의 ETF에서 비중을 늘렸어요.')
+        st.dataframe(increase.head(10), use_container_width=True)
+
+    with col2:
+        st.write(f'### 📉 최근 {stocks[etf_code]}의 비중을 줄였어요.')
+        decrease = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10)
+        st.write(f'총 {len(decrease)}개의 ETF에서 비중을 늘렸어요.')
+        st.dataframe(decrease.head(10), use_container_width=True)

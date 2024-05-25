@@ -307,6 +307,10 @@ elif search and type == 'Stock' :
         </style>
         ''', unsafe_allow_html=True)
 
-        decrease = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10)
+        # decrease = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10)
+        decrease = pd.DataFrame({'ETF' : ['TIGER 200', 'KODEX 300'],
+                                 '기준일 비중' : [50.00, 20.00],
+                                 '비교일 비중' : [30.00, 10.00],
+                                 '차이' : [-20.00, -10.00]})
         st.write(f'총 **{len(decrease)}**개의 ETF에서 비중을 늘렸어요.')
         st.dataframe(decrease.head(10), use_container_width=True)

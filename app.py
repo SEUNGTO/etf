@@ -48,7 +48,7 @@ stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바
 
 col1, col2 = st.columns(2)
 with col1 :
-    etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'etf_name', placeholder = '(예) 삼성전자, TIGER 200')
+    etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'etf_name', placeholder = 'ex. 삼성전자, TIGER 200')
     if etf_name :
         etf_code_update(etf_name)
 with col2 : 
@@ -180,3 +180,57 @@ if search and type == 'ETF':
 
 elif search and type == 'Stock' :
     st.write('개별주식에 대한 요약을 보여주는 section')
+    df = conn.query(f'SELECT * from etf_20240521 where etf_code = {etf_code};', ttl=600)
+    price = fdr.DataReader(etf_code, start='2024-04-20', end='2024-05-21').reset_index()
+    research = conn.query('SELECT * FROM research', ttl=600)
+    research.columns = ['종목명', '종목코드', '리포트 제목', 'nid', '목표가', '의견', '게시일자', '증권사', '링크']
+    research['목표가'] = [re.sub('\D', '', t) for t in research['목표가']]
+    research = research[research['목표가'] != ""]
+    research['목표가'] = research['목표가'].astype(int)
+    target = research[['종목코드', '목표가']].groupby('종목코드').mean()
+    target.columns = ['목표가(가중평균)']
+
+
+
+    st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
+
+    fig = go.Figure(data=[go.Candlestick(x=price['Date'].apply(lambda x : x.strftime('%m-%d')),
+                                         open=price['Open'],
+                                         high=price['High'],
+                                         low=price['Low'],
+                                         close=price['Close'],
+                                         name = f'{stocks[etf_code]}')])
+    fig.update_layout(
+        xaxis_title='날짜',
+        yaxis_title='가격',
+        margin={'t': 10, 'b': 10},
+        xaxis=dict(type='category', tickangle=45),
+        xaxis_rangeslider_visible=False
+    )
+
+
+    tmp3 = df[['종목코드', '평가금액', '보유량']]
+    tmp3 = tmp3.set_index('종목코드')
+    tmp3 = tmp3.join(target, how='left')
+    tmp3['종가'] = tmp3['평가금액']/tmp3['보유량']
+    tmp3['목표가(가중평균)'].fillna(tmp3['종가'], inplace = True)
+    tmp3['시총'] = tmp3['목표가(가중평균)'] * tmp3['보유량']
+
+
+    target_PQ = tmp3['시총'].dropna().sum()
+    real_PQ = tmp3['평가금액'].dropna().sum()
+    idx = real_PQ/target_PQ
+
+    col1, col2, col3, col4 = st.columns(4)
+    with col1 :
+        st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
+    with col2 :
+        close = price['Close'].tail(1).values[0]
+        high = price['High'].max()
+        delta = close - high
+        st.metric(label = '종가(고점 대비)', value = f'{close:,}',  delta = f'{delta:,}')
+    with col3 :
+        high = price['High'].max()
+        low = price['Low'].min()
+        delta = high - low
+        st.metric(label = '최고점(저점 대비)', value = f'{high:,}', delta = f'{delta:,}')

@@ -183,8 +183,8 @@ elif search and type == 'Stock' :
 
 
     df = conn.query(f'SELECT * from etf_20240521 where stock_code = {etf_code};', ttl=600)
-    df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
-    df.columns = ['종목코드', '종목명', '보유량', '평가금액']
+    df = df.loc[:, ['etf_code','stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
+    df.columns = ['ETF코드','종목코드', '종목명', '보유량', '평가금액']
 
     price = fdr.DataReader(etf_code, start='2024-04-20', end='2024-05-21').reset_index()
 
@@ -196,14 +196,15 @@ elif search and type == 'Stock' :
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 
-    st.write(f'### 2. {stocks[etf_code]} 관련 리포트에요.')
+    st.write(f'### 1. {stocks[etf_code]} 관련 리포트에요.')
     tmp = research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False)
-    st.write(f'총 {len(tmp["목표가"])}개의 리포트가 있어요.')
-    st.write(f'증권사의 평균 목표가는 {tmp["목표가"].mean():,.0f}원이에요.')
+    st.write(f'- 총 {len(tmp["목표가"])}개의 리포트가 있어요.')
+    st.write(f'- 증권사의 평균 목표가는 {tmp["목표가"].mean():,.0f}원이에요.')
     st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
                  use_container_width=True)
 
-    st.write(f'### 1. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
+
+    st.write(f'### 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 
     fig = go.Figure(data=[go.Candlestick(x=price['Date'].apply(lambda x : x.strftime('%m-%d')),
                                          open=price['Open'],
@@ -245,3 +246,24 @@ elif search and type == 'Stock' :
         delta = high - low
         st.metric(label = '최고점(저점 대비)', value = f'{highest:,}', delta = f'{delta:,}')
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+
+
+    st.write(f'### 3. {stocks[etf_code]}의 비중을 늘린 ETF들이에요.')
+
+    df2 = conn.query(f'SELECT * from etf_20240518 where stock_code = {etf_code};', ttl=600)
+    df2 = df2.loc[:, ['etf_code', 'stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
+    df2.columns = ['ETF코드', '종목코드', '종목명', '보유량', '평가금액']
+    df2['비중'] = df2['평가금액'].astype(int) / df2['평가금액'].astype(int).sum() * 100
+
+    tmp = df[['ETF코드', '종목명', '비중']].set_index('ETF코드').join(df2[['ETF코드', '비중']].set_index('ETF코드'),
+                                                           how='inner', lsuffix='T', rsuffix='C')
+    tmp['차이'] = tmp['비중T'] - tmp['비중C']
+    tmp.columns = ['기준일 비중', '비교일 비중', '차이']
+    tmp.reset_index(inplace=True)
+    tmp = tmp.set_index('종목명').drop('종목코드', axis=1)
+
+    st.write(f'### 3. 최근 {stocks[etf_code]}에서 가장 비중이 늘어난 종목들이에요.')
+    st.dataframe(tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10), use_container_width=True)
+
+    st.write(f'### 3. {stocks[etf_code]}의 비중을 줄인 ETF들이에요.')
+    st.dataframe(tmp[tmp['차이'] < 0].sort_values('차이', ascending=True).head(10), use_container_width=True)

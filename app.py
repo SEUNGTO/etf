@@ -263,7 +263,7 @@ elif search and type == 'Stock' :
                 telegram_msgs['msg'].append(msg)
 
             except:
-                msg = None
+                msg = '(메세지없이 링크만 있어요.)'
                 telegram_msgs['msg'].append(msg)
 
         for msg in soup.find_all('a', class_='tgme_widget_message_date'):
@@ -273,7 +273,7 @@ elif search and type == 'Stock' :
         telegram_msgs = pd.DataFrame(telegram_msgs)
         telegram_msgs.columns = ['메세지', '링크']
 
-        st.markdown(f'** [{name}]({tele_url}) **의 최근 메세지를 가져왔어요.')
+        st.write(f'**{name}**의 최근 메세지를 가져왔어요.')
         st.dataframe(telegram_msgs.set_index('메세지'),
                      column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small')},
                      use_container_width = True)

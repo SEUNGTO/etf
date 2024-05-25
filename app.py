@@ -310,7 +310,7 @@ elif search and type == 'Stock' :
 
     with col4 :
 
-        st.write(f'### 📈 최근 {stocks[etf_code]}를 모두 청산했어요.')
+        st.write(f'### 📉 최근 {stocks[etf_code]}를 모두 청산했어요.')
         drop = pd.DataFrame({'ETF' : ['timefolio', 'HANARO 200'],
                             '이전 비중' : [20.00, 30.00]})
         drop = drop.set_index('ETF')

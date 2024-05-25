@@ -203,7 +203,7 @@ elif search and type == 'Stock' :
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 
-    st.write(f'## 1. {stocks[etf_code]}에 대해, 이런 이야기들이 있어요.')
+    st.write(f'## 1. {stocks[etf_code]}에 대해 이런 이야기들이 있어요.')
 
     tab1, tab2, tab3 = st.tabs(['증권사 리포트', '뉴스', 'SNS'])
 
@@ -218,6 +218,8 @@ elif search and type == 'Stock' :
         st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
                      use_container_width=True)
     with tab2 :
+
+        st.write(f'네이버 뉴스에서 {stocks[etf_code]}를 방금 검색한 결과에요.')
 
         url = f'https://openapi.naver.com/v1/search/news.json'
         params = {'query' : stocks[etf_code],

@@ -7,7 +7,37 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
+def telegram_crawller(name, url)
+    telegram_msgs = {
+            'msg': []
+            , 'link': []
+        }
 
+    name = '주식 급등일보🚀급등테마·대장주 탐색기 (텔레그램)'
+    url = 'https://t.me/s/FastStockNews'
+
+    query = f'{url}?q={stocks[etf_code]}'
+    response = requests.get(query)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    for msg in soup.find_all('div', class_='tgme_widget_message_bubble'):
+
+        msg.find('a').decompose()
+        try:
+            msg = msg.find('div', class_='tgme_widget_message_text js-message_text').text
+            telegram_msgs['msg'].append(msg)
+
+        except:
+            msg = '(메세지없이 링크만 있어요.)'
+            telegram_msgs['msg'].append(msg)
+
+    for uu in soup.find_all('a', class_='tgme_widget_message_date'):
+        link = uu.attrs['href']
+        telegram_msgs['link'].append(link)
+
+    telegram_msgs = pd.DataFrame(telegram_msgs)
+    telegram_msgs.columns = ['메세지', '링크']
+    return telegram_msgs
 
 st.set_page_config(
     page_title="ETFace",
@@ -249,7 +279,7 @@ hide_index = True)
                      column_config = {"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
 
     with tab3 :
-
+        
         telegram_msgs = {
             'msg': []
             , 'url': []
@@ -257,7 +287,7 @@ hide_index = True)
 
         name = '주식 급등일보🚀급등테마·대장주 탐색기 (텔레그램)'
         tele_url = 'https://t.me/s/FastStockNews'
-
+        st.dataframe(telegram_crawller(name, tele_url)
         query = f'{tele_url}?q={stocks[etf_code]}'
         response = requests.get(query)
         soup = BeautifulSoup(response.content, 'html.parser')

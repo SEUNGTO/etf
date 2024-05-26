@@ -373,8 +373,10 @@ hide_index = True)
 
     st.write(f'## 3. 최근 {stocks[etf_code]}에 관심을 갖고 있는 ETF들이에요.')
     total = df.set_index('ETF코드').join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'inner')
-    st.dataframe(total)
-    st.dataframe(df)
+    total.drop(['종목코드', '종목명'], axis = 1)
+    total.reset_index(inplace = True, drop = True)
+    st.dataframe(total.sort_values('비중', ascending = False))
+    
 
     col1, col2 = st.columns(2)
     with col1 :

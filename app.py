@@ -303,6 +303,8 @@ hide_index = True)
 
     with tab4 :
         st.write('유튜브 검색결과를 넣는 영역')
+        st.write('참고 예정')
+        st.write('https://velog.io/@ssongji/%EC%9C%A0%ED%8A%9C%EB%B8%8C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%81%AC%EB%A1%A4%EB%A7%81-%EB%B0%8F-%EC%8B%9C%EA%B0%81%ED%99%94-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-2.-YOUTUBE-API%EB%A1%9C-%ED%82%A4%EC%9B%8C%EB%93%9C-%EA%B2%80%EC%83%89-%EB%B0%8F-%ED%8A%B9%EC%A0%95-%EC%9C%A0%ED%8A%9C%EB%B2%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B6%94%EC%B6%9C')
 
     st.write(f'## 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 

@@ -372,11 +372,12 @@ hide_index = True)
     # DB 변경 이후에 수정해야 함
 
     st.write(f'## 3. 최근 {stocks[etf_code]}에 관심을 갖고 있는 ETF들이에요.')
+    st.write(f'### 📈 {stocks[etf_code]}의 비중이 높은 ETF들이에요.')
     total = df.set_index('ETF코드').join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'inner')
     total = total.drop(['종목코드', '종목명'], axis = 1)
     total.reset_index(inplace = True, drop = True)
     total = total.set_index('ETF')
-    st.dataframe(total.sort_values('비중', ascending = False))
+    st.dataframe(total.head(10).sort_values('비중', ascending = False))
     
 
     col1, col2 = st.columns(2)

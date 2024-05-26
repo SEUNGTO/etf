@@ -373,6 +373,7 @@ hide_index = True)
 
     st.write(f'## 3. 최근 {stocks[etf_code]}에 관심을 갖고 있는 ETF들이에요.')
     st.dataframe(df)
+    st.dataframe(tmp)
 
     col1, col2 = st.columns(2)
     with col1 :

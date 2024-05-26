@@ -338,7 +338,7 @@ hide_index = True)
 
     col1, col2, col3, col4 = st.columns(4)
     with col1 :
-        st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
+        st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}%', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
     with col2 :
         delta = close - highest
         st.metric(label = '종가(고점 대비)', value = f'{close:,}',  delta = f'{delta:,}')

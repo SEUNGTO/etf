@@ -288,7 +288,7 @@ hide_index = True)
 
         name = '주식 급등일보🚀급등테마·대장주 탐색기 (텔레그램)'
         tele_url = 'https://t.me/s/FastStockNews'
-        st.dataframe(telegram_crawller(name, tele_url)
+        st.dataframe(telegram_crawller(name, tele_url))
         query = f'{tele_url}?q={stocks[etf_code]}'
         response = requests.get(query)
         soup = BeautifulSoup(response.content, 'html.parser')

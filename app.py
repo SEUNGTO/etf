@@ -281,44 +281,21 @@ hide_index = True)
 
     with tab3 :
         
-        telegram_msgs = {
-            'msg': []
+        telegram_dict = {
+            '주식 급등일보🚀급등테마·대장주 탐색기 (텔레그램)': 'https://t.me/s/FastStockNews'
             , 'url': []
         }
+        for name, url in telegram_dict.items() :
+        
+        
 
-        name = '주식 급등일보🚀급등테마·대장주 탐색기 (텔레그램)'
-        tele_url = 'https://t.me/s/FastStockNews'
-        st.dataframe(telegram_crawller(name, tele_url))
-        query = f'{tele_url}?q={stocks[etf_code]}'
-        response = requests.get(query)
-        soup = BeautifulSoup(response.content, 'html.parser')
+            with st.expander(f'{name}') :
 
-        for msg in soup.find_all('div', class_='tgme_widget_message_bubble'):
-
-            msg.find('a').decompose()
-            try:
-                msg = msg.find('div', class_='tgme_widget_message_text js-message_text').text
-                telegram_msgs['msg'].append(msg)
-
-            except:
-                msg = '(메세지없이 링크만 있어요.)'
-                telegram_msgs['msg'].append(msg)
-
-        for uu in soup.find_all('a', class_='tgme_widget_message_date'):
-            url = uu.attrs['href']
-            telegram_msgs['url'].append(url)
-
-        telegram_msgs = pd.DataFrame(telegram_msgs)
-        telegram_msgs.columns = ['메세지', '링크']
-
-        with st.expander(f'{name}') :
-
-            st.write(f'- "{name}"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({tele_url})).')
-            st.dataframe(telegram_msgs,
-                         hide_index=True,
+                st.write(f'- "{name}"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({tele_url})).')
+                st.dataframe(telegram_crawller(name, tele_url), hide_index=True,
                          column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small')},
                          use_container_width = True)
-
+            
         with st.expander(f'텔레그램2') :
             st.write(f'- "****"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({tele_url})).')
             st.dataframe(telegram_msgs,

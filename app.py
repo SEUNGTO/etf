@@ -281,6 +281,7 @@ hide_index = True)
         telegram_dict = {
             '주식 급등일보🚀급등테마·대장주 탐색기': 'https://t.me/s/FastStockNews'
 ,'텐렙' : 'https://t.me/s/Ten_level'
+,'조정은 뇌를 뽑아가지' : 'https://t.me/s/shlrkQhqgla'
             
         }
         for name, url in telegram_dict.items() :

@@ -221,8 +221,9 @@ elif search and type == 'Stock' :
         st.write(f' 증권사의 평균 목표가는 **{tmp["목표가"].mean():,.0f}**원이에요.')
         st.write(f'- 가장 높은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].max()]["증권사"].values[0]}의 {tmp["목표가"].max():,.0f}원이에요.')
         st.write(f'- 가장 낮은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].min()]["증권사"].values[0]}의 {tmp["목표가"].min():,.0f}원이에요.')
-        st.dataframe(tmp, column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
-                     use_container_width=True)
+        st.dataframe(tmp.reset_index(drop=True), column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
+                     use_container_width=True,
+hide_index = True)
     with tab2 :
 
         st.write(f'**네이버 뉴스**에서 방금 {stocks[etf_code]}를 검색한 결과에요.')

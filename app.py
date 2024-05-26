@@ -186,7 +186,7 @@ if search and type == 'ETF':
     st.dataframe(increase.head(10), use_container_width=True)
 
     st.write(f'## 4. 📉 최근 {stocks[etf_code]}에서 가장 비중이 줄어든 종목들이에요')
-    decrease = tmp[tmp['차이'] > 0].sort_values('차이', ascending=True)
+    decrease = tmp[tmp['차이'] < 0].sort_values('차이', ascending=True)
     st.dataframe(decrease.head(10), use_container_width=True)
 
 

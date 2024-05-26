@@ -67,6 +67,11 @@ codeList = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이�
                          'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF',
                                    'Stock', 'Stock', 'Stock', 'Stock', 'Stock']})
 
+codetmp = fdr.StockListing('KRX')
+codetmp = codetmp[['Name', 'Symbol']]
+codetmp['Type'] = 'Stock'
+st.dataframe(codetmp)
+
 col1, col2 = st.columns(2)
 with col2 :
     with st.expander("검색가능한 종목"):

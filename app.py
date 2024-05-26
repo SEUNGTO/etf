@@ -279,7 +279,7 @@ hide_index = True)
     with tab3 :
         
         telegram_dict = {
-            '주식 급등일보🚀급등테마·대장주 탐색기 (텔레그램)': 'https://t.me/s/FastStockNews'
+            '주식 급등일보🚀급등테마·대장주 탐색기': 'https://t.me/s/FastStockNews'
 ,'텐렙' : 'https://t.me/s/Ten_level'
             
         }

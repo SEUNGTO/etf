@@ -17,9 +17,6 @@ def telegram_crawller(name, url) :
             , 'link': []
         }
 
-    name = '주식 급등일보🚀급등테마·대장주 탐색기 (텔레그램)'
-    url = 'https://t.me/s/FastStockNews'
-
     query = f'{url}?q={stocks[etf_code]}'
     response = requests.get(query)
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -291,24 +288,13 @@ hide_index = True)
 
             with st.expander(f'{name}') :
 
-                st.write(f'- "{name}"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({tele_url})).')
-                st.dataframe(telegram_crawller(name, tele_url), hide_index=True,
+                st.write(f'- "{name}"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({url})).')
+                st.dataframe(telegram_crawller(name, url), hide_index=True,
                          column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small')},
                          use_container_width = True)
             
-        with st.expander(f'텔레그램2') :
-            st.write(f'- "****"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({tele_url})).')
-            st.dataframe(telegram_msgs,
-                         hide_index=True,
-                         column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small')},
-                         use_container_width = True)
-        with st.expander(f'텔레그램3') :
-            st.write(f'- "****"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({tele_url})).')
-            st.dataframe(telegram_msgs,
-                         hide_index=True,
-                         column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small')},
-                         use_container_width = True)
-
+        
+        
     with tab4 :
         st.write('유튜브 검색결과를 넣는 영역')
         st.write('참고 예정')

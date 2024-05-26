@@ -7,7 +7,11 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
-def telegram_crawller(name, url)
+st.set_page_config(
+    page_title="ETFace",
+    page_icon="😎"
+)
+def telegram_crawller(name, url) :
     telegram_msgs = {
             'msg': []
             , 'link': []
@@ -39,10 +43,7 @@ def telegram_crawller(name, url)
     telegram_msgs.columns = ['메세지', '링크']
     return telegram_msgs
 
-st.set_page_config(
-    page_title="ETFace",
-    page_icon="😎"
-)
+
 
 def etf_code_update(etf_name) :
     st.session_state['etf_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]

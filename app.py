@@ -186,7 +186,7 @@ if search and type == 'ETF':
 
     col1, col2, col3, col4 = st.columns(4)
     with col1 : 
-        st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
+        st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}%', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
     with col2 :
         close = price['Close'].tail(1).values[0]
         high = price['High'].max()

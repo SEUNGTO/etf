@@ -372,7 +372,7 @@ hide_index = True)
     # DB 변경 이후에 수정해야 함
 
     st.write(f'## 3. 최근 {stocks[etf_code]}에 관심을 갖고 있는 ETF들이에요.')
-    total = df.join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'inner')
+    total = df.set_index('ETF코드').join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'inner')
     st.dataframe(total)
     st.dataframe(df)
 

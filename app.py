@@ -247,7 +247,7 @@ elif search and type == 'Stock' :
     tab1, tab2, tab3, tab4 = st.tabs(['증권사 리포트', '뉴스', '텔레그램', '유튜브'])
 
     with tab1 :
-        try : 
+        if research.shape[0] > 0 : 
             tmp = research.set_index('종목명').drop(['종목코드', 'nid'], axis = 1).sort_values('게시일자', ascending = False)
             st.write(f' 총 **{len(tmp["목표가"])}**개의 리포트가 있어요.')
 
@@ -257,7 +257,7 @@ elif search and type == 'Stock' :
             st.dataframe(tmp.reset_index(drop=True), column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
                      use_container_width=True,
 hide_index = True)
-        except : st.error('증권사 리포트가 없어요.')
+        else : st.error('증권사 리포트가 없어요.')
     with tab2 :
 
         st.write(f'**네이버 뉴스**에서 방금 {stocks[etf_code]}를 검색한 결과에요.')

@@ -372,6 +372,7 @@ hide_index = True)
     # DB 변경 이후에 수정해야 함
 
     st.write(f'## 3. 최근 {stocks[etf_code]}에 관심을 갖고 있는 ETF들이에요.')
+    st.dataframe(df)
 
     col1, col2 = st.columns(2)
     with col1 :

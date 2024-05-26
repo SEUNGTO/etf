@@ -68,7 +68,7 @@ codeList = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이�
                                    'Stock', 'Stock', 'Stock', 'Stock', 'Stock']})
 
 codetmp = fdr.StockListing('S&P500')
-codetmp = codetmp[['Name', 'Code']]
+codetmp = codetmp[['Name', 'Symbol']]
 codetmp['Type'] = 'Stock'
 st.dataframe(codetmp)
 

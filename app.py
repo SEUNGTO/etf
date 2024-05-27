@@ -379,7 +379,7 @@ elif search and type == 'Stock' :
 
         st.write(f'### 📉 최근 비중을 줄였어요.')
 
-        decrease = tmp[tmp['차이'] < 0].sort_values('차이', ascending=False).head(10)
+        decrease = tmp[tmp['차이'] < 0].sort_values('차이', ascending=True).head(10)
         st.write(f'**총 {len(decrease)}개**의 ETF에서 {name}의 비중을 줄였어요.')
         st.dataframe(decrease.head(10), use_container_width=True,)
 

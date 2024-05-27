@@ -246,8 +246,8 @@ hide_index = True)
         for telegram, url in telegram_dict.items() :
 
             with st.expander(f'{telegram}') :
-                st.write(f'##### __{name}__와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
-                st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 __링크__를 클릭하세요.')
+                st.write(f'##### {name}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
+                st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 :blue[링크]를 클릭하세요.')
                 st.dataframe(telegram_crawller(url, name)
                              , hide_index=True
                              ,column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small'),

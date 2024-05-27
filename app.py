@@ -9,6 +9,10 @@ st.set_page_config(
 # session 정의
 set_session()
 
+# DB 연동
+@st.cache_resource()
+conn = st.connection('mysql', type='sql')
+
 # 기본 변수 세팅
 codeList = load_codeList()
 etf = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브'],
@@ -41,11 +45,11 @@ search = ~st.session_state['search']
 code = st.session_state['code']
 type = st.session_state['type']
 
-conn = st.connection('mysql', type='sql')
 
 if search and type == 'ETF':
+
     # 전체 내역 조회
-    
+
     df = conn.query(f'SELECT * from etf_new where etf_code = {code};', ttl=600)
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
     research = conn.query('SELECT * FROM research', ttl=600)
@@ -60,9 +64,10 @@ if search and type == 'ETF':
     df.columns = ['종목코드', '종목명', '보유량', '평가금액', '비중']
 
     st.dataframe(df)
-    st.write(df.info())
-    st.write(f'## 1. {name}의 보유 종목과 비중이에요.')
+    st.write(type(df['비중']))
+    st.dataframe(df.sum(df['비중']))
 
+    st.write(f'## 1. {name}의 보유 종목과 비중이에요.')
 
     tab1, tab2 = st.tabs(["상위 10개 종목의 비중", "보유 종목별 주요 리포트"])
     with tab1:

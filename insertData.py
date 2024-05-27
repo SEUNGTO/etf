@@ -88,3 +88,10 @@ if __name__ == "__main__" :
     # insert_date('old', data, 1000)
 
 
+
+
+    connection = connect_to_mysql(host, user, password, database)
+    cursor = connection.cursor()
+    drop_query = f"select * from etf_new"
+    data = cursor.execute(drop_query)
+    data

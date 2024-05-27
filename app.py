@@ -58,14 +58,15 @@ if search and type == 'ETF':
 
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액', '비중']
-    # df['비중'] = round(df['평가금액'].astype(int) / df['평가금액'].astype(int).sum() * 100, 2)
+
+    st.dataframe(df)
 
     st.write(f'## 1. {name}의 보유 종목과 비중이에요.')
 
     tab1, tab2 = st.tabs(["상위 10개 종목의 비중", "보유 종목별 주요 리포트"])
     with tab1:
         ratio = df.sort_values('비중', ascending=False)[['종목명', '비중']].head(10)
-        ratio.loc['other', :] = ['기타', 100 - sum(ratio['비중'])]
+        ratio.loc['other', :] = ['기타', 100 - sum(ratio['비중'].astype(int))]
 
         fig = px.pie(ratio, values='비중', names='종목명')
         fig.update_layout(template='plotly_white',

@@ -14,6 +14,7 @@ def telegram_crawller(url, keyword) :
         'msg': []
         , 'date': []
         , 'time': []
+        , 'view': []
         , 'link': []
     }
     query = f'{url}?q={keyword}'

@@ -131,6 +131,7 @@ if search and type == 'ETF':
                                                       "메세지": st.column_config.TextColumn(width='middle')}
                                      , use_container_width=True
                                      )
+    st.success('텔레그램 채널에서 정보를 모두 모아왔어요.')
 
     st.write(f'## 3. {name}의 최근 한 달 주가 추이에요.')
 

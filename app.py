@@ -34,10 +34,9 @@ conn = st.connection('mysql', type='sql')
 if search and type == 'ETF':
 
     # 전체 내역 조회
-
     df = load_etf_data('new')
-    df = df[df['etf_code'] == code]
-    st.dataframe(df)
+
+    # st.dataframe(df)
     # df = conn.query(f'SELECT * from etf_20240521 where etf_code = {code};', ttl=600)
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
 
@@ -49,9 +48,9 @@ if search and type == 'ETF':
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 
-    df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
-    df.columns = ['종목코드', '종목명', '보유량', '평가금액', '비중']
-    df['비중'] = df['비중'].astype(float)
+    # df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
+    # df.columns = ['종목코드', '종목명', '보유량', '평가금액', '비중']
+    # df['비중'] = df['비중'].astype(float)
     # df['비중'] = round(df['평가금액'].astype(floa) / df['평가금액'].astype(int).sum() * 100, 2)
 
 

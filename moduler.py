@@ -9,14 +9,21 @@ import re
 from bs4 import BeautifulSoup
 import time
 
-def load_etf_data(type) :
+def load_etf_data(type, code) :
     if type == 'old' :
         url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/old_data.json'
     elif type == 'new' :
         url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/new_data.json'
     tmp = requests.get(url)
+    tmp = pd.DataFrame(tmp.json(), dtype = str)
+    tmp = tmp.loc[tmp['etf_code'] == code, :]
+    tmp = tmp.drop('etf_code', axis = 1)
+    tmp.columns = ['종목코드', '종목명', '보유량', '평가금액', '비중']
+    tmp['보유량'] = tmp['보유량'].astype(int)
+    tmp['평가금액'] = tmp['평가금액'].astype(int)
+    tmp['비중'] = tmp['비중'].astype(float)
 
-    return pd.DataFrame(tmp.json(), dtype = str)
+    return tmp
 
 
 def telegram_crawller(url, keyword) :

@@ -100,7 +100,7 @@ if search and type == 'ETF':
         _topList = ratio.head(5)['종목명'].tolist()
         _teles = [tele for tele in telegram_dict.keys()]
 
-        for tab, _tele in zip(st.tabs(_teles), _teles) :
+        for _tele in _teles :
             url = telegram_dict[_tele]
             with st.expander(tab) :
                 for stocks in _topList :

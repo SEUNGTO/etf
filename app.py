@@ -243,7 +243,7 @@ hide_index = True)
 
     with tab3 :
 
-        for telegram, url in config.telegram_dict.items() :
+        for telegram, url in telegram_dict.items() :
 
             with st.expander(f'{telegram}') :
 

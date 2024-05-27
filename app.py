@@ -300,7 +300,7 @@ hide_index = True)
     target = research['목표가'].mean()
 
     idx = close/target
-    st.write(target)
+    st.write(f'값 검증 : {target == np.nan}')
 
     col1, col2, col3, col4 = st.columns(4)
     with col1 :

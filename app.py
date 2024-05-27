@@ -169,6 +169,7 @@ if search and type == 'ETF':
 
     # 최근 내역 비교
     df2 = load_etf_data('old', code)
+    df2['비중'] = round(df2['비중'], 2)
 
     tmp = df[['종목코드', '종목명', '비중']].set_index('종목코드').join(df2[['종목코드', '비중']].set_index('종목코드'),
                                                            how='inner', lsuffix='T', rsuffix='C')

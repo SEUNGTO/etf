@@ -230,41 +230,49 @@ hide_index = True)
         else : st.error('증권사 리포트가 없어요.')
     with tab2 :
 
-        st.write(f'**네이버 뉴스**에서 방금 {name}를 검색한 결과에요.')
+        try :
 
-        url = f'https://openapi.naver.com/v1/search/news.json'
-        params = {'query' : name,
-                  'display' : '50'}
-        headers = {
-            'X-Naver-Client-Id' : st.secrets["clientid"],
-            'X-Naver-Client-Secret' : st.secrets["clientsecret"]}
+            url = f'https://openapi.naver.com/v1/search/news.json'
+            params = {'query' : name,
+                      'display' : '50'}
+            headers = {
+                'X-Naver-Client-Id' : st.secrets["clientid"],
+                'X-Naver-Client-Secret' : st.secrets["clientsecret"]}
 
-        response = requests.get(url, params = params, headers = headers)
-        newsData = pd.DataFrame(response.json()['items'])[['title', 'pubDate', 'link']]
+            response = requests.get(url, params = params, headers = headers)
+            newsData = pd.DataFrame(response.json()['items'])[['title', 'pubDate', 'link']]
 
-        newsData['title'] = newsData['title'].apply(lambda x : x.replace('<b>', '').replace('</b>', ''))
-        newsData['pubDate'] = pd.to_datetime(newsData['pubDate'])
-        newsData['pubDate'] = newsData['pubDate'].apply(lambda x : x.strftime('%Y-%m-%d'))
+            newsData['title'] = newsData['title'].apply(lambda x : x.replace('<b>', '').replace('</b>', ''))
+            newsData['pubDate'] = pd.to_datetime(newsData['pubDate'])
+            newsData['pubDate'] = newsData['pubDate'].apply(lambda x : x.strftime('%Y-%m-%d'))
 
-        newsData.columns = ['기사 제목', '날짜', '링크']
+            newsData.columns = ['기사 제목', '날짜', '링크']
 
-        st.dataframe(newsData,
-                     hide_index = True,
-                     column_config = {"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
+            st.write(f'**네이버 뉴스**에서 방금 {name}를 검색한 결과에요.')
+            st.dataframe(newsData,
+                         hide_index = True,
+                         column_config = {"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
+        except : st.error('검색된 뉴스가 없어요.')
 
     with tab3 :
 
         for telegram, url in telegram_dict.items() :
 
-            with st.expander(f'{telegram}') :
-                st.write(f'##### {name}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
-                st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 :blue[링크]를 클릭하세요.')
-                st.dataframe(telegram_crawller(url, name)
-                             , hide_index=True
-                             ,column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small'),
-                                            "메세지" : st.column_config.TextColumn(width = 'middle')}
-                             ,use_container_width = True
-                             )
+            try :
+
+                with st.expander(f'{telegram}') :
+                    tele = telegram_crawller(url, name)
+                    st.write(f'##### {name}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
+                    st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 :blue[링크]를 클릭하세요.')
+                    st.dataframe(tele
+                                 , hide_index=True
+                                 ,column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small'),
+                                                "메세지" : st.column_config.TextColumn(width = 'middle')}
+                                 ,use_container_width = True
+                                 )
+            except :
+                with st.expander(f'{telegram}'):
+                    st.error('검색된 내용이 없어요')
 
 
     with tab4 :
@@ -377,7 +385,7 @@ hide_index = True)
 
     col3, col4 = st.columns(2)
     with col3 :
-        st.write(f'### 🆕 새로 포트폴리오에 넣었어요.')
+        st.write(f'### 🆕 포트폴리오에 추가했어요.')
 
         new = pd.DataFrame({'ETF' : ['KODEX 200', 'TIGER 200', 'HANARO 200'],
                             '보유 비중' : [20.00, 30.00, 10.00],

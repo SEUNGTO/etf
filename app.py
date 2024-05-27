@@ -354,11 +354,6 @@ elif search and type == 'Stock' :
     tmp = tmp.drop('종목명', axis = 1)
     tmp = tmp.set_index('ETF')
 
-    with st.expander('※ 수정 예정 사항(24.5.25.)') :
-        st.write(f'{name}를 포함한 애들끼리만 모아서 비중을 계산해서 오류 있음(df1, df2 모두)')
-        st.write(f'DB 내에 미리 비중을 계산해두어야 함')
-        st.dataframe(tmp)
-
     # DB 변경 이후에 수정해야 함
 
     st.write(f'## 3. 최근 {name}에 관심을 갖고 있는 ETF들이에요.')

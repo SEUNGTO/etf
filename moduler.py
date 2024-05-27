@@ -70,7 +70,7 @@ def load_codeList() :
          'Symbol': ['102110', '069500', '463050', '482030', '385720'],
          'Type': ['ETF', 'ETF', 'ETF', 'ETF', 'ETF']})
 
-    return pd.concat([data, etf])
+    return pd.concat([etf, data])
 
 def search_bar(codeList) :
     col1, col2 = st.columns(2)

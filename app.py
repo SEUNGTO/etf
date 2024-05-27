@@ -24,10 +24,6 @@ with col2 :
 
 st.title('ETF 관상가')
 
-# stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브',
-#           '482030': 'Koact 테크핵심소재공급망액티브', '385720': 'timefolio Kstock 액티브',
-#           '005930' : '삼성전자', '009150' : '삼성전기', '000660' : 'SK하이닉스', '005380' : '현대차', '068270' : '셀트리온'}
-
 
 col1, col2 = st.columns(2)
 with col1 :
@@ -77,10 +73,10 @@ if search and type == 'ETF':
         st.plotly_chart(fig
                         , theme="streamlit"
                         , use_container_width=True)
-
-        st.dataframe(df[['종목명', '비중', '평가금액']]
-                    ,hide_index = True
-                    ,use_container_width=True)
+        with st.expander(f'{name}의 보유종목 한 눈에 보기') :
+            st.dataframe(df[['종목명', '비중', '평가금액']]
+                        ,hide_index = True
+                        ,use_container_width=True)
 
 
     with tab2:

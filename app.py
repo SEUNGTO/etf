@@ -63,7 +63,7 @@ if search and type == 'ETF':
     df.columns = ['종목코드', '종목명', '보유량', '평가금액', '비중']
 
     st.dataframe(df)
-    st.write(type(df['비중']))
+    df['비중'] = df['비중'].astype(int)
     st.dataframe(df.sum(df['비중']))
 
     st.write(f'## 1. {name}의 보유 종목과 비중이에요.')

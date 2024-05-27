@@ -257,12 +257,12 @@ hide_index = True)
 ,'조정은 뇌를 뽑아가지' : 'https://t.me/s/shlrkQhqgla'
             
         }
-        for name, url in telegram_dict.items() :
+        for telegram, url in telegram_dict.items() :
 
-            with st.expander(f'{name}') :
+            with st.expander(f'{telegram}') :
 
-                st.write(f'- "{name}"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({url})).')
-                st.dataframe(telegram_crawller(url, name),
+                st.write(f'- "{telegram}"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({url})).')
+                st.dataframe(telegram_crawller(url, telegram),
                              hide_index=True,
                              column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small')},
                              use_container_width = True)

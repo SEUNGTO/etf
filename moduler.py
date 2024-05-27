@@ -3,9 +3,11 @@ import FinanceDataReader as fdr
 import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
+import numpy as np
 import requests
 import re
 from bs4 import BeautifulSoup
+
 
 def telegram_crawller(url, keyword) :
     telegram_msgs = {

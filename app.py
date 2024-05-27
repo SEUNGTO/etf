@@ -222,6 +222,7 @@ elif search and type == 'Stock' :
                          use_container_width=True,
                          hide_index = True)
         else : st.error('증권사 리포트가 없어요.')
+
     with tab2 :
 
         try :
@@ -339,12 +340,8 @@ elif search and type == 'Stock' :
     df2['종목코드'] = code
 
 
-    # df2 = conn.query(f'SELECT * from etf_20240518 where stock_code = {code};', ttl=600)
-    # df2 = df2.loc[:, ['etf_code', 'stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
-    # df2.columns = ['ETF코드', '종목코드', '종목명', '보유량', '평가금액', '비중']
-
     tmp = df[['ETF코드', '종목명', '비중']].set_index('ETF코드').join(df2[['ETF코드', '비중']].set_index('ETF코드'),
-                                                           how='inner', lsuffix='T', rsuffix='C')
+                                                           how='left', lsuffix='T', rsuffix='C')
     tmp['차이'] = tmp['비중T'] - tmp['비중C']
     tmp = tmp.join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'inner')
 
@@ -362,7 +359,7 @@ elif search and type == 'Stock' :
 
     st.write(f'## 3. 최근 {name}에 관심을 갖고 있는 ETF들이에요.')
     st.write(f'### 📈 {name}의 비중이 높은 ETF들이에요.')
-    total = df.set_index('ETF코드').join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'inner')
+    total = df.set_index('ETF코드').join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'left')
     total = total.drop(['종목코드', '종목명'], axis = 1)
     total.reset_index(inplace = True, drop = True)
     total = total.set_index('ETF')
@@ -372,7 +369,7 @@ elif search and type == 'Stock' :
     col1, col2 = st.columns(2)
     with col1 :
         st.write(f'### 📈 최근 비중을 늘렸어요.')
-        increase = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False)
+        increase = tmp.dropna()[tmp['차이'] > 0].sort_values('차이', ascending=False)
         st.write(f'**총 {len(increase)}개**의 ETF에서 {name}의 비중을 늘렸어요.')
         st.dataframe(increase.head(10), use_container_width=True)
 
@@ -380,7 +377,7 @@ elif search and type == 'Stock' :
 
         st.write(f'### 📉 최근 비중을 줄였어요.')
 
-        decrease = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10)
+        decrease = tmp.dropna()[tmp['차이'] > 0].sort_values('차이', ascending=False).head(10)
         st.write(f'**총 {len(decrease)}개**의 ETF에서 {name}의 비중을 줄였어요.')
         st.dataframe(decrease.head(10), use_container_width=True,)
 

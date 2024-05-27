@@ -46,7 +46,7 @@ conn = st.connection('mysql', type='sql')
 if search and type == 'ETF':
     # 전체 내역 조회
     
-    df = conn.query(f'SELECT * from etf_20240521 where etf_code = {code};', ttl=600)
+    df = conn.query(f'SELECT * from etf_new where etf_code = {code};', ttl=600)
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
     research = conn.query('SELECT * FROM research', ttl=600)
     research.columns = ['종목명', '종목코드', '리포트 제목', 'nid', '목표가', '의견', '게시일자', '증권사', '링크']
@@ -56,9 +56,9 @@ if search and type == 'ETF':
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 
-    df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
-    df.columns = ['종목코드', '종목명', '보유량', '평가금액']
-    df['비중'] = round(df['평가금액'].astype(int) / df['평가금액'].astype(int).sum() * 100, 2)
+    df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
+    df.columns = ['종목코드', '종목명', '보유량', '평가금액', '비중']
+    # df['비중'] = round(df['평가금액'].astype(int) / df['평가금액'].astype(int).sum() * 100, 2)
 
     st.write(f'## 1. {name}의 보유 종목과 비중이에요.')
 

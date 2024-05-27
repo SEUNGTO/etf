@@ -1,8 +1,9 @@
-import mysql.connector
 import pandas as pd
+import mysql.connector
+from tqdm import tqdm
 
-data = pd.read_csv('')
-data = data.drop(['시가총액', '시가총액 구성비중'], axis = 1)
+data = pd.read_excel('../data/etf_20240514.xlsx',
+                     dtype = str)
 data.fillna(0, inplace = True)
 
 host = "34.22.69.206"
@@ -26,56 +27,64 @@ def connect_to_mysql(host, user, password, database):
         return None
 
 
-def drop_table(date) :
+def drop_table(type) :
     connection = connect_to_mysql(host, user, password, database)
     cursor = connection.cursor()
-    drop_query = f"drop table if exists etf_{date}"
+    drop_query = f"drop table if exists etf_{type}"
     cursor.execute(drop_query)
     cursor.close()
     connection.close()
 
-def create_table(date) :
+def create_table(type) :
     connection = connect_to_mysql(host, user, password, database)
     cursor = connection.cursor()
 
-    create_query = f"create table etf_{date} " \
+    create_query = f"create table etf_{type} " \
                    f" (etf_code varchar(6)" \
                    f", stock_code varchar(50)" \
                    f", stock_nm varchar(30)" \
                    f", stock_amt int" \
-                   f", evl_amt int)"
+                   f", evl_amt int" \
+                   f", ratio varchar(30)" \
+                   f")"
 
     cursor.execute(create_query)
     cursor.close()
     connection.close()
 
-def insert_date(date, data) :
-    connection = connect_to_mysql(host, user, password, database)
-    cursor = connection.cursor()
+def insert_date(type, data, batch_size) :
 
-    insert_query = f"""
-    INSERT INTO  etf_{date} 
-    (etf_code, stock_code, stock_nm, stock_amt, evl_amt)
-    VALUES (%s, %s, %s, %s, %s)
-    """
+    _len = data.shape[0]
 
-    insert_data = []
-    for row in data.iterrows():
-        tmp = tuple(row[1].values)
-        insert_data.append(tmp)
+    for i in tqdm(range(0, _len, batch_size)) :
 
-    cursor.executemany(insert_query, insert_data[:100])
-    cursor.fetchall()
-    cursor.close()
-    connection.commit()
-    connection.close()
+        batch = data[i:i+batch_size].drop('평가금액', axis = 1)
+        connection = connect_to_mysql(host, user, password, database)
+        cursor = connection.cursor()
+
+
+        insert_query = f"""
+        INSERT INTO  etf_{type} 
+        (etf_code, stock_code, stock_nm, stock_amt, evl_amt, ratio)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """
+
+        insert_data = []
+        for row in batch.iterrows():
+            tmp = tuple(row[1].values)
+            insert_data.append(tmp)
+
+        cursor.executemany(insert_query, insert_data)
+        cursor.fetchall()
+        cursor.close()
+        connection.commit()
+        connection.close()
 
 
 if __name__ == "__main__" :
-    date = '20240519'
-    data = pd.read_csv('')
+
+    # drop_table('old')
+    # create_table('old')
+    # insert_date('old', data, 1000)
 
 
-    drop_table(date)
-    create_table(date)
-    insert_date(date, data)

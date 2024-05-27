@@ -189,7 +189,7 @@ if search and type == 'ETF':
 elif search and type == 'Stock' :
 
     df = load_stock_data('new', code)
-
+    df['종목코드'] = code
     # df = conn.query(f'SELECT * from etf_20240521 where stock_code = {code};', ttl=600)
     # df = df.loc[:, ['etf_code','stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
     # df.columns = ['ETF코드','종목코드', '종목명', '보유량', '평가금액', '비중']
@@ -336,10 +336,12 @@ elif search and type == 'Stock' :
 
     ########### 비중 늘리고 줄인 ETF 계산 ##################
     df2 = load_stock_data('old', code)
+    df2['종목코드'] = code
+
 
     # df2 = conn.query(f'SELECT * from etf_20240518 where stock_code = {code};', ttl=600)
-    df2 = df2.loc[:, ['etf_code', 'stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
-    df2.columns = ['ETF코드', '종목코드', '종목명', '보유량', '평가금액', '비중']
+    # df2 = df2.loc[:, ['etf_code', 'stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
+    # df2.columns = ['ETF코드', '종목코드', '종목명', '보유량', '평가금액', '비중']
 
     tmp = df[['ETF코드', '종목명', '비중']].set_index('ETF코드').join(df2[['ETF코드', '비중']].set_index('ETF코드'),
                                                            how='inner', lsuffix='T', rsuffix='C')

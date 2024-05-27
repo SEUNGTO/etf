@@ -47,8 +47,7 @@ def telegram_crawller(url, keyword) :
 
     telegram_msgs = pd.DataFrame(telegram_msgs)
     telegram_msgs.columns = ['메세지', '일자', '시간', '링크']
-    return telegram_msgs
-        # .sort_values(by = ['일자', '시간'], ascending=[False, False])
+    return telegram_msgs.sort_values(by = ['일자', '시간'], ascending = ['False', 'False'])
 
 def code_update(name, codeList) :
     st.session_state['code'] = codeList[codeList['Name'] == name]['Symbol'].values[0]

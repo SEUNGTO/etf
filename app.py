@@ -249,10 +249,11 @@ hide_index = True)
 
                 st.write(f'- "{telegram}"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({url})).')
                 st.dataframe(telegram_crawller(url, name),
-                             hide_index=True,
-                             column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small'),
-                                            "메세지" : st.column_config.TextColumn(width = 'middle')},
-                             use_container_width = True)
+                             hide_index=True
+                             ,column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small'),
+                                            "메세지" : st.column_config.TextColumn(width = 'middle')}
+                             # ,use_container_width = True
+                             )
 
     with tab4 :
         st.info('🚧업데이트 중이에요.')

@@ -39,13 +39,8 @@ def telegram_crawller(url, keyword) :
             msg = '(메세지없이 링크만 있어요.)'
             telegram_msgs['msg'].append(msg)
 
-            datetime = pd.to_datetime(msg.find('time', class_='time').attrs['datetime'])
-            datetime = datetime.tz_convert('Asia/Seoul')
-            date = datetime.strftime('%Y-%m-%d')
-            _time = datetime.strftime('%H:%M')
-
-            telegram_msgs['date'].append(date)
-            telegram_msgs['time'].append(_time)
+            telegram_msgs['date'].append("")
+            telegram_msgs['time'].append("")
 
     for uu in soup.find_all('a', class_='tgme_widget_message_date'):
         link = uu.attrs['href']

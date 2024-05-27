@@ -60,8 +60,9 @@ if search and type == 'ETF':
     df.columns = ['종목코드', '종목명', '보유량', '평가금액', '비중']
 
     st.dataframe(df)
-
+    st.write(df.info())
     st.write(f'## 1. {name}의 보유 종목과 비중이에요.')
+
 
     tab1, tab2 = st.tabs(["상위 10개 종목의 비중", "보유 종목별 주요 리포트"])
     with tab1:

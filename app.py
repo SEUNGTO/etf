@@ -1,4 +1,5 @@
-from moduler import *
+import moduler
+import pandas as pd
 from config import *
 
 st.set_page_config(
@@ -20,7 +21,7 @@ if 'type' not in st.session_state:
 
 
 # 기본 변수 세팅
-codeList = load_codeList()
+codeList = moduler.load_codeList()
 etf = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브'],
                     'Symbol' : ['102110', '069500', '463050', '482030', '385720'],
                     'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF']})
@@ -44,7 +45,7 @@ with col1 :
     name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'name', placeholder = 'ex. 삼성전자, TIGER 200')
     if name :
         st.write('코드 업데이트가 잘 되었나요?')
-        code_update(name, codeList)
+        moduler.code_update(name, codeList)
         st.write(st.session_state['code'])
         st.write(st.session_state['name'])
 

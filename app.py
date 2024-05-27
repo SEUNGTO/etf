@@ -45,6 +45,7 @@ search = ~st.session_state['search']
 etf_code = st.session_state['etf_code']
 type = st.session_state['type']
 
+st.write(f'type : {type}')
 
 conn = st.connection('mysql', type='sql')
 

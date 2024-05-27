@@ -11,10 +11,13 @@ import time
 
 
 def load_etf_data(type, code) :
+
     if type == 'old' :
         url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/old_data.json'
+
     elif type == 'new' :
         url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/new_data.json'
+
     tmp = requests.get(url)
     tmp = pd.DataFrame(tmp.json(), dtype = str)
     tmp = tmp.loc[tmp['etf_code'] == code, :]
@@ -25,7 +28,6 @@ def load_etf_data(type, code) :
     tmp['비중'] = tmp['비중'].astype(float)
 
     return tmp
-
 
 def telegram_crawller(url, keyword) :
     telegram_msgs = {

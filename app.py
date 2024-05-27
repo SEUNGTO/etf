@@ -250,7 +250,7 @@ hide_index = True)
                 st.dataframe(telegram_crawller(url, name)
                              , hide_index=True
                              ,column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small'),
-                                            "메세지" : st.column_config.TextColumn(width = 'small')}
+                                            "메세지" : st.column_config.TextColumn(width = 'middle')}
                              ,use_container_width = True
                              )
 

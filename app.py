@@ -105,8 +105,7 @@ if search and type == 'ETF':
     st.write(f'## 2. {name}의 상위 5개 종목과 관련된 이야기들이에요.')
 
     with st.spinner('🔍텔레그램 채널을 돌아다니며 정보를 모으고 있어요.') :
-        st.dataframe(ratio.head(5))
-        _topList = ratio.head(5).drop('other')['종목명'].tolist()
+        _topList = ratio.head(5).tolist()
         _teles = [tele for tele in telegram_dict.keys()]
 
         for tab, _tele in zip(st.tabs(_teles), _teles) :

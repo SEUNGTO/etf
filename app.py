@@ -51,7 +51,7 @@ if search and type == 'ETF':
 
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액', '비중']
-    df['비중'] = df['비중'].astype(int)
+    df['비중'] = df['비중'].apply(lambda x: x.astype(int))
     # df['비중'] = round(df['평가금액'].astype(int) / df['평가금액'].astype(int).sum() * 100, 2)
 
 

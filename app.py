@@ -102,7 +102,7 @@ if search and type == 'ETF':
 
         for _tele in _teles :
             url = telegram_dict[_tele]
-            with st.expander(tab) :
+            with st.expander(_tele) :
                 for stocks in _topList :
                     with st.expander(f'{stocks}(비중 : {ratio[ratio["종목명"]==stocks]["비중"].values[0]}%)'):
                         st.write(f'{stocks}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')

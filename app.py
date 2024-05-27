@@ -10,14 +10,11 @@ st.set_page_config(
 set_session()
 
 # 기본 변수 세팅
-codeList = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브',
-                                   '삼성전자', '삼성전기', 'SK하이닉스', '현대차', '셀트리온'],
-                         'Symbol' : ['102110', '069500', '463050', '482030', '385720',
-                                     '005930', '009150','000660' , '005380', '068270'],
-                         'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF',
-                                   'Stock', 'Stock', 'Stock', 'Stock', 'Stock']})
-
-# codeList = fdr.StockListing('KRX')
+codeList = load_codeList()
+etf = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브'],
+                    'Symbol' : ['102110', '069500', '463050', '482030', '385720'],
+                    'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF']})
+codeList = pd.concat([etf, codeList])
 
 col1, col2 = st.columns(2)
 with col2 :

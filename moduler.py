@@ -36,8 +36,11 @@ def telegram_crawller(url, stocks) :
     telegram_msgs.columns = ['메세지', '링크']
     return telegram_msgs
 
-
-
 def etf_code_update(etf_name, codeList) :
     st.session_state['etf_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
     st.session_state['type'] = codeList[codeList['Name'] == etf_name]['Type'].values[0]
+
+def load_codeList() :
+    url = 'https://raw.githubusercontent.com/SEUNGTO/botdata/main/ETFcodeList.json'
+    data = requests.get(url)
+    return pd.DataFrame(data.json())

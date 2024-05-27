@@ -16,6 +16,7 @@ codeList = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이�
                                      '005930', '009150','000660' , '005380', '068270'],
                          'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF',
                                    'Stock', 'Stock', 'Stock', 'Stock', 'Stock']})
+st.dataframe(fdr.StockListing('S&P500'))
 
 codeList = fdr.StockListing('S&P500')
 

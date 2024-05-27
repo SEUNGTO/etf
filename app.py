@@ -63,10 +63,6 @@ if search and type == 'ETF':
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
     df['비중'] = round(df['평가금액'].astype(int) / sum(df['평가금액'].astype(int)), 2)
 
-    st.dataframe(df)
-    df['비중'] = df['비중'].astype(int)
-    st.dataframe(df.sum(df['비중']))
-
     st.write(f'## 1. {name}의 보유 종목과 비중이에요.')
 
     tab1, tab2 = st.tabs(["상위 10개 종목의 비중", "보유 종목별 주요 리포트"])

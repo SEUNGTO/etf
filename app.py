@@ -14,7 +14,7 @@ if 'etf_code' not in st.session_state:
 if 'search_results' not in st.session_state:
     st.session_state['search_results'] = []
 if 'etf_name' not in st.session_state:
-    st.session_state['name'] = 'TIGER 2000'
+    st.session_state['name'] = 'TIGER 200'
 if 'type' not in st.session_state:
     st.session_state['type'] = 'ETF'
 

@@ -36,12 +36,12 @@ def telegram_crawller(url, keyword) :
     telegram_msgs.columns = ['메세지', '링크']
     return telegram_msgs
 
-@st.cache_data
+# @st.cache_data
 def code_update(name, codeList) :
     st.session_state['code'] = codeList[codeList['Name'] == name]['Symbol'].values[0]
     st.session_state['type'] = codeList[codeList['Name'] == name]['Type'].values[0]
 
-@st.cache_data
+# @st.cache_data
 def load_codeList() :
     url = 'https://raw.githubusercontent.com/SEUNGTO/botdata/main/ETFcodeList.json'
     data = pd.DataFrame(requests.get(url).json())

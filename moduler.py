@@ -16,6 +16,10 @@ def telegram_crawller(url, keyword) :
         , 'time': []
         , 'link': []
     }
+    query = f'{url}?q={keyword}'
+    response = requests.get(query)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
     for msg in soup.find_all('div', class_='tgme_widget_message_bubble'):
 
         msg.find('a').decompose()
@@ -46,7 +50,7 @@ def telegram_crawller(url, keyword) :
 
     telegram_msgs = pd.DataFrame(telegram_msgs)
     telegram_msgs.columns = ['메세지', '일자', '시간', '링크']
-    return telegram_msgs
+    return telegram_msgs.sort_values(by = ['일자', '시간'], ascending=[False, False])
 
 def code_update(name, codeList) :
     st.session_state['code'] = codeList[codeList['Name'] == name]['Symbol'].values[0]

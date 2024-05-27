@@ -306,7 +306,7 @@ hide_index = True)
         if target > 0 :
             st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}%', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
         else :
-            ma = price[['Close']].mean()
+            ma = price[['Close']].mean().values[0]
             st.metric(label='평균 대비 현재 가격', value = f'{close/ma:,.0f}', help = '리포트가 없어 평균가격으로 대체했어요.')
     with col2 :
         delta = close - highest

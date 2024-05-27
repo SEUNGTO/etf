@@ -1,5 +1,3 @@
-import streamlit as st
-
 # session 정의
 # def set_session() :
 #     if 'search' not in st.session_state :

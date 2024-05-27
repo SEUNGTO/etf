@@ -1,5 +1,4 @@
 import streamlit as st
-from config import *
 from moduler import *
 
 st.set_page_config(

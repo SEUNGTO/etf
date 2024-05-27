@@ -48,7 +48,7 @@ if search and type == 'ETF':
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 
-    df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
+    df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액', '비중']
     # df['비중'] = round(df['평가금액'].astype(int) / df['평가금액'].astype(int).sum() * 100, 2)
 

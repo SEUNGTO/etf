@@ -189,14 +189,10 @@ if search and type == 'ETF':
 elif search and type == 'Stock' :
 
     df = load_stock_data('new', code)
-    st.dataframe(df)
-
-    df2 = load_stock_data('old', code)
-    st.dataframe(df2)
 
     # df = conn.query(f'SELECT * from etf_20240521 where stock_code = {code};', ttl=600)
-    df = df.loc[:, ['etf_code','stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
-    df.columns = ['ETF코드','종목코드', '종목명', '보유량', '평가금액', '비중']
+    # df = df.loc[:, ['etf_code','stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
+    # df.columns = ['ETF코드','종목코드', '종목명', '보유량', '평가금액', '비중']
 
 
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()

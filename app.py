@@ -306,7 +306,7 @@ hide_index = True)
         if target > 0 :
             st.metric(label = '리포트 대비 현재 가격', value = f'{idx*100:.2f}%', delta = f'{((1/idx)-1) * 100:.2f}% 가능')
         else :
-            st.metric(label='리포트 대비 현재 가격', value=f'(현재 리포트가 없어요.)')
+            st.metric(label='리포트 대비 현재 가격', label_visibility = 'collapsed')
     with col2 :
         delta = close - highest
         st.metric(label = '종가(고점 대비)', value = f'{close:,}',  delta = f'{delta:,}')

@@ -188,10 +188,10 @@ if search and type == 'ETF':
 
 elif search and type == 'Stock' :
 
-    df = conn.query(f'SELECT * from etf_20240521 where stock_code = {code};', ttl=600)
-    df = df.loc[:, ['etf_code','stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
-    df.columns = ['ETF코드','종목코드', '종목명', '보유량', '평가금액']
-    df['비중'] = round(df['평가금액'].astype(int) / df['평가금액'].astype(int).sum() * 100, 2)
+    df = load_stock_data('new', code)
+    # df = conn.query(f'SELECT * from etf_20240521 where stock_code = {code};', ttl=600)
+    df = df.loc[:, ['etf_code','stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
+    df.columns = ['ETF코드','종목코드', '종목명', '보유량', '평가금액', '비중']
 
 
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
@@ -334,10 +334,10 @@ elif search and type == 'Stock' :
 
 
     ########### 비중 늘리고 줄인 ETF 계산 ##################
-    df2 = conn.query(f'SELECT * from etf_20240518 where stock_code = {code};', ttl=600)
-    df2 = df2.loc[:, ['etf_code', 'stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
-    df2.columns = ['ETF코드', '종목코드', '종목명', '보유량', '평가금액']
-    df2['비중'] = round(df2['평가금액'].astype(int) / df2['평가금액'].astype(int).sum() * 100, 2)
+    df2 = load_stock_data('old', code)
+    # df2 = conn.query(f'SELECT * from etf_20240518 where stock_code = {code};', ttl=600)
+    df2 = df2.loc[:, ['etf_code', 'stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
+    df2.columns = ['ETF코드', '종목코드', '종목명', '보유량', '평가금액', '비중']
 
     tmp = df[['ETF코드', '종목명', '비중']].set_index('ETF코드').join(df2[['ETF코드', '비중']].set_index('ETF코드'),
                                                            how='inner', lsuffix='T', rsuffix='C')

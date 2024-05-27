@@ -363,9 +363,7 @@ elif search and type == 'Stock' :
     total = total.drop(['종목코드', '종목명'], axis = 1)
     total.reset_index(inplace = True, drop = True)
     total = total.set_index('ETF')
-    st.dataframe(total.head(10).sort_values('비중', ascending = False))
-
-    st.dataframe(tmp)
+    st.dataframe(total.head(10).sort_values('비중', ascending = False), use_container_width=True)
 
     col1, col2 = st.columns(2)
 

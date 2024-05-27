@@ -7,16 +7,23 @@ st.set_page_config(
 )
 
 # session 정의
-set_session()
+if 'search' not in st.session_state:
+    st.session_state['search'] = True
+if 'etf_code' not in st.session_state:
+    st.session_state['code'] = '102110'
+if 'search_results' not in st.session_state:
+    st.session_state['search_results'] = []
+if 'etf_name' not in st.session_state:
+    st.session_state['name'] = 'TIGER 200'
+if 'type' not in st.session_state:
+    st.session_state['type'] = 'ETF'
 
 # 기본 변수 세팅
 codeList = load_codeList()
-st.dataframe(codeList)
 etf = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브'],
                     'Symbol' : ['102110', '069500', '463050', '482030', '385720'],
                     'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF']})
 codeList = pd.concat([etf, codeList])
-st.dataframe(codeList)
 col1, col2 = st.columns(2)
 with col2 :
     with st.expander("검색가능한 종목"):

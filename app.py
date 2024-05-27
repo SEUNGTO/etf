@@ -46,6 +46,9 @@ etf_code = st.session_state['etf_code']
 type = st.session_state['type']
 
 st.write(f'type : {type}')
+st.write(f'etf_code : {etf_code}')
+st.write(f'etf_code : {etf_name}')
+st.write(f'etf_code : {stocks[etf_code]}')
 
 conn = st.connection('mysql', type='sql')
 

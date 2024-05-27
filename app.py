@@ -258,23 +258,26 @@ elif search and type == 'Stock' :
 
     with tab3 :
 
-        for telegram, url in telegram_dict.items() :
+        with st.spinner('🔍텔레그램 채널을 돌아다니며 정보를 모으고 있어요.') :
 
-            try :
+            for telegram, url in telegram_dict.items() :
 
-                with st.expander(f'{telegram}') :
-                    tele = telegram_crawller(url, name)
-                    st.write(f'##### {name}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
-                    st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 :blue[링크]를 클릭하세요.')
-                    st.dataframe(tele
-                                 , hide_index=True
-                                 ,column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small'),
-                                                "메세지" : st.column_config.TextColumn(width = 'middle')}
-                                 ,use_container_width = True
-                                 )
-            except :
-                with st.expander(f'{telegram}'):
-                    st.error('검색된 내용이 없어요')
+                try :
+                    with st.expander(f'{telegram}') :
+                        tele = telegram_crawller(url, name)
+                        st.write(f'##### {name}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
+                        st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 :blue[링크]를 클릭하세요.')
+                        st.dataframe(tele
+                                     , hide_index=True
+                                     ,column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small'),
+                                                    "메세지" : st.column_config.TextColumn(width = 'middle')}
+                                     ,use_container_width = True
+                                     )
+                except :
+                    with st.expander(f'{telegram}'):
+                        st.error('검색된 내용이 없어요')
+
+        st.success('텔레그램 채널에서 정보를 모두 모아왔어요.')
 
 
     with tab4 :

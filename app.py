@@ -24,6 +24,7 @@ etf = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액
                     'Symbol' : ['102110', '069500', '463050', '482030', '385720'],
                     'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF']})
 codeList = pd.concat([etf, codeList])
+
 col1, col2 = st.columns(2)
 with col2 :
     with st.expander("검색가능한 종목"):
@@ -52,6 +53,7 @@ search = ~st.session_state['search']
 code = st.session_state['code']
 type = st.session_state['type']
 
+st.write(f'search : {search}')
 st.write(f'type : {type}')
 st.write(f'code : {code}')
 st.write(f'name : {name}')

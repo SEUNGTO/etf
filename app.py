@@ -14,7 +14,7 @@ if 'etf_code' not in st.session_state:
 if 'search_results' not in st.session_state:
     st.session_state['search_results'] = []
 if 'etf_name' not in st.session_state:
-    st.session_state['name'] = 'TIGER 200'
+    st.session_state['name'] = 'TIGER 2000'
 if 'type' not in st.session_state:
     st.session_state['type'] = 'ETF'
 
@@ -50,6 +50,7 @@ with col2 :
     st.write(" ") # blank
     st.write(" ") # blank
     st.session_state['search'] = st.button(label = '검색')
+
 
 search = ~st.session_state['search']
 code = st.session_state['code']

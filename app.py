@@ -1,64 +1,13 @@
-import streamlit as st
-import FinanceDataReader as fdr
-import plotly.express as px
-import plotly.graph_objs as go
-import pandas as pd
-import requests
-import re
-from bs4 import BeautifulSoup
+from moduler import *
+from config import *
 
 st.set_page_config(
     page_title="ETFace",
     page_icon="😎"
 )
 
-def telegram_crawller(url, stocks) :
-    telegram_msgs = {
-            'msg': []
-            , 'link': []
-        }
-
-    query = f'{url}?q={stocks}'
-    response = requests.get(query)
-    soup = BeautifulSoup(response.content, 'html.parser')
-
-    for msg in soup.find_all('div', class_='tgme_widget_message_bubble'):
-
-        msg.find('a').decompose()
-        try:
-            msg = msg.find('div', class_='tgme_widget_message_text js-message_text').text
-            telegram_msgs['msg'].append(msg)
-
-        except:
-            msg = '(메세지없이 링크만 있어요.)'
-            telegram_msgs['msg'].append(msg)
-
-    for uu in soup.find_all('a', class_='tgme_widget_message_date'):
-        link = uu.attrs['href']
-        telegram_msgs['link'].append(link)
-
-    telegram_msgs = pd.DataFrame(telegram_msgs)
-    telegram_msgs.columns = ['메세지', '링크']
-    return telegram_msgs
-
-
-
-def etf_code_update(etf_name) :
-    st.session_state['etf_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
-    st.session_state['type'] = codeList[codeList['Name'] == etf_name]['Type'].values[0]
-
 # session 정의
-if 'search' not in st.session_state :
-    st.session_state['search'] = True
-if 'etf_code' not in st.session_state :
-    st.session_state['etf_code'] = '102110'
-if 'search_results' not in st.session_state : 
-    st.session_state['search_results'] = []
-if 'etf_name' not in st.session_state :
-    st.session_state['etf_name'] = 'TIGER 200'
-if 'type' not in st.session_state :
-    st.session_state['type'] = 'ETF'
-
+set_session()
 
 # 기본 변수 세팅
 codeList = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브',
@@ -67,11 +16,8 @@ codeList = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이�
                                      '005930', '009150','000660' , '005380', '068270'],
                          'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF',
                                    'Stock', 'Stock', 'Stock', 'Stock', 'Stock']})
-# st.help(fdr.StockListing)
-# codetmp = fdr.StockListing('KOSPI200')
-# codetmp = codetmp[['Name', 'Symbol']]
-# codetmp['Type'] = 'Stock'
-# st.dataframe(codetmp)
+
+codeList = fdr.StockListing('S&P500')
 
 col1, col2 = st.columns(2)
 with col2 :
@@ -81,12 +27,10 @@ with col2 :
 
 st.title('ETF 관상가')
 
-# codeList = fdr.StockListing('ETF/KR')
-
-
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브',
           '482030': 'Koact 테크핵심소재공급망액티브', '385720': 'timefolio Kstock 액티브',
           '005930' : '삼성전자', '009150' : '삼성전기', '000660' : 'SK하이닉스', '005380' : '현대차', '068270' : '셀트리온'}
+
 
 col1, col2 = st.columns(2)
 with col1 :

@@ -8,7 +8,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
-
+@st.cache_data
 def telegram_crawller(url, keyword) :
     telegram_msgs = {
         'msg': []

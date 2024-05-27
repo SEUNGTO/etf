@@ -41,17 +41,13 @@ with col2 :
     st.write(" ") # blank
     st.session_state['search'] = st.button(label = '검색')
 
-## etf_name -> name
-## code -> code
-## name -> name
-
 search = ~st.session_state['search']
 code = st.session_state['code']
 type = st.session_state['type']
 
 st.write(f'type : {type}')
 st.write(f'code : {code}')
-st.write(f'code : {name}')
+st.write(f'name : {name}')
 
 
 conn = st.connection('mysql', type='sql')

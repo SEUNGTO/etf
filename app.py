@@ -113,22 +113,24 @@ if search and type == 'ETF':
         st.caption('\* wAvg : 가중평균')
 
     st.write(f'## 2. {name}의 상위 10개 종목과 관련된 이야기들이에요.')
-    _top10 = ratio.drop('other')['종목명'].tolist()
-    _teles = [tele for tele in telegram_dict.keys()]
 
-    for tab, _tele in zip(st.tabs(_teles), _teles) :
-        url = telegram_dict[_tele]
-        with tab :
-            for stocks in _top10 :
-                with st.expander(f'{stocks}(비중 : {ratio[ratio["종목명"]==stocks]["비중"].values[0]}%)'):
-                    st.write(f'{stocks}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
-                    st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 :blue[링크]를 클릭하세요.')
-                    st.dataframe(telegram_crawller(url, stocks)
-                                 , hide_index=True
-                                 , column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width='small'),
-                                                  "메세지": st.column_config.TextColumn(width='middle')}
-                                 , use_container_width=True
-                                 )
+    with st.spinner('🔍텔레그램 채널을 돌아다니며 정보를 모으고 있어요.') :
+        _top10 = ratio.drop('other')['종목명'].tolist()
+        _teles = [tele for tele in telegram_dict.keys()]
+
+        for tab, _tele in zip(st.tabs(_teles), _teles) :
+            url = telegram_dict[_tele]
+            with tab :
+                for stocks in _top10 :
+                    with st.expander(f'{stocks}(비중 : {ratio[ratio["종목명"]==stocks]["비중"].values[0]}%)'):
+                        st.write(f'{stocks}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
+                        st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 :blue[링크]를 클릭하세요.')
+                        st.dataframe(telegram_crawller(url, stocks)
+                                     , hide_index=True
+                                     , column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width='small'),
+                                                      "메세지": st.column_config.TextColumn(width='middle')}
+                                     , use_container_width=True
+                                     )
 
     st.write(f'## 3. {name}의 최근 한 달 주가 추이에요.')
 

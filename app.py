@@ -386,37 +386,38 @@ elif search and type == 'Stock' :
     with col3 :
         st.write(f'### 🆕 포트폴리오에 추가했어요.')
 
-        st.dataframe(tmp.fillna(0))
-        st.dataframe(tmp[tmp.fillna(0)['기준일 비중'] == 0])
 
-        new = pd.DataFrame({'ETF' : ['KODEX 200', 'TIGER 200', 'HANARO 200'],
-                            '보유 비중' : [20.00, 30.00, 10.00],
-                            '매수 금액' : [50000, 20000, 5000]})
-        new = new.set_index('ETF')
+        new = tmp[tmp.fillna(0)['기준일 비중'] == 0]
+        if new.shape[0] > 0:
+            new = new.set_index('ETF')
 
-        st.write(f'**총 {len(new)}개의 ETF**에서 {name}를 처음으로 담았어요.')
+            st.write(f'**총 {len(new)}개의 ETF**에서 {name}를 처음으로 담았어요.')
 
-        st.write(f'- 평균적으로 **{new["매수 금액"].mean():,.0f}**원만큼 샀어요.')
-        st.write(f'- 가장 크게 비중을 늘린 ETF는 **{new["보유 비중"].max():,.2f}**%만큼 늘린 **{new.index[new["보유 비중"].argmax()]}**이에요.')
-        st.write(f'- 가장 큰 금액을 산 ETF는 **{new["매수 금액"].max():,.0f}**원을 매수한 **{new.index[new["매수 금액"].argmax()]}**이에요.')
+            st.write(f'- 평균적으로 **{new["매수 금액"].mean():,.0f}**원만큼 샀어요.')
+            st.write(f'- 가장 크게 비중을 늘린 ETF는 **{new["보유 비중"].max():,.2f}**%만큼 늘린 **{new.index[new["보유 비중"].argmax()]}**이에요.')
+            st.write(f'- 가장 큰 금액을 산 ETF는 **{new["매수 금액"].max():,.0f}**원을 매수한 **{new.index[new["매수 금액"].argmax()]}**이에요.')
 
-        new.loc['평균', :] = new.mean()
+            new.loc['평균', :] = new.mean()
 
-        st.dataframe(new, use_container_width=True)
+            st.dataframe(new, use_container_width=True)
+        else :
+            st.info(f'{name}을 새롭게 추가한 ETF는 없어요.')
 
 
     with col4 :
 
         st.write(f'### ❎ 포트폴리오에서 제외했어요.')
-        drop = pd.DataFrame({'ETF' : ['timefolio', 'HANARO 200'],
-                            '원래 비중' : [20.00, 30.00],
-                            '매도 금액' : [10000, 20000]})
-        drop = drop.set_index('ETF')
 
-        st.write(f'**총 {len(drop)}개의 ETF**에서 {name}를 모두 정리했어요.')
-        st.write(f'- 평균 **{drop["매도 금액"].mean():,.0f}**원만큼 팔았어요.')
-        st.write(f'- 가장 크게 비중을 줄인 ETF는 **{drop["원래 비중"].max():,.2f}**%의 비중을 정리한 **{drop.index[drop["원래 비중"].argmax()]}**이에요.')
-        st.write(f'- 가장 큰 금액을 판 ETF는 **{drop["매도 금액"].max():,.0f}**원을 매도한 **{drop.index[drop["매도 금액"].argmax()]}**이에요.')
+        drop = tmp[tmp.fillna(0)['비교일 비중'] == 0]
+        if drop.shape[0] > 0 :
+            drop = drop.set_index('ETF')
 
-        drop.loc['평균', :] = drop.mean()
-        st.dataframe(drop, use_container_width=True)
+            st.write(f'**총 {len(drop)}개의 ETF**에서 {name}를 모두 정리했어요.')
+            st.write(f'- 평균 **{drop["매도 금액"].mean():,.0f}**원만큼 팔았어요.')
+            st.write(f'- 가장 크게 비중을 줄인 ETF는 **{drop["원래 비중"].max():,.2f}**%의 비중을 정리한 **{drop.index[drop["원래 비중"].argmax()]}**이에요.')
+            st.write(f'- 가장 큰 금액을 판 ETF는 **{drop["매도 금액"].max():,.0f}**원을 매도한 **{drop.index[drop["매도 금액"].argmax()]}**이에요.')
+
+            drop.loc['평균', :] = drop.mean()
+            st.dataframe(drop, use_container_width=True)
+        else :
+            st.info(f'{name}을 모두 정리한 ETF는 없어요.')

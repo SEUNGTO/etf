@@ -6,37 +6,23 @@ st.set_page_config(
     page_icon="😎"
 )
 
+
 # session 정의
 set_session()
 
 
 # 기본 변수 세팅
 codeList = load_codeList()
-etf = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브'],
-                    'Symbol' : ['102110', '069500', '463050', '482030', '385720'],
-                    'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF']})
-codeList = pd.concat([etf, codeList])
 
 col1, col2 = st.columns(2)
 with col2 :
     with st.expander("검색가능한 종목"):
         st.dataframe(codeList.rename(columns = {'Name' : '종목명', 'Symbol' : '종목코드', 'Type' : 'ETF/Stock'}).set_index('종목명'))
 
-
+# Main UI
 st.title('ETF 관상가')
 
-
-col1, col2 = st.columns(2)
-with col1 :
-    name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), placeholder = 'ex. 삼성전자, TIGER 200')
-    if name :
-        code_update(name, codeList)
-
-with col2 :
-    st.write(" ") # blank
-    st.write(" ") # blank
-    st.session_state['search'] = st.button(label = '검색')
-
+name = search_bar(codeList)
 
 search = ~st.session_state['search']
 code = st.session_state['code']
@@ -61,7 +47,8 @@ if search and type == 'ETF':
 
     df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['종목코드', '종목명', '보유량', '평가금액']
-    df['비중'] = round(df['평가금액'].astype(int) / sum(df['평가금액'].astype(int)), 2)
+    df['비중'] = round(df['평가금액'].astype(int) / df['평가금액'].astype(int).sum() * 100, 2)
+
 
     st.write(f'## 1. {name}의 보유 종목과 비중이에요.')
 

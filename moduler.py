@@ -65,8 +65,26 @@ def load_codeList() :
     data = pd.DataFrame(requests.get(url).json())
     data.columns = ['Name', 'Symbol', 'Type']
 
-    return data
+    etf = pd.DataFrame(
+        {'Name': ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브'],
+         'Symbol': ['102110', '069500', '463050', '482030', '385720'],
+         'Type': ['ETF', 'ETF', 'ETF', 'ETF', 'ETF']})
 
+    return pd.concat([data, etf])
+
+def search_bar(codeList) :
+    col1, col2 = st.columns(2)
+    with col1 :
+        name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), placeholder = 'ex. 삼성전자, TIGER 200')
+        if name :
+            code_update(name, codeList)
+
+    with col2 :
+        st.write(" ") # blank
+        st.write(" ") # blank
+        st.session_state['search'] = st.button(label = '검색')
+
+    return name
 
 
 

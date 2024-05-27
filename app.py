@@ -1,4 +1,3 @@
-import streamlit as st
 from moduler import *
 
 st.set_page_config(
@@ -17,9 +16,9 @@ if 'etf_name' not in st.session_state:
 if 'type' not in st.session_state:
     st.session_state['type'] = 'ETF'
 
-def code_update(name, codeList) :
-    st.session_state['code'] = codeList[codeList['Name'] == name]['Symbol'].values[0]
-    st.session_state['type'] = codeList[codeList['Name'] == name]['Type'].values[0]
+# def code_update(name, codeList) :
+#     st.session_state['code'] = codeList[codeList['Name'] == name]['Symbol'].values[0]
+#     st.session_state['type'] = codeList[codeList['Name'] == name]['Type'].values[0]
 
 
 # 기본 변수 세팅
@@ -194,8 +193,7 @@ elif search and type == 'Stock' :
 
 
     df = conn.query(f'SELECT * from etf_20240521 where stock_code = {code};', ttl=600)
-    st.dataframe(df)
-    df = df.loc[:, ['code','stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
+    df = df.loc[:, ['etf_code','stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['ETF코드','종목코드', '종목명', '보유량', '평가금액']
     df['비중'] = round(df['평가금액'].astype(int) / df['평가금액'].astype(int).sum() * 100, 2)
 

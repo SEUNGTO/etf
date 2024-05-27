@@ -11,13 +11,14 @@ st.set_page_config(
     page_title="ETFace",
     page_icon="😎"
 )
-def telegram_crawller(name, url) :
+
+def telegram_crawller(url, stocks) :
     telegram_msgs = {
             'msg': []
             , 'link': []
         }
 
-    query = f'{url}?q={stocks[etf_code]}'
+    query = f'{url}?q={stocks}'
     response = requests.get(query)
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -147,22 +148,25 @@ if search and type == 'ETF':
         tmp = tmp.reset_index().set_index('종목명')
         
         tmp['목표가(가중평균)'] = round(tmp['목표가(가중평균)'])
-        st.dataframe(tmp.drop(['종목코드','보유량','평가금액'], axis = 1).sort_values('비중', ascending=False).rename(columns = {'목표가(가중평균)':'목표가(wAvg)'}), column_config={
+        _list = tmp.drop(['종목코드','보유량','평가금액'], axis = 1).sort_values('비중', ascending=False).rename(columns = {'목표가(가중평균)':'목표가(wAvg)'})
+        st.dataframe(_list, column_config={
             "링크": st.column_config.LinkColumn(display_text='\U0001F517'),
-"리포트 제목" : st.column_config.TextColumn(width = 'middle'),
+            "리포트 제목" : st.column_config.TextColumn(width = 'middle'),
             "증권사" : st.column_config.TextColumn(width = 'small'),
             "게시일자" : st.column_config.TextColumn(width = 'small'),
-        "목표가(wAvg)" : st.column_config.NumberColumn(width = "small")})
+            "목표가(wAvg)" : st.column_config.NumberColumn(width = "small")})
         st.write('\* wAvg : 가중평균')
 
     st.write(f'## 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 
-    fig = go.Figure(data=[go.Candlestick(x=price['Date'].apply(lambda x : x.strftime('%m-%d')),
-                                         open=price['Open'],
-                                         high=price['High'],
-                                         low=price['Low'],
-                                         close=price['Close'],
-                                         name = f'{stocks[etf_code]}')])
+    fig = go.Figure(data=[go.Candlestick(
+        x=price['Date'].apply(lambda x : x.strftime('%m-%d')),
+        open=price['Open'],
+        high=price['High'],
+        low=price['Low'],
+        close=price['Close'],
+        name = f'{stocks[etf_code]}')])
+
     fig.update_layout(
         xaxis_title='날짜',
         yaxis_title='가격',
@@ -244,7 +248,7 @@ elif search and type == 'Stock' :
 
     st.write(f'## 1. {stocks[etf_code]}에 대해 이런 이야기들이 있어요.')
 
-    tab1, tab2, tab3, tab4 = st.tabs(['증권사 리포트', '뉴스', '텔레그램', '유튜브'])
+    tab1, tab2, tab3, tab4 = st.tabs(['증권사 리포트', '뉴스', '텔레그램', '유튜브(예정)'])
 
     with tab1 :
         if research.shape[0] > 0 : 
@@ -254,8 +258,9 @@ elif search and type == 'Stock' :
             st.write(f' 증권사의 평균 목표가는 **{tmp["목표가"].mean():,.0f}**원이에요.')
             st.write(f'- 가장 높은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].max()]["증권사"].values[0]}의 {tmp["목표가"].max():,.0f}원이에요.')
             st.write(f'- 가장 낮은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].min()]["증권사"].values[0]}의 {tmp["목표가"].min():,.0f}원이에요.')
-            st.dataframe(tmp.reset_index(drop=True), column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
-                     use_container_width=True,
+            st.dataframe(tmp.reset_index(drop=True),
+                         column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
+                         use_container_width=True,
 hide_index = True)
         else : st.error('증권사 리포트가 없어요.')
     with tab2 :
@@ -291,31 +296,28 @@ hide_index = True)
             
         }
         for name, url in telegram_dict.items() :
-        
-        
 
             with st.expander(f'{name}') :
 
                 st.write(f'- "{name}"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({url})).')
-                st.dataframe(telegram_crawller(name, url), hide_index=True,
-                         column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small')},
-                         use_container_width = True)
-            
-        
-        
+                st.dataframe(telegram_crawller(url, stocks[etf_code]),
+                             hide_index=True,
+                             column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small')},
+                             use_container_width = True)
+
     with tab4 :
-        st.write('유튜브 검색결과를 넣는 영역')
-        st.write('참고 예정')
-        st.write('https://velog.io/@ssongji/%EC%9C%A0%ED%8A%9C%EB%B8%8C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%81%AC%EB%A1%A4%EB%A7%81-%EB%B0%8F-%EC%8B%9C%EA%B0%81%ED%99%94-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-2.-YOUTUBE-API%EB%A1%9C-%ED%82%A4%EC%9B%8C%EB%93%9C-%EA%B2%80%EC%83%89-%EB%B0%8F-%ED%8A%B9%EC%A0%95-%EC%9C%A0%ED%8A%9C%EB%B2%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B6%94%EC%B6%9C')
+        st.info('🚧업데이트 중이에요.')
 
     st.write(f'## 2. {stocks[etf_code]}의 최근 한 달 주가 추이에요.')
 
-    fig = go.Figure(data=[go.Candlestick(x=price['Date'].apply(lambda x : x.strftime('%m-%d')),
-                                         open=price['Open'],
-                                         high=price['High'],
-                                         low=price['Low'],
-                                         close=price['Close'],
-                                         name = f'{stocks[etf_code]}')])
+    fig = go.Figure(data=[go.Candlestick(
+        x=price['Date'].apply(lambda x : x.strftime('%m-%d')),
+        open=price['Open'],
+        high=price['High'],
+        low=price['Low'],
+        close=price['Close'],
+        name = f'{stocks[etf_code]}')])
+
     fig.update_layout(
         xaxis_title='날짜',
         yaxis_title='가격',
@@ -437,3 +439,4 @@ hide_index = True)
 
         drop.loc['평균', :] = drop.mean()
         st.dataframe(drop, use_container_width=True)
+

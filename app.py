@@ -11,6 +11,7 @@ set_session()
 
 # 기본 변수 세팅
 codeList = load_codeList()
+st.dataframe(codeList)
 etf = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브'],
                     'Symbol' : ['102110', '069500', '463050', '482030', '385720'],
                     'Type' : ['ETF', 'ETF', 'ETF', 'ETF', 'ETF']})

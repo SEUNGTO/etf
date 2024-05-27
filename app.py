@@ -36,6 +36,7 @@ if search and type == 'ETF':
     # 전체 내역 조회
 
     df = load_etf_data('new')
+    st.dataframe(df)
     # df = conn.query(f'SELECT * from etf_20240521 where etf_code = {code};', ttl=600)
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
 

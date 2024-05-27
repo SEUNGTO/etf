@@ -15,6 +15,7 @@ def load_etf_data(type) :
     elif type == 'new' :
         url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/new_data.json'
     tmp = requests.get(url)
+
     return pd.DataFrame(tmp.json(), dtype = str)
 
 

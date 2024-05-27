@@ -191,7 +191,6 @@ if search and type == 'ETF':
 
 elif search and type == 'Stock' :
 
-
     df = conn.query(f'SELECT * from etf_20240521 where stock_code = {code};', ttl=600)
     df = df.loc[:, ['etf_code','stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df.columns = ['ETF코드','종목코드', '종목명', '보유량', '평가금액']
@@ -301,6 +300,7 @@ hide_index = True)
     target = research['목표가'].mean()
 
     idx = close/target
+    st.write(target)
 
     col1, col2, col3, col4 = st.columns(4)
     with col1 :

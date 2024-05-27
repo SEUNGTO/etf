@@ -279,12 +279,11 @@ elif search and type == 'Stock' :
 
     with tab4 :
         st.info('🚧업데이트 중이에요.')
-        if st.button('구글 트랜드 검색') :
-            data = fetch_trends([name, 'SK 하이닉스'])
-            fig = go.Figure()
-            fig.add_trace(go.Scatter(x = data.index, y = data[name]), mode = 'lines')
-            fig.add_trace(go.Scatter(x = data.index, y= data['SK 하이닉스']), mode='lines')
-            fig.show()
+        data = fetch_trends([name, 'SK 하이닉스'])
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x = data.index, y = data[name]), mode = 'lines')
+        fig.add_trace(go.Scatter(x = data.index, y= data['SK 하이닉스']), mode='lines')
+        st.plotly_chart(fig)
 
 
     st.write(f'## 2. {name}의 최근 한 달 주가 추이에요.')

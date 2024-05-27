@@ -114,13 +114,16 @@ if search and type == 'ETF':
 
     st.write(f'## 2. {name} 10개 종목과 관련된 이야기들이에요.')
     _top10 = ratio.drop('other')['종목명'].tolist()
-    for tab, stock in zip(st.tabs(_top10), _top10) :
+    _teles = [tele for tele in telegram_dict.keys()]
+
+    for tab, _tele in zip(st.tabs(_teles), _teles) :
+        url = telegram_dict[_tele]
         with tab :
-            for telegram, url in telegram_dict.items():
-                with st.expander(f'{telegram}'):
-                    st.write(f'##### {stock}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
+            for stocks in _top10 :
+                with st.expander(f'{stocks}'):
+                    st.write(f'##### {_tele}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
                     st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 :blue[링크]를 클릭하세요.')
-                    st.dataframe(telegram_crawller(url, stock)
+                    st.dataframe(telegram_crawller(url, _tele)
                                  , hide_index=True
                                  , column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width='small'),
                                                   "메세지": st.column_config.TextColumn(width='middle')}

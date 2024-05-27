@@ -23,7 +23,7 @@ with col2 :
 
 
 st.title('ETF 관상가')
-st.dataframe(codeList.head())
+st.dataframe(codeList.head(100))
 stocks = {'102110': 'TIGER200', '069500': 'KODEX 200', '463050': 'timefolio K바이오액티브',
           '482030': 'Koact 테크핵심소재공급망액티브', '385720': 'timefolio Kstock 액티브',
           '005930' : '삼성전자', '009150' : '삼성전기', '000660' : 'SK하이닉스', '005380' : '현대차', '068270' : '셀트리온'}

@@ -72,8 +72,11 @@ if search and type == 'ETF':
         ratio.loc['other', :] = ['기타', 100 - sum(ratio['비중'])]
 
         fig = px.pie(ratio, values='비중', names='종목명')
-        fig.update_layout(template='plotly_white')
-        st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+        fig.update_layout(template='plotly_white',
+                          margin={'t': 10, 'b': 5})
+        st.plotly_chart(fig
+                        , theme="streamlit"
+                        , use_container_width=True)
 
         st.dataframe(df[['종목명', '비중', '평가금액']]
                     ,hide_index = True

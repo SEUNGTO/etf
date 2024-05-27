@@ -23,6 +23,8 @@ def telegram_crawller(url, keyword) :
     for msg in soup.find_all('div', class_='tgme_widget_message_bubble'):
 
         msg.find('a').decompose()
+        _view = msg.find('span', class_='tgme_widget_message_views').text
+
         try:
             _msg = msg.find('div', class_='tgme_widget_message_text js-message_text').text
 
@@ -34,20 +36,22 @@ def telegram_crawller(url, keyword) :
             telegram_msgs['msg'].append(_msg)
             telegram_msgs['date'].append(_date)
             telegram_msgs['time'].append(_time)
+            telegram_msgs['view'].append(_view)
 
         except:
             _msg = '(메세지없이 링크만 있어요.)'
             telegram_msgs['msg'].append(_msg)
             telegram_msgs['date'].append("-")
             telegram_msgs['time'].append("-")
+            telegram_msgs['view'].append(_view)
 
     for uu in soup.find_all('a', class_='tgme_widget_message_date'):
         _link = uu.attrs['href']
         telegram_msgs['link'].append(_link)
 
     telegram_msgs = pd.DataFrame(telegram_msgs)
-    telegram_msgs.columns = ['메세지', '일자', '시간', '링크']
-    telegram_msgs.sort_values(by = ['일자', '시간'], ascending = [False, False], inplace = True)
+    telegram_msgs.columns = ['메세지', '일자', '시간', '조회수', '링크']
+    telegram_msgs.sort_values(by=['일자', '시간'], ascending=[False, False], inplace=True)
     return telegram_msgs
 
 def code_update(name, codeList) :
@@ -65,43 +69,51 @@ def load_codeList() :
 
 
 
-    telegram_msgs = {
-        'msg': []
-        , 'date': []
-        , 'time': []
-        , 'link': []
-    }
-    query = f'{url}?q={keyword}'
-    response = requests.get(query)
-    soup = BeautifulSoup(response.content, 'html.parser')
+url = 'https://t.me/s/FastStockNews'
+keyword = '삼성전자'
+telegram_msgs = {
+    'msg' : []
+    , 'date' : []
+    , 'time' : []
+    , 'view' : []
+    , 'link' : []
+}
+query = f'{url}?q={keyword}'
+response = requests.get(query)
+soup = BeautifulSoup(response.content, 'html.parser')
+msgs = soup.find_all('div', class_='tgme_widget_message_bubble')
+msg = msgs[19]
+msg.find('span', class_ = 'tgme_widget_message_views').text
 
-    for msg in soup.find_all('div', class_='tgme_widget_message_bubble'):
+for msg in soup.find_all('div', class_='tgme_widget_message_bubble'):
 
-        msg.find('a').decompose()
-        try:
-            _msg = msg.find('div', class_='tgme_widget_message_text js-message_text').text
+    msg.find('a').decompose()
+    _view = msg.find('span', class_='tgme_widget_message_views').text
 
-            datetime = pd.to_datetime(msg.find('time', class_='time').attrs['datetime'])
-            datetime = datetime.tz_convert('Asia/Seoul')
-            _date = datetime.strftime('%Y-%m-%d')
-            _time = datetime.strftime('%H:%M')
+    try:
+        _msg = msg.find('div', class_='tgme_widget_message_text js-message_text').text
 
-            telegram_msgs['msg'].append(_msg)
-            telegram_msgs['date'].append(_date)
-            telegram_msgs['time'].append(_time)
+        datetime = pd.to_datetime(msg.find('time', class_='time').attrs['datetime'])
+        datetime = datetime.tz_convert('Asia/Seoul')
+        _date = datetime.strftime('%Y-%m-%d')
+        _time = datetime.strftime('%H:%M')
 
-        except:
-            _msg = '(메세지없이 링크만 있어요.)'
-            telegram_msgs['msg'].append(_msg)
-            telegram_msgs['date'].append("-")
-            telegram_msgs['time'].append("-")
+        telegram_msgs['msg'].append(_msg)
+        telegram_msgs['date'].append(_date)
+        telegram_msgs['time'].append(_time)
+        telegram_msgs['view'].append(_view)
 
-    for uu in soup.find_all('a', class_='tgme_widget_message_date'):
-        _link = uu.attrs['href']
-        telegram_msgs['link'].append(_link)
+    except:
+        _msg = '(메세지없이 링크만 있어요.)'
+        telegram_msgs['msg'].append(_msg)
+        telegram_msgs['date'].append("-")
+        telegram_msgs['time'].append("-")
+        telegram_msgs['view'].append(_view)
 
-    telegram_msgs = pd.DataFrame(telegram_msgs)
-    telegram_msgs.columns = ['메세지', '일자', '시간', '링크']
-    telegram_msgs = telegram_msgs.sort_values(by = ['일자', '시간'], ascending = [False, False])
+for uu in soup.find_all('a', class_='tgme_widget_message_date'):
+    _link = uu.attrs['href']
+    telegram_msgs['link'].append(_link)
 
-    telegram_msgs.loc[:, ['일자', '시간']]
+telegram_msgs = pd.DataFrame(telegram_msgs)
+telegram_msgs.columns = ['메세지', '일자', '시간', '조회수', '링크']
+telegram_msgs.sort_values(by = ['일자', '시간'], ascending = [False, False], inplace = True)

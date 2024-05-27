@@ -112,7 +112,7 @@ if search and type == 'ETF':
             "목표가(wAvg)" : st.column_config.NumberColumn(width = "small")})
         st.caption('\* wAvg : 가중평균')
 
-    st.write(f'## 2. {name} 10개 종목과 관련된 이야기들이에요.')
+    st.write(f'## 2. {name}의 상위 10개 종목과 관련된 이야기들이에요.')
     _top10 = ratio.drop('other')['종목명'].tolist()
     _teles = [tele for tele in telegram_dict.keys()]
 

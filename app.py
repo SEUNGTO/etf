@@ -9,20 +9,6 @@ st.set_page_config(
 # session 정의
 set_session()
 
-# if 'search' not in st.session_state:
-#     st.session_state['search'] = True
-# if 'etf_code' not in st.session_state:
-#     st.session_state['code'] = '102110'
-# if 'etf_name' not in st.session_state:
-#     st.session_state['name'] = 'TIGER 200'
-# if 'type' not in st.session_state:
-#     st.session_state['type'] = 'ETF'
-
-# def code_update(name, codeList) :
-#     st.session_state['code'] = codeList[codeList['Name'] == name]['Symbol'].values[0]
-#     st.session_state['type'] = codeList[codeList['Name'] == name]['Type'].values[0]
-
-
 # 기본 변수 세팅
 codeList = load_codeList()
 etf = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브'],
@@ -80,7 +66,7 @@ if search and type == 'ETF':
 
     st.write(f'## 1. {name}의 보유 종목과 비중이에요.')
 
-    tab1, tab2 = st.tabs(["상위 10개 종목의 비중", "보유 종목과 비중"])
+    tab1, tab2 = st.tabs(["상위 10개 종목의 비중", "보유 종목별 주요 리포트"])
     with tab1:
         ratio = df.sort_values('비중', ascending=False)[['종목명', '비중']].head(10)
         ratio.loc['other', :] = ['기타', 100 - sum(ratio['비중'])]
@@ -88,6 +74,11 @@ if search and type == 'ETF':
         fig = px.pie(ratio, values='비중', names='종목명')
         fig.update_layout(template='plotly_white')
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+
+        st.dataframe(df[['종목명', '비중', '평가금액']]
+                    ,hide_index = True
+                    ,use_container_width=True)
+
 
     with tab2:
         tmp = df.set_index('종목코드')

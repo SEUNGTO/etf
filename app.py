@@ -310,7 +310,7 @@ hide_index = True)
             st.metric(label='평균 대비 현재 가격', value = f'{close/ma:,.0f}', help = '리포트가 없어 평균가격으로 대체했어요.')
 
     with col2 :
-        st.metric(label='평균 가격', value=f'{ma:,.0f}', delta = )
+        st.metric(label='평균 가격', value=f'{ma:,.0f}', delta = f'{close-ma:,.0f}')
 
     with col3 :
         delta = close - highest

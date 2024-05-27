@@ -120,7 +120,7 @@ if search and type == 'ETF':
         url = telegram_dict[_tele]
         with tab :
             for stocks in _top10 :
-                with st.expander(f'{stocks}'):
+                with st.expander(f'{stocks}(비중 : {ratio[ratio["종목명"]==stocks]["비중"]:.2f}%)'):
                     st.write(f'{stocks}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
                     st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 :blue[링크]를 클릭하세요.')
                     st.dataframe(telegram_crawller(url, stocks)

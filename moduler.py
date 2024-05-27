@@ -9,6 +9,7 @@ import re
 from bs4 import BeautifulSoup
 import time
 
+
 def load_etf_data(type, code) :
 
     if type == 'old' :

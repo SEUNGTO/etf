@@ -114,6 +114,7 @@ if search and type == 'ETF':
 
     st.write(f'## 2. {name}의 상위 10개 종목과 관련된 이야기들이에요.')
 
+    @st.cache_data
     with st.spinner('🔍텔레그램 채널을 돌아다니며 정보를 모으고 있어요.') :
         _top10 = ratio.drop('other')['종목명'].tolist()
         _teles = [tele for tele in telegram_dict.keys()]

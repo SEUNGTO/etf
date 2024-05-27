@@ -44,7 +44,7 @@ with col1 :
     name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'name', placeholder = 'ex. 삼성전자, TIGER 200')
     if name :
         st.write('코드 업데이트가 잘 되었나요?')
-        moduler.code_update(name, codeList)
+        code_update(name, codeList)
         st.write(st.session_state['code'])
         st.write(st.session_state['name'])
 

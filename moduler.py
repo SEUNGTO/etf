@@ -7,13 +7,13 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
-def telegram_crawller(url, stocks) :
+def telegram_crawller(url, keyword) :
     telegram_msgs = {
             'msg': []
             , 'link': []
         }
 
-    query = f'{url}?q={stocks}'
+    query = f'{url}?q={keyword}'
     response = requests.get(query)
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -36,9 +36,9 @@ def telegram_crawller(url, stocks) :
     telegram_msgs.columns = ['메세지', '링크']
     return telegram_msgs
 
-def etf_code_update(etf_name, codeList) :
-    st.session_state['etf_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
-    st.session_state['type'] = codeList[codeList['Name'] == etf_name]['Type'].values[0]
+def code_update(name, codeList) :
+    st.session_state['code'] = codeList[codeList['Name'] == name]['Symbol'].values[0]
+    st.session_state['type'] = codeList[codeList['Name'] == name]['Type'].values[0]
 
 def load_codeList() :
     url = 'https://raw.githubusercontent.com/SEUNGTO/botdata/main/ETFcodeList.json'

@@ -1,5 +1,5 @@
 from moduler import *
-
+from config import *
 st.set_page_config(
     page_title="ETFace",
     page_icon="😎"
@@ -7,14 +7,16 @@ st.set_page_config(
 
 
 # session 정의
-if 'search' not in st.session_state:
-    st.session_state['search'] = True
-if 'etf_code' not in st.session_state:
-    st.session_state['code'] = '102110'
-if 'etf_name' not in st.session_state:
-    st.session_state['name'] = 'TIGER 200'
-if 'type' not in st.session_state:
-    st.session_state['type'] = 'ETF'
+set_session()
+
+# if 'search' not in st.session_state:
+#     st.session_state['search'] = True
+# if 'etf_code' not in st.session_state:
+#     st.session_state['code'] = '102110'
+# if 'etf_name' not in st.session_state:
+#     st.session_state['name'] = 'TIGER 200'
+# if 'type' not in st.session_state:
+#     st.session_state['type'] = 'ETF'
 
 # def code_update(name, codeList) :
 #     st.session_state['code'] = codeList[codeList['Name'] == name]['Symbol'].values[0]
@@ -240,14 +242,8 @@ hide_index = True)
                      column_config = {"링크": st.column_config.LinkColumn(display_text='\U0001F517')})
 
     with tab3 :
-        
-        telegram_dict = {
-            '주식 급등일보🚀급등테마·대장주 탐색기': 'https://t.me/s/FastStockNews'
-,'AWAKE-실시간 주식 공시 정리채널' : 'https://t.me/s/darthacking'
-,'조정은 뇌를 뽑아가지' : 'https://t.me/s/shlrkQhqgla'
-            
-        }
-        for telegram, url in telegram_dict.items() :
+
+        for telegram, url in config.telegram_dict.items() :
 
             with st.expander(f'{telegram}') :
 

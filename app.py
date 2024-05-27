@@ -167,10 +167,12 @@ if search and type == 'ETF':
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
     # 최근 내역 비교
-    df2 = conn.query(f'SELECT * from etf_20240518 where etf_code = {code};', ttl=600)
-    df2 = df2.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
-    df2.columns = ['종목코드', '종목명', '보유량', '평가금액']
-    df2['비중'] = round(df2['평가금액'].astype(int) / df2['평가금액'].astype(int).sum() * 100, 2)
+    df2 = load_etf_data('old', code)
+
+    # df2 = conn.query(f'SELECT * from etf_20240518 where etf_code = {code};', ttl=600)
+    # df2 = df2.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
+    # df2.columns = ['종목코드', '종목명', '보유량', '평가금액']
+    # df2['비중'] = round(df2['평가금액'].astype(int) / df2['평가금액'].astype(int).sum() * 100, 2)
     tmp = df[['종목코드', '종목명', '비중']].set_index('종목코드').join(df2[['종목코드', '비중']].set_index('종목코드'),
                                                            how='inner', lsuffix='T', rsuffix='C')
     tmp['차이'] = tmp['비중T'] - tmp['비중C']

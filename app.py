@@ -34,7 +34,7 @@ conn = st.connection('mysql', type='sql')
 if search and type == 'ETF':
 
     # 전체 내역 조회
-    df = load_etf_data('new')
+    df = load_etf_data('new', code)
 
     # st.dataframe(df)
     # df = conn.query(f'SELECT * from etf_20240521 where etf_code = {code};', ttl=600)

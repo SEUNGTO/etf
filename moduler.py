@@ -9,6 +9,9 @@ import re
 from bs4 import BeautifulSoup
 import time
 
+# type = 'new'
+# code = '102110'
+
 def load_etf_data(type, code) :
     if type == 'old' :
         url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/old_data.json'
@@ -102,81 +105,3 @@ def search_bar(codeList) :
         st.session_state['search'] = st.button(label = '검색')
 
     return name
-
-
-
-url = 'https://t.me/s/FastStockNews'
-keyword = '삼성전자'
-telegram_msgs = {
-    'msg' : []
-    , 'date' : []
-    , 'time' : []
-    , 'view' : []
-    , 'link' : []
-}
-query = f'{url}?q={keyword}'
-response = requests.get(query)
-soup = BeautifulSoup(response.content, 'html.parser')
-msgs = soup.find_all('div', class_='tgme_widget_message_bubble')
-msg = msgs[19]
-msg.find('span', class_ = 'tgme_widget_message_views').text
-
-for msg in soup.find_all('div', class_='tgme_widget_message_bubble'):
-
-    msg.find('a').decompose()
-    _view = msg.find('span', class_='tgme_widget_message_views').text
-
-    try:
-        _msg = msg.find('div', class_='tgme_widget_message_text js-message_text').text
-
-        datetime = pd.to_datetime(msg.find('time', class_='time').attrs['datetime'])
-        datetime = datetime.tz_convert('Asia/Seoul')
-        _date = datetime.strftime('%Y-%m-%d')
-        _time = datetime.strftime('%H:%M')
-
-        telegram_msgs['msg'].append(_msg)
-        telegram_msgs['date'].append(_date)
-        telegram_msgs['time'].append(_time)
-        telegram_msgs['view'].append(_view)
-
-    except:
-        _msg = '(메세지없이 링크만 있어요.)'
-        telegram_msgs['msg'].append(_msg)
-        telegram_msgs['date'].append("-")
-        telegram_msgs['time'].append("-")
-        telegram_msgs['view'].append(_view)
-
-for uu in soup.find_all('a', class_='tgme_widget_message_date'):
-    _link = uu.attrs['href']
-    telegram_msgs['link'].append(_link)
-
-telegram_msgs = pd.DataFrame(telegram_msgs)
-telegram_msgs.columns = ['메세지', '일자', '시간', '조회수', '링크']
-telegram_msgs.sort_values(by = ['일자', '시간'], ascending = [False, False], inplace = True)
-
-import time
-from pytrends.request import TrendReq
-from pytrends.exceptions import TooManyRequestsError
-
-
-def fetch_trends(keyword) :
-
-    pytrends = TrendReq(hl = 'ko-KR', tz = 540)
-    kw_list = keyword
-
-    try :
-        time.sleep(1)
-
-        pytrends.build_payload(kw_list,
-                               timeframe = '2024-04-25 2024-05-25',
-                               geo = 'KR')
-        time.sleep(3)
-        return pytrends.interest_over_time()
-
-    except TooManyRequestsError :
-        time.sleep(5)
-        fetch_trends(kw_list)
-
-
-data = fetch_trends(['삼성전자', 'SK하이닉스'])
-data

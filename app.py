@@ -45,6 +45,8 @@ with col1 :
     if name :
         st.write('코드 업데이트가 잘 되었나요?')
         code_update(name, codeList)
+        st.write(st.session_state['code'])
+        st.write(st.session_state['name'])
 
 with col2 :
     st.write(" ") # blank
@@ -57,10 +59,10 @@ code = st.session_state['code']
 type = st.session_state['type']
 
 st.write(f'search : {search}')
-st.write(f'type : {type}')
+
 st.write(f'code : {code}')
 st.write(f'name : {name}')
-
+st.write(f'type : {type}')
 
 conn = st.connection('mysql', type='sql')
 

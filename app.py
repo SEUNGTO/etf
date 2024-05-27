@@ -246,15 +246,15 @@ hide_index = True)
         for telegram, url in telegram_dict.items() :
 
             with st.expander(f'{telegram}') :
-                st.write(f'- "{telegram}"의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({url})).')
-
+                st.write(f'- **\"{telegram}\"**의 최근 메세지를 가져왔어요(링크 : [\U0001F517]({url})).')
+                st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 링크를 클릭하세요.')
                 st.dataframe(telegram_crawller(url, name)
                              , hide_index=True
                              ,column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width = 'small'),
                                             "메세지" : st.column_config.TextColumn(width = 'middle')}
                              ,use_container_width = True
                              )
-                st.caption('메세지를 열어보시려면 오른쪽 끝에 링크를 클릭하세요.')
+
 
     with tab4 :
         st.info('🚧업데이트 중이에요.')

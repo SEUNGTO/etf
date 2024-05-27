@@ -44,4 +44,4 @@ def load_codeList() :
     url = 'https://raw.githubusercontent.com/SEUNGTO/botdata/main/ETFcodeList.json'
     data = requests.get(url)
 
-    return pd.DataFrame(data.rename({'Code' : 'Symbol'}).json())
+    return pd.DataFrame(data.json()).rename({'Code' : 'Symbol'})

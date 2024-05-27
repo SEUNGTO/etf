@@ -9,6 +9,15 @@ import re
 from bs4 import BeautifulSoup
 import time
 
+def load_etf_data(type) :
+    if type == 'old' :
+        url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/old_data.json'
+    elif type == 'new' :
+        url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/new_data.json'
+    tmp = requests.get(url)
+    return pd.DataFrame(tmp.json(), dtype = str)
+
+
 def telegram_crawller(url, keyword) :
     telegram_msgs = {
         'msg': []

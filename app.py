@@ -386,6 +386,7 @@ elif search and type == 'Stock' :
     with col3 :
         st.write(f'### 🆕 포트폴리오에 추가했어요.')
 
+        st.dataframe(tmp.fillna(0))
         st.dataframe(tmp[tmp.fillna(0)['기준일 비중'] == 0])
 
         new = pd.DataFrame({'ETF' : ['KODEX 200', 'TIGER 200', 'HANARO 200'],

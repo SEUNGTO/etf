@@ -121,9 +121,9 @@ if search and type == 'ETF':
         with tab :
             for stocks in _top10 :
                 with st.expander(f'{stocks}'):
-                    st.write(f'##### {_tele}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
+                    st.write(f'{stocks}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
                     st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 :blue[링크]를 클릭하세요.')
-                    st.dataframe(telegram_crawller(url, _tele)
+                    st.dataframe(telegram_crawller(url, stocks)
                                  , hide_index=True
                                  , column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width='small'),
                                                   "메세지": st.column_config.TextColumn(width='middle')}

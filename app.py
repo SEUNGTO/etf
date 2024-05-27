@@ -112,7 +112,22 @@ if search and type == 'ETF':
             "목표가(wAvg)" : st.column_config.NumberColumn(width = "small")})
         st.caption('\* wAvg : 가중평균')
 
-    st.write(f'## 2. {name}의 최근 한 달 주가 추이에요.')
+    st.write(f'## 2. {name} 10개 종목과 관련된 이야기들이에요.')
+
+    st.dataframe(ratio)
+
+    # for telegram, url in telegram_dict.items():
+    #     with st.expander(f'{telegram}'):
+    #         st.write(f'##### {name}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')
+    #         st.caption('※ 메세지를 열어보시려면 오른쪽 끝에 :blue[링크]를 클릭하세요.')
+    #         st.dataframe(telegram_crawller(url, name)
+    #                      , hide_index=True
+    #                      , column_config={"링크": st.column_config.LinkColumn(display_text='\U0001F517', width='small'),
+    #                                       "메세지": st.column_config.TextColumn(width='middle')}
+    #                      , use_container_width=True
+    #                      )
+
+    st.write(f'## 3. {name}의 최근 한 달 주가 추이에요.')
 
     fig = go.Figure(data=[go.Candlestick(
         x=price['Date'].apply(lambda x : x.strftime('%m-%d')),
@@ -173,11 +188,11 @@ if search and type == 'ETF':
     tmp = tmp.set_index('종목명').drop('종목코드', axis=1)
 
 
-    st.write(f'## 3. 📈 최근 {name}에서 가장 비중이 늘어난 종목들이에요.')
+    st.write(f'## 4. 📈 최근 {name}에서 가장 비중이 늘어난 종목들이에요.')
     increase = tmp[tmp['차이'] > 0].sort_values('차이', ascending=False)
     st.dataframe(increase.head(10), use_container_width=True)
 
-    st.write(f'## 4. 📉 최근 {name}에서 가장 비중이 줄어든 종목들이에요')
+    st.write(f'## 5. 📉 최근 {name}에서 가장 비중이 줄어든 종목들이에요')
     decrease = tmp[tmp['차이'] < 0].sort_values('차이', ascending=True)
     st.dataframe(decrease.head(10), use_container_width=True)
 

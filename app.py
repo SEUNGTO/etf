@@ -113,7 +113,7 @@ if search and type == 'ETF':
         st.caption('\* wAvg : 가중평균')
 
     st.write(f'## 2. {name} 10개 종목과 관련된 이야기들이에요.')
-
+    _top10 = ratio.drop('other')['종목명'].tolist()
     for tab, stock in zip(st.tabs(_top10), _top10) :
         with tab :
             for telegram, url in telegram_dict.items():

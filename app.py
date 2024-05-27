@@ -6,6 +6,7 @@ st.set_page_config(
     page_icon="😎"
 )
 
+
 # session 정의
 if 'search' not in st.session_state:
     st.session_state['search'] = True
@@ -17,6 +18,10 @@ if 'etf_name' not in st.session_state:
     st.session_state['name'] = 'TIGER 200'
 if 'type' not in st.session_state:
     st.session_state['type'] = 'ETF'
+
+def code_update(name, codeList) :
+    st.session_state['code'] = codeList[codeList['Name'] == name]['Symbol'].values[0]
+    st.session_state['type'] = codeList[codeList['Name'] == name]['Type'].values[0]
 
 
 # 기본 변수 세팅

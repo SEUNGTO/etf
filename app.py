@@ -1,17 +1,14 @@
 from moduler import *
 from config import *
+
 st.set_page_config(
     page_title="ETFace",
     page_icon="😎"
 )
 
-
 # session 정의
 set_session()
 
-# DB 연동
-@st.cache_resource()
-conn = st.connection('mysql', type='sql')
 
 # 기본 변수 세팅
 codeList = load_codeList()
@@ -45,6 +42,8 @@ search = ~st.session_state['search']
 code = st.session_state['code']
 type = st.session_state['type']
 
+# DB 연동
+conn = st.connection('mysql', type='sql')
 
 if search and type == 'ETF':
 

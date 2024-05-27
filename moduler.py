@@ -38,6 +38,6 @@ def telegram_crawller(url, stocks) :
 
 
 
-def etf_code_update(etf_name) :
+def etf_code_update(etf_name, codeList) :
     st.session_state['etf_code'] = codeList[codeList['Name'] == etf_name]['Symbol'].values[0]
     st.session_state['type'] = codeList[codeList['Name'] == etf_name]['Type'].values[0]

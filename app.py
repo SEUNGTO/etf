@@ -36,8 +36,9 @@ col1, col2 = st.columns(2)
 with col1 :
     etf_name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'etf_name', placeholder = 'ex. 삼성전자, TIGER 200')
     if etf_name :
-        etf_code_update(etf_name)
-with col2 : 
+        etf_code_update(etf_name, codeList)
+
+with col2 :
     st.write(" ") # blank
     st.write(" ") # blank
     st.session_state['search'] = st.button(label = '검색')

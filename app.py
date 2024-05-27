@@ -18,6 +18,7 @@ if 'etf_name' not in st.session_state:
 if 'type' not in st.session_state:
     st.session_state['type'] = 'ETF'
 
+
 # 기본 변수 세팅
 codeList = load_codeList()
 etf = pd.DataFrame({'Name' : ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브'],
@@ -42,6 +43,7 @@ col1, col2 = st.columns(2)
 with col1 :
     name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'name', placeholder = 'ex. 삼성전자, TIGER 200')
     if name :
+        st.write('코드 업데이트가 잘 되었나요?')
         code_update(name, codeList)
 
 with col2 :

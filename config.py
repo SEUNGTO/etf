@@ -18,4 +18,6 @@ telegram_dict = {
     , 'AWAKE-일정, 테마, 이벤트드리븐' : 'https://t.me/awake_schedule'
     # , '조정은 뇌를 뽑아가지': 'https://t.me/s/shlrkQhqgla'
     , '52주 신고가 모니터링' : 'https://t.me/s/awake_realtimeCheck'
+    , 'SB 리포트 요약' : 'https://t.me/s/stonereport'
+
 }

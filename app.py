@@ -424,4 +424,3 @@ elif search and type == 'Stock' :
 
         drop.loc['평균', :] = drop.mean()
         st.dataframe(drop, use_container_width=True)
-

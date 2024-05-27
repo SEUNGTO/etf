@@ -7,6 +7,7 @@ import numpy as np
 import requests
 import re
 from bs4 import BeautifulSoup
+import time
 
 def telegram_crawller(url, keyword) :
     telegram_msgs = {
@@ -117,3 +118,30 @@ for uu in soup.find_all('a', class_='tgme_widget_message_date'):
 telegram_msgs = pd.DataFrame(telegram_msgs)
 telegram_msgs.columns = ['메세지', '일자', '시간', '조회수', '링크']
 telegram_msgs.sort_values(by = ['일자', '시간'], ascending = [False, False], inplace = True)
+
+import time
+from pytrends.request import TrendReq
+from pytrends.exceptions import TooManyRequestsError
+
+
+def fetch_trends(keyword) :
+
+    pytrends = TrendReq(hl = 'ko-KR', tz = 540)
+    kw_list = keyword
+
+    try :
+        time.sleep(1)
+
+        pytrends.build_payload(kw_list,
+                               timeframe = '2024-04-25 2024-05-25',
+                               geo = 'KR')
+        time.sleep(3)
+        return pytrends.interest_over_time()
+
+    except TooManyRequestsError :
+        time.sleep(5)
+        fetch_trends(kw_list)
+
+
+data = fetch_trends(['삼성전자', 'SK하이닉스'])
+data

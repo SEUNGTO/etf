@@ -227,7 +227,7 @@ elif search and type == 'Stock' :
             st.dataframe(tmp.reset_index(drop=True),
                          column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
                          use_container_width=True,
-hide_index = True)
+                         hide_index = True)
         else : st.error('증권사 리포트가 없어요.')
     with tab2 :
 
@@ -279,6 +279,13 @@ hide_index = True)
 
     with tab4 :
         st.info('🚧업데이트 중이에요.')
+        if st.button('구글 트랜드 검색') :
+            data = fetch_trends([name, 'SK 하이닉스'])
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x = data.index, y = data[name]), mode = 'lines')
+            fig.add_trace(go.Scatter(x = data.index, y= data['SK 하이닉스']), mode='lines')
+            fig.show()
+
 
     st.write(f'## 2. {name}의 최근 한 달 주가 추이에요.')
 

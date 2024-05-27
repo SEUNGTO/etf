@@ -5,3 +5,4 @@ finance-datareader
 bs4
 plotly
 PyNaver
+pytrends

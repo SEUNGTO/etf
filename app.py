@@ -115,7 +115,7 @@ if search and type == 'ETF':
     st.write(f'## 2. {name} 10개 종목과 관련된 이야기들이에요.')
 
     st.dataframe(ratio.drop('other'))
-    _top10 = radio.drop('other')['종목명']
+    _top10 = ratio.drop('other')['종목명']
     st.dataframe(_top10)
 
     # for telegram, url in telegram_dict.items():

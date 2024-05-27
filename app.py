@@ -100,9 +100,9 @@ if search and type == 'ETF':
         _topList = ratio.head(5)['종목명'].tolist()
         _teles = [tele for tele in telegram_dict.keys()]
 
-        for _tele in _teles :
+        for tab, _tele in zip(st.tabs(_teles), _teles) :
             url = telegram_dict[_tele]
-            with st.expander(_tele) :
+            with st.expander(tab) :
                 for stocks in _topList :
                     with st.expander(f'{stocks}(비중 : {ratio[ratio["종목명"]==stocks]["비중"].values[0]}%)'):
                         st.write(f'{stocks}와 관련있는 최근 메세지를 가져왔어요. (링크 : [\U0001F517]({url}))')

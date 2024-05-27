@@ -45,10 +45,7 @@ col1, col2 = st.columns(2)
 with col1 :
     name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), placeholder = 'ex. 삼성전자, TIGER 200')
     if name :
-        st.write('코드 업데이트 확인')
         code_update(name, codeList)
-        st.write(st.session_state['code'])
-        st.write(st.session_state['name'])
 
 with col2 :
     st.write(" ") # blank

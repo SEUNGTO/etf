@@ -109,7 +109,7 @@ def load_codeList() :
     etf = etf.loc[:, ['Name', 'Symbol']]
     etf.loc[:, 'Type'] = 'ETF'
 
-    return pd.concat([etf, data])
+    return pd.concat([data, etf])
 
 def search_bar(codeList) :
     col1, col2 = st.columns(2)

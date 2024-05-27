@@ -12,8 +12,6 @@ if 'search' not in st.session_state:
     st.session_state['search'] = True
 if 'etf_code' not in st.session_state:
     st.session_state['code'] = '102110'
-if 'search_results' not in st.session_state:
-    st.session_state['search_results'] = []
 if 'etf_name' not in st.session_state:
     st.session_state['name'] = 'TIGER 200'
 if 'type' not in st.session_state:
@@ -46,7 +44,7 @@ st.title('ETF 관상가')
 
 col1, col2 = st.columns(2)
 with col1 :
-    name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), key = 'name', placeholder = 'ex. 삼성전자, TIGER 200')
+    name = st.selectbox("종목명을 검색해주세요", codeList['Name'].tolist(), placeholder = 'ex. 삼성전자, TIGER 200')
     if name :
         st.write('코드 업데이트 확인')
         code_update(name, codeList)

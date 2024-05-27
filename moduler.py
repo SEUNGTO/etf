@@ -85,10 +85,9 @@ def load_codeList() :
     data = pd.DataFrame(requests.get(url).json())
     data.columns = ['Name', 'Symbol', 'Type']
 
-    etf = pd.DataFrame(
-        {'Name': ['TIGER 200', 'KODEX 200', 'timefolio K바이오액티브', 'Koact 테크핵심소재공급망액티브', 'timefolio Kstock 액티브'],
-         'Symbol': ['102110', '069500', '463050', '482030', '385720'],
-         'Type': ['ETF', 'ETF', 'ETF', 'ETF', 'ETF']})
+    etf = fdr.StockListing('ETF/KR')
+    etf = etf.loc[:, ['Name', 'Symbol']]
+    etf.loc[:, 'Type'] = 'ETF'
 
     return pd.concat([etf, data])
 

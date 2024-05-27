@@ -365,6 +365,7 @@ elif search and type == 'Stock' :
     st.write(f'### 📈 {name}의 비중이 높은 ETF들이에요.')
     total = df.set_index('ETF코드').join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'left')
     total = total.drop(['종목코드', '종목명'], axis = 1)
+    total = total.dropna()
     total.reset_index(inplace = True, drop = True)
     total = total.set_index('ETF')
     st.dataframe(total.sort_values('비중', ascending = False).head(10), use_container_width=True)

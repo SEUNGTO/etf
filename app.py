@@ -281,8 +281,8 @@ elif search and type == 'Stock' :
         st.info('🚧업데이트 중이에요.')
         data = fetch_trends([name, 'SK 하이닉스'])
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x = data.index, y = data[name]), mode = 'lines')
-        fig.add_trace(go.Scatter(x = data.index, y= data['SK 하이닉스']), mode='lines')
+        fig.add_trace(go.Scatter(x = data.index.tolist(), y = data[name]), mode = 'lines')
+        fig.add_trace(go.Scatter(x = data.index.tolist(), y= data['SK 하이닉스']), mode='lines')
         st.plotly_chart(fig)
 
 

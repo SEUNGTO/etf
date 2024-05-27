@@ -320,7 +320,7 @@ hide_index = True)
 
     ########### 비중 늘리고 줄인 ETF 계산 ##################
     df2 = conn.query(f'SELECT * from etf_20240518 where stock_code = {code};', ttl=600)
-    df2 = df2.loc[:, ['code', 'stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
+    df2 = df2.loc[:, ['etf_code', 'stock_code', 'stock_nm', 'stock_amt', 'evl_amt']]
     df2.columns = ['ETF코드', '종목코드', '종목명', '보유량', '평가금액']
     df2['비중'] = round(df2['평가금액'].astype(int) / df2['평가금액'].astype(int).sum() * 100, 2)
 

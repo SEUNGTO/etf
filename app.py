@@ -115,8 +115,13 @@ if search and type == 'ETF':
     st.write(f'## 2. {name} 10개 종목과 관련된 이야기들이에요.')
 
     st.dataframe(ratio.drop('other'))
-    _top10 = ratio.drop('other')['종목명']
+    _top10 = ratio.drop('other')[['종목명']].tolist()
     st.dataframe(_top10)
+    st.write(len(_top10))
+    for tab, stock in zip(st.tabs(_top10), _top10) :
+        with tab :
+            st.write(stock)
+
 
     # for telegram, url in telegram_dict.items():
     #     with st.expander(f'{telegram}'):

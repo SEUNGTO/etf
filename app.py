@@ -33,12 +33,12 @@ conn = st.connection('mysql', type='sql')
 
 if search and type == 'ETF':
     if code == '102110' :
-        with st.expander('가상 재무제표') :
+        with st.expander('가상 재무제표(테스트 중)') :
+            st.write(f'{name}이 보유한 종목의 지분률을 감안한 가상의 재무상태표에요.'
             url = 'https://raw.githubusercontent.com/sEUNGTO/etfdata/main/tiger200.json'
             response = requests.get(url).json()
             st.dataframe(response)
         
-        # {"\ubd80\ucc44\ucd1d\uacc4":5793815076.3636026382,"\uc790\ubcf8\ucd1d\uacc4":1994987871.0290408134,"\uc790\uc0b0\ucd1d\uacc4":7788802947.3926439285}
 
     # 전체 내역 조회
     df = load_etf_data('new', code)

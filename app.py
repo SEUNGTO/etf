@@ -37,7 +37,7 @@ if search and type == 'ETF':
             st.write(f'{name}이 보유한 종목의 지분률을 감안한 가상의 재무상태표에요.')
             url = 'https://raw.githubusercontent.com/sEUNGTO/etfdata/main/tiger200.json'
             response = requests.get(url).json()
-            st.dataframe(response)
+            st.dataframe(response.drop('보유량'))
         
 
     # 전체 내역 조회

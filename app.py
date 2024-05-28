@@ -33,9 +33,10 @@ conn = st.connection('mysql', type='sql')
 
 if search and type == 'ETF':
     if code == '102110' :
-        url = 'https://raw.githubusercontent.com/sEUNGTO/etfdata/main/tiger200.json'
-        response = requests.get(url).json()
-        st.dataframe(response)
+        with st.expander('가상 재무제표') :
+            url = 'https://raw.githubusercontent.com/sEUNGTO/etfdata/main/tiger200.json'
+            response = requests.get(url).json()
+            st.dataframe(response)
         
         # {"\ubd80\ucc44\ucd1d\uacc4":5793815076.3636026382,"\uc790\ubcf8\ucd1d\uacc4":1994987871.0290408134,"\uc790\uc0b0\ucd1d\uacc4":7788802947.3926439285}
 

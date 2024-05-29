@@ -24,14 +24,6 @@ type = st.session_state['type']
 
 
 if search and type == 'ETF':
-    if code == '102110' :
-        with st.expander('가상 재무제표(테스트 중, TIGER 200만 가능)') :
-
-            st.write(f'{name}이 보유한 종목의 지분률을 감안한 가상의 재무상태표에요.')
-            url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/fs.json'
-            response = pd.DataFrame(requests.get(url).json())
-
-            st.dataframe(response)
 
 
     # 전체 내역 조회
@@ -44,6 +36,17 @@ if search and type == 'ETF':
     research = research[research['종목코드'].isin(df['종목코드'])]
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
+
+    # 재무제표
+    if code == '102110' :
+
+        with st.expander('가상 재무제표(테스트 중, TIGER 200만 가능)'):
+
+            st.write(f'{name}이 보유한 종목의 지분률을 감안한 가상의 재무상태표에요.')
+            url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/fs.json'
+            fs = pd.DataFrame(requests.get(url).json())
+            fs = fs.loc[fs['종목모드'].isin(df['종목코드']), : ]
+            st.dataframe(fs)
 
     st.write(f'## 1. {name}의 보유 종목과 비중이에요.')
 

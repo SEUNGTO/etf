@@ -11,7 +11,14 @@ st.set_page_config(
 set_session()
 
 # 기본 변수 세팅
-codeList = load_codeList()
+codeList = load_codeList() # 종목코드 리스팅
+
+# 시간 변수
+tz = pytz.timezone('Asia/Seoul')
+now = datetime.now(tz)
+today = now.strftime('%Y-%m-%d')
+one_month_ago = now - timedelta(days = 30)
+one_month_ago = one_month_ago.strftime('%Y-%m-%d')
 
 # Main UI
 st.title('ETF 관상가')
@@ -29,7 +36,7 @@ if search and type == 'ETF':
     df = load_etf_data('new', code)
     df['비중'] = round(df['비중'], 2)
 
-    price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
+    price = fdr.DataReader(code, start=one_month_ago, end=today).reset_index()
 
     research = load_research()
     research = research[research['종목코드'].isin(df['종목코드'])]
@@ -200,7 +207,7 @@ elif search and type == 'Stock' :
     df = load_stock_data('new', code)
     df['비중'] = round(df['비중'], 2)
 
-    price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
+    price = fdr.DataReader(code, start=one_month_ago, end=today).reset_index()
 
     research = load_research()
     research = research[research['종목코드'].isin(df['종목코드'])]

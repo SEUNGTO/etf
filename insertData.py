@@ -108,3 +108,5 @@ if __name__ == "__main__" :
     drop_query = f"select * from etf_new"
     data = cursor.execute(drop_query)
     data
+
+

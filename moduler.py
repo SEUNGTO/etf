@@ -8,6 +8,8 @@ import requests
 import re
 from bs4 import BeautifulSoup
 import time
+import pytz
+from datetime import datetime, timedelta
 
 
 def load_etf_data(type, code) :

@@ -102,15 +102,9 @@ def code_update(name, codeList) :
 
 @st.cache_data
 def load_codeList() :
-    url = 'https://raw.githubusercontent.com/SEUNGTO/botdata/main/ETFcodeList.json'
-    data = pd.DataFrame(requests.get(url).json())
-    data.columns = ['Name', 'Symbol', 'Type']
+    url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/code_list.json'
 
-    etf = fdr.StockListing('ETF/KR')
-    etf = etf.loc[:, ['Name', 'Symbol']]
-    etf.loc[:, 'Type'] = 'ETF'
-
-    return pd.concat([data, etf])
+    return pd.DataFrame(requests.get(url).json())
 
 def search_bar(codeList) :
     col1, col2 = st.columns(2)

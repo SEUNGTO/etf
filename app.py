@@ -36,7 +36,6 @@ if search and type == 'ETF':
     df = load_etf_data('new', code)
     df['비중'] = round(df['비중'], 2)
 
-
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
 
     research = load_research()
@@ -53,8 +52,8 @@ if search and type == 'ETF':
         ratio.loc['other', :] = ['기타', 100 - sum(ratio['비중'].astype(int))]
 
         fig = px.pie(ratio, values='비중', names='종목명')
-        fig.update_layout(template='plotly_white',
-                          margin={'t': 10, 'b': 5})
+        fig.update_layout(template='plotly_white'
+                          , margin={'t': 10, 'b': 5})
         st.plotly_chart(fig
                         , theme="streamlit"
                         , use_container_width=True)
@@ -157,6 +156,7 @@ if search and type == 'ETF':
     
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
+
     # 최근 내역 비교
     df2 = load_etf_data('old', code)
     df2['비중'] = round(df2['비중'], 2)
@@ -181,7 +181,6 @@ if search and type == 'ETF':
 elif search and type == 'Stock' :
 
     df = load_stock_data('new', code)
-    df['종목코드'] = code
     df['비중'] = round(df['비중'], 2)
 
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
@@ -320,7 +319,7 @@ elif search and type == 'Stock' :
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
-
+    codeList.to_json('code_list.json')
 
     ########### 비중 늘리고 줄인 ETF 계산 ##################
     df2 = load_stock_data('old', code)

@@ -51,7 +51,7 @@ if search and type == 'ETF':
             st.write(f'📊 {name}의 재무상태표')
             st.dataframe(balance, use_container_width=True)
         with col2 :
-            st.write(f'💰 {name}의 손익계산서에요.')
+            st.write(f'💰 {name}의 손익계산서')
             st.dataframe(income, use_container_width=True)
 
             st.caption('※ 금융업은 제외')

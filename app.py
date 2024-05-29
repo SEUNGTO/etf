@@ -34,7 +34,9 @@ if search and type == 'ETF':
     df = load_etf_data('new', code)
     df['비중'] = round(df['비중'], 2)
 
-    print(f'')
+    st.dataframe(df)
+    st.write(df['비중'])
+    st.write(10p - df['비중'])
 
     price = fdr.DataReader(code, start=one_month_ago, end=today).reset_index()
 

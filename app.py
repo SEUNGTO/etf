@@ -22,8 +22,6 @@ search = ~st.session_state['search']
 code = st.session_state['code']
 type = st.session_state['type']
 
-# DB 연동
-conn = st.connection('mysql', type='sql')
 
 if search and type == 'ETF':
     if code == '102110' :
@@ -35,8 +33,11 @@ if search and type == 'ETF':
         
 
     # 전체 내역 조회
+
+    code = '069500'
     df = load_etf_data('new', code)
     df['비중'] = round(df['비중'], 2)
+
 
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
 
@@ -44,10 +45,10 @@ if search and type == 'ETF':
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 
-
     st.write(f'## 1. {name}의 보유 종목과 비중이에요.')
 
     tab1, tab2 = st.tabs(["상위 10개 종목의 비중", "보유 종목별 주요 리포트"])
+
     with tab1:
         ratio = df.sort_values('비중', ascending=False)[['종목명', '비중']].head(10)
         ratio.loc['other', :] = ['기타', 100 - sum(ratio['비중'].astype(int))]
@@ -183,18 +184,10 @@ elif search and type == 'Stock' :
     df = load_stock_data('new', code)
     df['종목코드'] = code
     df['비중'] = round(df['비중'], 2)
-    # df = conn.query(f'SELECT * from etf_20240521 where stock_code = {code};', ttl=600)
-    # df = df.loc[:, ['etf_code','stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
-    # df.columns = ['ETF코드','종목코드', '종목명', '보유량', '평가금액', '비중']
-
 
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
 
-    research = conn.query(f'SELECT * FROM research where code = {code} ', ttl=600)
-    research.columns = ['종목명', '종목코드', '리포트 제목', 'nid', '목표가', '의견', '게시일자', '증권사', '링크']
-    research['목표가'] = [re.sub('\D', '', t) for t in research['목표가']]
-    research = research[research['목표가'] != ""]
-    research['목표가'] = research['목표가'].astype(int)
+    research = load_research()
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 

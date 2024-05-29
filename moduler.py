@@ -20,6 +20,7 @@ def load_etf_data(type, code) :
 
     tmp = requests.get(url)
     tmp = pd.DataFrame(tmp.json(), dtype = str)
+
     tmp = tmp.loc[tmp['etf_code'] == code, :]
     tmp = tmp.drop('etf_code', axis = 1)
     tmp.columns = ['종목코드', '종목명', '보유량', '평가금액', '비중']

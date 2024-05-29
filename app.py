@@ -319,8 +319,6 @@ elif search and type == 'Stock' :
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
-    codeList.to_json('code_list.json')
-
     ########### 비중 늘리고 줄인 ETF 계산 ##################
     df2 = load_stock_data('old', code)
     df2['종목코드'] = code

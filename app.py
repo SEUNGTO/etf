@@ -30,10 +30,11 @@ code = st.session_state['code']
 type = st.session_state['type']
 
 if search and type == 'ETF':
-
     # 전체 내역 조회
     df = load_etf_data('new', code)
     df['비중'] = round(df['비중'], 2)
+
+    print(f'')
 
     price = fdr.DataReader(code, start=one_month_ago, end=today).reset_index()
 
@@ -46,6 +47,7 @@ if search and type == 'ETF':
     with st.expander(f'🧾 {name}의 가상 재무제표'):
 
         st.write(f'**{name}**이 보유한 종목들의 지분률을 감안해서 재무제표를 작성했어요.')
+        st.write(f'- [참고] 종목들의 평가금액을 합치면 {df["평가금액"].sum():,.0f}원이에요.')
 
         url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/fs.json'
         fs = pd.DataFrame(requests.get(url).json())

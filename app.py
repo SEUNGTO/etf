@@ -43,7 +43,11 @@ if search and type == 'ETF':
 
         url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/fs.json'
         fs = pd.DataFrame(requests.get(url).json())
-        fs = fs.loc[fs['종목코드'].isin(df['종목코드']), : ].drop('종목코드',axis = 1).sum()
+        fs = fs.loc[fs['종목코드'].isin(df['종목코드']), : ]
+        fs = fs.set_index('종목코드').join(df.set_index('종목코드')['보유량'])
+        for col in fs.columns :
+            fs[col] *= fs['보유량']
+        fs = fs.reset_index(drop = True).drop('보유량', axis = 1).sum()
         balance = round(fs[['자산총계', '유동자산', '부채총계', '유동부채', '비유동부채', '자본총계', '자본금', '이익잉여금']], 0)
         income = round(fs[['매출액', '영업이익', '영업비용', '이자비용','당기순이익', '총포괄손익']], 0)
         col1, col2 = st.columns(2)

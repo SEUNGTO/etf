@@ -29,6 +29,8 @@ def load_etf_data(type, code) :
     tmp['보유량'] = tmp['보유량'].astype(float)
     tmp['평가금액'] = tmp['평가금액'].astype(float)
     tmp['비중'] = tmp['비중'].astype(float)
+    # 임시 코드
+    tmp['비중'] = 100 * tmp['평가금액'] / sum(tmp['평가금액'])
 
     return tmp
 

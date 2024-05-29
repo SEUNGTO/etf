@@ -124,3 +124,13 @@ def search_bar(codeList) :
         st.session_state['search'] = st.button(label = '검색')
 
     return name
+
+
+def load_research() :
+    url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/research.json'
+    data = pd.DataFrame(requests.get(url).json())
+    data['목표가'] = [re.sub('\D', '', t) for t in data['목표가']]
+    data = data[data['목표가'] != ""]
+    data['목표가'] = data['목표가'].astype(int)
+
+    return data

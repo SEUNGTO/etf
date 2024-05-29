@@ -10,14 +10,8 @@ st.set_page_config(
 # session 정의
 set_session()
 
-
 # 기본 변수 세팅
 codeList = load_codeList()
-
-# col1, col2 = st.columns(2)
-# with col2 :
-#     with st.expander("검색가능한 종목"):
-   #     st.dataframe(codeList.rename(columns = #{'Name' : '종목명', 'Symbol' : '종목코드', 'Type' : #'ETF/Stock'}).set_index('종목명'))
 
 # Main UI
 st.title('ETF 관상가')
@@ -44,22 +38,11 @@ if search and type == 'ETF':
     df = load_etf_data('new', code)
     df['비중'] = round(df['비중'], 2)
 
-    # st.dataframe(df)
-    # df = conn.query(f'SELECT * from etf_20240521 where etf_code = {code};', ttl=600)
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
 
-    research = conn.query('SELECT * FROM research', ttl=600)
-    research.columns = ['종목명', '종목코드', '리포트 제목', 'nid', '목표가', '의견', '게시일자', '증권사', '링크']
-    research['목표가'] = [re.sub('\D', '', t) for t in research['목표가']]
-    research = research[research['목표가'] != ""]
-    research['목표가'] = research['목표가'].astype(int)
+    research = load_research()
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
-
-    # df = df.loc[:, ['stock_code', 'stock_nm', 'stock_amt', 'evl_amt', 'ratio']]
-    # df.columns = ['종목코드', '종목명', '보유량', '평가금액', '비중']
-    # df['비중'] = df['비중'].astype(float)
-    # df['비중'] = round(df['평가금액'].astype(floa) / df['평가금액'].astype(int).sum() * 100, 2)
 
 
     st.write(f'## 1. {name}의 보유 종목과 비중이에요.')

@@ -53,10 +53,10 @@ if search and type == 'ETF':
         col1, col2 = st.columns(2)
         with col1 :
             st.write(f'📊 {name}의 재무상태표')
-            st.table(balance, use_container_width=True)
+            st.dataframe(balance, use_container_width=True)
         with col2 :
             st.write(f'💰 {name}의 손익계산서')
-            st.table(income, use_container_width=True)
+            st.dataframe(income, use_container_width=True)
 
             st.caption('※ 금융업은 제외')
 

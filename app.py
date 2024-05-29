@@ -29,8 +29,6 @@ search = ~st.session_state['search']
 code = st.session_state['code']
 type = st.session_state['type']
 
-st.write(today)
-st.write(one_month_ago)
 if search and type == 'ETF':
 
     # 전체 내역 조회

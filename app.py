@@ -33,8 +33,6 @@ if search and type == 'ETF':
         
 
     # 전체 내역 조회
-
-    code = '069500'
     df = load_etf_data('new', code)
     df['비중'] = round(df['비중'], 2)
 
@@ -42,6 +40,7 @@ if search and type == 'ETF':
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
 
     research = load_research()
+    research = research[research['종목코드'].isin(df['종목코드'])]
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 
@@ -188,6 +187,8 @@ elif search and type == 'Stock' :
     price = fdr.DataReader(code, start='2024-04-20', end='2024-05-21').reset_index()
 
     research = load_research()
+    research = research[research['종목코드'].isin(df['종목코드'])]
+
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
 

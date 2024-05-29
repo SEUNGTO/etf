@@ -74,7 +74,7 @@ if search and type == 'ETF':
 
     with tab1:
         ratio = df.sort_values('비중', ascending=False)[['종목명', '비중']].head(10)
-        ratio.loc['other', :] = ['기타', 100 - sum(ratio['비중'].astype(int))]
+        ratio.loc['other', :] = ['기타', 100 - sum(ratio['비중'].astype(float))]
 
         fig = px.pie(ratio, values='비중', names='종목명')
         fig.update_layout(template='plotly_white'

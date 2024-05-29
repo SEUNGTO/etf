@@ -25,7 +25,6 @@ type = st.session_state['type']
 
 if search and type == 'ETF':
 
-
     # 전체 내역 조회
     df = load_etf_data('new', code)
     df['비중'] = round(df['비중'], 2)
@@ -38,16 +37,22 @@ if search and type == 'ETF':
     target.columns = ['목표가(가중평균)']
 
     # 재무제표
-    if code == '102110' :
+    with st.expander('가상 재무제표(BETA 서비스)'):
 
-        with st.expander('가상 재무제표(테스트 중, TIGER 200만 가능)'):
-
-            st.write(f'{name}이 보유한 종목의 지분률을 감안한 가상의 재무상태표에요.')
-            url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/fs.json'
-            fs = pd.DataFrame(requests.get(url).json())
-            st.dataframe(fs)
-            fs = fs.loc[fs['종목코드'].isin(df['종목코드']), : ]
-            st.dataframe(fs)
+        st.write(f'{name}이 보유한 종목의 지분률을 감안한 가상의 가상의 재무제표에요.')
+        st.caption('※ 금융업은 제외')
+        url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/fs.json'
+        fs = pd.DataFrame(requests.get(url).json())
+        fs = fs.loc[fs['종목코드'].isin(df['종목코드']), : ].drop('종목코드',axis = 1).sum()
+        balance = fs[['자산총계', '유동자산', '부채총계', '유동부채', '비유동부채', '자본총계', '자본금', '이익잉여금']]
+        income = fs[['매출액', '영업이익', '영업비용', '이자비용','당기순이익', '총포괄손익']]
+        col1, col2 = st.columns(2)
+        with col1 :
+            st.write(f'{name}의 재무상태표에요.')
+            st.dataframe(balance)
+        with col2 :
+            st.write(f'{name}의 손익계산서에요.')
+            st.dataframe(income)
 
     st.write(f'## 1. {name}의 보유 종목과 비중이에요.')
 

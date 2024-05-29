@@ -32,11 +32,13 @@ type = st.session_state['type']
 if search and type == 'ETF':
     # 전체 내역 조회
     df = load_etf_data('new', code)
-    df['비중'] = round(df['비중'], 2)
-
-    st.dataframe(df)
-    st.write(df['비중'])
-    st.write(100 - df['비중'])
+    # 임시 코드
+    
+    # df['비중'] = round(df['비중'], 2)
+    
+    # st.dataframe(df)
+    # st.write(df['비중'])
+    # st.write(100 - df['비중'])
 
     price = fdr.DataReader(code, start=one_month_ago, end=today).reset_index()
 

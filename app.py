@@ -26,11 +26,13 @@ type = st.session_state['type']
 if search and type == 'ETF':
     if code == '102110' :
         with st.expander('가상 재무제표(테스트 중, TIGER 200만 가능)') :
+
             st.write(f'{name}이 보유한 종목의 지분률을 감안한 가상의 재무상태표에요.')
-            url = 'https://raw.githubusercontent.com/sEUNGTO/etfdata/main/tiger200.json'
-            response = requests.get(url).json()
+            url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/fs.json'
+            response = pd.DataFrame(requests.get(url).json())
+
             st.dataframe(response)
-        
+
 
     # 전체 내역 조회
     df = load_etf_data('new', code)

@@ -6,10 +6,6 @@ data = pd.read_excel('../data/etf_20240514.xlsx',
                      dtype = str)
 data.fillna(0, inplace = True)
 
-host = "34.22.69.206"
-database = "db_etf"
-user = "user"
-password = "1234"
 
 # MySQL 연결
 def connect_to_mysql(host, user, password, database):
@@ -87,6 +83,23 @@ if __name__ == "__main__" :
     # create_table('old')
     # insert_date('old', data, 1000)
 
+    host = "34.22.69.206"
+    database = "db_etf"
+    user = "user"
+    password = "1234"
+
+    query = '''
+    SELECT * FROM research
+    '''
+
+    connection = connect_to_mysql(host, user, password, database)
+    cursor = connection.cursor()
+    cursor.execute(query)
+
+    data = cursor.fetchall()
+    data = pd.DataFrame(data)
+    data.columns = ['종목명', '종목코드', '리포트 제목', 'nid', '목표가', '의견', '게시일자', '증권사', '링크']
+    data.to_json('research.json')
 
 
 

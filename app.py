@@ -45,7 +45,7 @@ if search and type == 'ETF':
             st.write(f'{name}이 보유한 종목의 지분률을 감안한 가상의 재무상태표에요.')
             url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/fs.json'
             fs = pd.DataFrame(requests.get(url).json())
-            fs = fs.loc[fs['종목모드'].isin(df['종목코드']), : ]
+            fs = fs.loc[fs['종목코드'].isin(df['종목코드']), : ]
             st.dataframe(fs)
 
     st.write(f'## 1. {name}의 보유 종목과 비중이에요.')

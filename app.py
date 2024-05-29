@@ -36,7 +36,7 @@ if search and type == 'ETF':
 
     st.dataframe(df)
     st.write(df['비중'])
-    st.write(10p - df['비중'])
+    st.write(100 - df['비중'])
 
     price = fdr.DataReader(code, start=one_month_ago, end=today).reset_index()
 

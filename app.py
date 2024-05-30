@@ -325,6 +325,7 @@ elif search and type == 'Stock' :
         mode='lines', 
         name='목표가', 
         yaxis='y2',
+        color = 'black',
         line=dict(dash='dash')
     ))
 

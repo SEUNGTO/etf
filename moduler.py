@@ -129,3 +129,31 @@ def load_research() :
     data['목표가'] = data['목표가'].astype(int)
 
     return data
+
+
+def load_entire_etf_data(url) :
+
+    tmp = requests.get(url)
+    tmp = pd.DataFrame(tmp.json(), dtype = str)
+
+    tmp.columns = ['ETF코드','종목코드', '종목명', '보유량', '평가금액', '비중']
+    tmp['보유량'] = tmp['보유량'].astype(float)
+    tmp['평가금액'] = tmp['평가금액'].astype(float)
+    tmp['비중'] = tmp['비중'].astype(float)
+
+    return tmp
+
+@st.cache
+def merge_date(new, old) :
+
+    entire = pd.merge(new, old.drop('종목명', axis = 1), on = ['ETF코드', '종목코드'], suffixes=['(기준일)', '(비교일)'])
+
+    etf_list = fdr.StockListing('ETF/KR')
+    etf_list = etf_list.loc[:, ['Name', 'Symbol']]
+    etf_list.columns = ['ETF', 'ETF코드']
+
+    entire = entire.set_index('ETF코드').join(etf_list.set_index('ETF코드'))
+    entire = entire.reset_index(drop = True).set_index('ETF')
+    entire.fillna(0, inplace = True)
+
+    return entire

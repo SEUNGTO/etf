@@ -314,9 +314,10 @@ elif search and type == 'Stock' :
         xaxis_rangeslider_visible=False
     )
     # st.write('반영 여부 확인 중')
-    # url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
-    # ewm_data = requests.get(url).json()
-    # st.write(ewm_data[code])
+    url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
+    ewm_data = requests.get(url).json()
+    ewm_data = pd.Series(ewm_data[code])
+    st.write(ewm_data)
     # st.dataframe(ewm_data[code])
     # ewm_data = pd.DataFrame(ewm_data[code])
     # ewm_data = ewm_data.loc[one_month_ago:today, code]

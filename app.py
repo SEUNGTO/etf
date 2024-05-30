@@ -313,10 +313,8 @@ elif search and type == 'Stock' :
         xaxis=dict(type='category', tickangle=45),
         xaxis_rangeslider_visible=False
     )
-    yaxis_tick0 = min(price['Low'])
-    yaxis_dtick = (max(price['High']) - min(price['Low']))/5
-    fig.update_layout(yaxis2=dict(tick0=yaxis_tick0,
-        dtick=yaxis_dtick,title='목표가', overlaying='y', side='right'))
+    
+    fig.update_layout(yaxis2=dict(title='목표가', overlaying='y', side='right'))
     url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
     ewm_data = requests.get(url).json()
     if code in ewm_data.keys() : 
@@ -340,7 +338,7 @@ elif search and type == 'Stock' :
     tmp3['시총'] = tmp3['목표가(가중평균)'] * tmp3['보유량']
 
     close = price['Close'].tail(1).values[0]
-    highest = high = price['High'].max()
+    highest = price['High'].max()
     target = research['목표가'].mean()
     ma = price['Close'].mean()
 
@@ -361,9 +359,9 @@ elif search and type == 'Stock' :
         delta = close - highest
         st.metric(label = '종가(고점 대비)', value = f'{close:,}',  delta = f'{delta:,}')
     with col4 :
-        high = price['High'].max()
+        
         low = price['Low'].min()
-        delta = high - low
+        delta = highest - low
         st.metric(label = '최고점(저점 대비)', value = f'{highest:,}', delta = f'{delta:,}')
 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)

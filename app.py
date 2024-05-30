@@ -98,7 +98,7 @@ if search and type == 'ETF':
         tmp2 = research[['종목코드', '리포트 제목', '의견', '게시일자', '증권사', '링크']]
         st.write(tmp2.info())
         st.dataframe(tmp2)
-        tmp2['게시일자'] = pd.to_datetime(tmp2['게시일자'])
+        tmp2['게시일자'] = pd.to_datetime(tmp2['게시일자'], format = '%Y.%m.%d')
         row = tmp2.groupby('종목코드')['게시일자'].idxmax()
         tmp2 = research.loc[row, ['종목코드', '리포트 제목', '의견', '게시일자', '증권사', '링크']]
 

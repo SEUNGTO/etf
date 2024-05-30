@@ -18,7 +18,7 @@ codeList = load_codeList() # 종목코드 리스팅
 tz = pytz.timezone('Asia/Seoul')
 now = datetime.now(tz)
 today = now.strftime('%Y-%m-%d')
-one_month_ago = now - timedelta(days = 30)
+one_month_ago = now - timedelta(days = 90) # 사실은 3달 전
 one_month_ago = one_month_ago.strftime('%Y-%m-%d')
 
 # Main UI
@@ -313,7 +313,7 @@ elif search and type == 'Stock' :
         xaxis=dict(type='category', tickangle=45),
         xaxis_rangeslider_visible=False
     )
-    st.write('반영 여부 확인 중')
+
     fig.update_layout(yaxis2=dict(title='목표가', overlaying='y', side='right'))
     url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
     ewm_data = requests.get(url).json()

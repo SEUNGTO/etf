@@ -210,6 +210,8 @@ elif search and type == 'Stock' :
     price = fdr.DataReader(code, start=one_month_ago, end=today).reset_index()
 
     research = load_research()
+    st.dataframe(df)
+    st.dataframe(research)
     research = research[research['종목코드'].isin(df['종목코드'])]
 
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()

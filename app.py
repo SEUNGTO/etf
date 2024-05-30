@@ -135,7 +135,7 @@ if search and type == 'ETF':
                                      )
     st.success('텔레그램 채널에서 정보를 모두 모아왔어요.')
 
-    st.write(f'## 3. {name}의 최근 한 달 주가 추이에요.')
+    st.write(f'## 3. {name}의 최근 세 달간의 주가 추이에요.')
 
     fig = go.Figure(data=[go.Candlestick(
         x=price['Date'].apply(lambda x : x.strftime('%m-%d')),

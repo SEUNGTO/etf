@@ -8,7 +8,11 @@ st.set_page_config(
 )
 
 entire = merge_data(type_dict)
-st.download_button('Download excel file', entire, 'entire/xls')
+df_xlsx = to_excel(entire)
+st.download_button(label='📥 Download Entire ETF Data',
+                                data=df_xlsx ,
+                                file_name= 'entire.xlsx')
+
 
 # session 정의
 set_session()

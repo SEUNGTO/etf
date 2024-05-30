@@ -219,6 +219,7 @@ elif search and type == 'Stock' :
     price = fdr.DataReader(code, start=one_month_ago, end=today).reset_index()
 
     research = load_research()
+    research['목표가'] = [re.sub('\D', '', v) for v in research['목표가']]
     ind = research['목표가'] == ""
     research.loc[ind, '목표가'] = np.nan
     research['목표가'] = research['목표가'].astype(float)

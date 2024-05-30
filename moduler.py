@@ -10,7 +10,8 @@ from bs4 import BeautifulSoup
 import time
 import pytz
 from datetime import datetime, timedelta
-
+from io import BytesIO
+from pyxlsb import open_workbook as open_xlsb
 
 def load_etf_data(type, code) :
 

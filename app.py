@@ -39,6 +39,7 @@ if search and type == 'ETF':
     price = fdr.DataReader(code, start=one_month_ago, end=today).reset_index()
 
     research = load_research()
+    research['목표가'] = research['목표가'].astype(float)
     research = research[research['종목코드'].isin(df['종목코드'])]
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']
@@ -218,6 +219,7 @@ elif search and type == 'Stock' :
     price = fdr.DataReader(code, start=one_month_ago, end=today).reset_index()
 
     research = load_research()
+    research['목표가'] = research['목표가'].astype(float)
     research = research[research['종목코드'].isin([code])]
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()
     target.columns = ['목표가(가중평균)']

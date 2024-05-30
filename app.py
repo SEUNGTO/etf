@@ -324,7 +324,8 @@ elif search and type == 'Stock' :
         y = ewm_data.values,
         mode='lines', 
         name='목표가', 
-        yaxis='y2'
+        yaxis='y2',
+        line=dict(dash='dash')
     ))
 
 

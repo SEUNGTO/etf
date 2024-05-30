@@ -144,7 +144,7 @@ def load_entire_etf_data(url) :
     return tmp
 
 @st.cache
-def merge_date() :
+def merge_data() :
 
     new = load_entire_etf_data(type_dict['new'])
     old = load_entire_etf_data(type_dict['old'])

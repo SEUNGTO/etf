@@ -44,8 +44,7 @@ def load_stock_data(type, code) :
     tmp = requests.get(url)
     tmp = pd.DataFrame(tmp.json(), dtype = str)
     tmp = tmp.loc[tmp['stock_code'] == code, :]
-    tmp = tmp.drop('stock_code', axis = 1)
-    tmp.columns = ['ETF코드', '종목명', '보유량', '평가금액', '비중']
+    tmp.columns = ['ETF코드','종목코드', '종목명', '보유량', '평가금액', '비중']
     tmp['보유량'] = tmp['보유량'].astype(float)
     tmp['평가금액'] = tmp['평가금액'].astype(float)
 

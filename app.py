@@ -350,6 +350,7 @@ elif search and type == 'Stock' :
 
     tmp = df[['ETF코드', '종목명', '비중']].set_index('ETF코드').join(df2[['ETF코드', '비중']].set_index('ETF코드'),
                                                            how='left', lsuffix='T', rsuffix='C')
+    st.dataframe(tmp)
     tmp['차이'] = tmp['비중T'] - tmp['비중C']
     tmp = tmp.join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'inner')
 

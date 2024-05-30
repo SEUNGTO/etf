@@ -316,8 +316,8 @@ elif search and type == 'Stock' :
     st.write('반영 여부 확인 중')
     url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
     ewm_data = requests.get(url).json()
-    st.write(ewm_data)
-    st.dataframe(ewm_data)
+    st.write(ewm_data[code])
+    st.dataframe(ewm_data[code])
     # ewm_data = pd.DataFrame(ewm_data[code])
     # ewm_data = ewm_data.loc[one_month_ago:today, code]
     # fig.add_trace(px.line(data, x='Date', y='Volume').data[0])

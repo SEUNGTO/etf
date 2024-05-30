@@ -7,12 +7,6 @@ st.set_page_config(
     page_icon="😎"
 )
 
-entire = merge_data(type_dict)
-df_xlsx = to_excel(entire)
-st.download_button(label='📥 Download Entire ETF Data',
-                                data=df_xlsx ,
-                                file_name= 'entire.xlsx')
-
 
 # session 정의
 set_session()
@@ -210,6 +204,11 @@ if search and type == 'ETF':
     st.write(f'## 5. 📉 최근 {name}에서 가장 비중이 줄어든 종목들이에요')
     decrease = tmp[tmp['차이'] < 0].sort_values('차이', ascending=True)
     st.dataframe(decrease.head(10), use_container_width=True)
+
+    with st.expander('모든 ETF종목 비교') :
+        entire = merge_data(type_dict)
+        st.dataframe(entire)
+
 
 
 elif search and type == 'Stock' :

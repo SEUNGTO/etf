@@ -21,3 +21,9 @@ telegram_dict = {
     , 'SB 리포트 요약' : 'https://t.me/s/stonereport'
 
 }
+
+
+type_dict = {
+'old': 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/old_data.json',
+'new' : 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/new_data.json'
+}

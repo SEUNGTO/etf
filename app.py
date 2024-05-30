@@ -314,7 +314,7 @@ elif search and type == 'Stock' :
         xaxis_rangeslider_visible=False
     )
     
-    fig.update_layout(yaxis2=dict(title='목표가', overlaying='y', side='right'))
+    fig.update_layout(yaxis2=dict(title='목표가', overlaying='y', side='right', range=[price['Low'].min()-1, price['High'].max()+1]))
     url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
     ewm_data = requests.get(url).json()
     if code in ewm_data.keys() : 

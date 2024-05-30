@@ -313,15 +313,18 @@ elif search and type == 'Stock' :
         xaxis=dict(type='category', tickangle=45),
         xaxis_rangeslider_visible=False
     )
-    # st.write('반영 여부 확인 중')
+    st.write('반영 여부 확인 중')
+    fig.update_layout(yaxis2=dict(title='목표가', overlaying='y', side='right'))
     url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
     ewm_data = requests.get(url).json()
     ewm_data = pd.Series(ewm_data[code])
-    st.dataframe(ewm_data)
-    # st.dataframe(ewm_data[code])
-    # ewm_data = pd.DataFrame(ewm_data[code])
-    # ewm_data = ewm_data.loc[one_month_ago:today, code]
-    # fig.add_trace(px.line(data, x='Date', y='Volume').data[0])
+    fig.add_trace(go.Scatter(
+        x = ewm_data.index,
+        y = ewm_data.values,
+        mode='lines', 
+        name='목표가', 
+        yaxis='y2'
+    ))
 
 
     tmp3 = df[['종목코드', '평가금액', '보유량']]

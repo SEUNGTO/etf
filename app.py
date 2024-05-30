@@ -1,5 +1,6 @@
-from moduler import *
 from config import *
+from moduler import *
+
 
 st.set_page_config(
     page_title="ETFace",

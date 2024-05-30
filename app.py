@@ -296,7 +296,7 @@ elif search and type == 'Stock' :
         st.info('🚧업데이트 중이에요.')
 
 
-    st.write(f'## 2. {name}의 최근 한 달 주가 추이에요.')
+    st.write(f'## 2. {name}의 최근 세 달 주가 추이에요.')
 
     fig = go.Figure(data=[go.Candlestick(
         x=price['Date'].apply(lambda x : x.strftime('%m-%d')),
@@ -317,16 +317,17 @@ elif search and type == 'Stock' :
     fig.update_layout(yaxis2=dict(title='목표가', overlaying='y', side='right'))
     url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
     ewm_data = requests.get(url).json()
-    ewm_data = pd.Series(ewm_data[code])
-    ewm_data = ewm_data[ewm_data.index >= one_month_ago]
-    fig.add_trace(go.Scatter(
-        x = [idx[-5:] for idx in ewm_data.index],
-        y = ewm_data.values,
-        mode='lines', 
-        name='목표가', 
-        yaxis='y2',
-        line=dict(dash='dash', color = 'black')
-    ))
+    if code in ewm_data.keys() : 
+        ewm_data = pd.Series(ewm_data[code])
+        ewm_data = ewm_data[ewm_data.index >= one_month_ago]
+        fig.add_trace(go.Scatter(
+            x = [idx[-5:] for idx in ewm_data.index],
+            y = ewm_data.values,
+            mode='lines', 
+            name='목표가', 
+            yaxis='y2',
+            line=dict(dash='dash', color = 'black')
+        ))
 
 
     tmp3 = df[['종목코드', '평가금액', '보유량']]

@@ -317,7 +317,7 @@ elif search and type == 'Stock' :
     url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
     ewm_data = requests.get(url).json()
     ewm_data = pd.Series(ewm_data[code])
-    st.write(ewm_data)
+    st.dataframe(ewm_data)
     # st.dataframe(ewm_data[code])
     # ewm_data = pd.DataFrame(ewm_data[code])
     # ewm_data = ewm_data.loc[one_month_ago:today, code]

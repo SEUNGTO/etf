@@ -39,6 +39,9 @@ if search and type == 'ETF':
     price = fdr.DataReader(code, start=one_month_ago, end=today).reset_index()
 
     research = load_research()
+    research['목표가'] = [re.sub('\D', '', v) if v is not None else '' for v in research['목표가']]
+    ind = research['목표가'] == ""
+    research.loc[ind, '목표가'] = np.nan
     research['목표가'] = research['목표가'].astype(float)
     research = research[research['종목코드'].isin(df['종목코드'])]
     target = research[['종목코드', '목표가']].groupby('종목코드').mean()

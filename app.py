@@ -55,7 +55,7 @@ if search and type == 'ETF':
         for col in fs.columns :
             fs[col] *= fs['보유량']
         fs = fs.reset_index(drop = True).drop('보유량', axis = 1).sum()
-        fs = pd.DataFrame(fs)
+        
         fs.index.name = '계정명'
         # fs.columns = ['금액']
         balance = round(fs[['자산총계', '유동자산', '부채총계', '유동부채', '비유동부채', '자본총계', '자본금', '이익잉여금']], 0)

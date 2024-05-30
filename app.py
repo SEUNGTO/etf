@@ -313,6 +313,11 @@ elif search and type == 'Stock' :
         xaxis=dict(type='category', tickangle=45),
         xaxis_rangeslider_visible=False
     )
+    url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
+    ewm_data = response.get(url).json()
+    ewm_data = ewm_data[code]
+    st.dataframe(ewm_data)
+    # fig.add_trace(px.line(data, x='Date', y='Volume').data[0])
 
 
     tmp3 = df[['종목코드', '평가금액', '보유량']]
@@ -348,6 +353,7 @@ elif search and type == 'Stock' :
         low = price['Low'].min()
         delta = high - low
         st.metric(label = '최고점(저점 대비)', value = f'{highest:,}', delta = f'{delta:,}')
+
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 

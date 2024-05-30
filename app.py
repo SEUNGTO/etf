@@ -7,7 +7,7 @@ st.set_page_config(
     page_icon="😎"
 )
 
-entire = merge_data()
+entire = merge_data(type_dict)
 st.download_button('Download excel file', entire, 'entire/xls')
 
 # session 정의

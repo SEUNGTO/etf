@@ -7,6 +7,7 @@ st.set_page_config(
 )
 
 entire = merge_data()
+st.download_button('Download excel file', entire, 'entire/xls')
 
 # session 정의
 set_session()

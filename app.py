@@ -214,9 +214,6 @@ elif search and type == 'Stock' :
     st.dataframe(research)
     research = research[research['종목코드'].isin([code])]
 
-    target = research[['종목코드', '목표가']].groupby('종목코드').mean()
-    target.columns = ['목표가(가중평균)']
-
     st.write(f'## 1. {name}에 대해 이런 이야기들이 있어요.')
 
     tab1, tab2, tab3, tab4 = st.tabs(['증권사 리포트', '뉴스', '텔레그램', '유튜브(예정)'])

@@ -6,6 +6,7 @@ st.set_page_config(
     page_icon="😎"
 )
 
+entire = merge_data()
 
 # session 정의
 set_session()

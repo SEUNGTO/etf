@@ -368,7 +368,7 @@ elif search and type == 'Stock' :
     total = df.set_index('ETF코드').join(codeList[['Name', 'Symbol']].rename(columns = {'Symbol' : 'ETF코드', 'Name' : 'ETF'}).set_index('ETF코드'), how = 'left')
     total = total.drop(['종목코드', '종목명'], axis = 1)
     total = total.dropna()
-    total['비중'] = round(total['비중'], 2)
+    total['비중'] = round(total['비중'].astype(float), 2)
     total.reset_index(inplace = True, drop = True)
     total = total.set_index('ETF')
     st.dataframe(total.sort_values('비중', ascending = False).head(10), use_container_width=True)

@@ -313,8 +313,11 @@ elif search and type == 'Stock' :
         xaxis=dict(type='category', tickangle=45),
         xaxis_rangeslider_visible=False
     )
+    yaxis_tick0 = fig.layout.yaxis.tick0 if fig.layout.yaxis.tick0 is not None else fig.data[0].y.min()
+    yaxis_dtick = fig.layout.yaxis.dtick if fig.layout.yaxis.dtick is not None else (fig.data[0].y.max() - fig.data[0].y.min()) / 5  # 기본적으로 5개의 틱을 계산
 
-    fig.update_layout(yaxis2=dict(title='목표가', overlaying='y', side='right'))
+    fig.update_layout(yaxis2=dict(tick0=yaxis_tick0,
+        dtick=yaxis_dtick,title='목표가', overlaying='y', side='right'))
     url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
     ewm_data = requests.get(url).json()
     if code in ewm_data.keys() : 

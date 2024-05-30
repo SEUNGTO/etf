@@ -371,7 +371,9 @@ elif search and type == 'Stock' :
     total['비중'] = round(total['비중'].astype(float), 2)
     total.reset_index(inplace = True, drop = True)
     total = total.set_index('ETF')
-    st.dataframe(total.sort_values('비중', ascending = False).head(10), use_container_width=True)
+    st.dataframe(total.reset_index().sort_values('비중', ascending = False).head(10)
+                 , use_container_width=True
+                ,hide_index = True)
 
     col1, col2 = st.columns(2)
 

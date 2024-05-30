@@ -144,7 +144,10 @@ def load_entire_etf_data(url) :
     return tmp
 
 @st.cache
-def merge_date(new, old) :
+def merge_date() :
+
+    new = load_entire_etf_data(type_dict['new'])
+    old = load_entire_etf_data(type_dict['old'])
 
     entire = pd.merge(new, old.drop('종목명', axis = 1), on = ['ETF코드', '종목코드'], suffixes=['(기준일)', '(비교일)'])
 

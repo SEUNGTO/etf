@@ -56,7 +56,7 @@ if search and type == 'ETF':
             fs[col] *= fs['보유량']
         fs = fs.reset_index(drop = True).drop('보유량', axis = 1).sum()
         fs.index.name = '계정명'
-        fs.columns = ['금액']
+        fs.columns.name = '금액'
         balance = round(fs[['자산총계', '유동자산', '부채총계', '유동부채', '비유동부채', '자본총계', '자본금', '이익잉여금']], 0)
         income = round(fs[['매출액', '영업이익', '영업비용', '이자비용','당기순이익', '총포괄손익']], 0)
         col1, col2 = st.columns(2)

@@ -216,6 +216,7 @@ if search and type == 'ETF':
 
     with col2 :
         comp_nm = [codeList.loc[codeList['Symbol'] == comp_code, "Name"] for comp_code in similar_etf]
+        st.write(comp_nm)
     
     with st.expander('모든 ETF종목 비교') :
         entire = merge_data(type_dict)

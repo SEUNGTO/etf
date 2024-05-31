@@ -209,7 +209,7 @@ if search and type == 'ETF':
     st.dataframe(decrease.head(10), use_container_width=True)
 
     st.write(f'## 6. 📉 {name}와 유사한 종목들이에요.')
-    similar_etf = load_similar_etf()
+    similar_etf = load_similar_etf(code)
     col1, col2 = st.columns(2)
     with col1 :
         st.write(similar_etf)

@@ -242,7 +242,7 @@ if search and type == 'ETF':
                                 , theme="streamlit"
                                 , use_container_width=True)
                 with st.expander(f'보유종목 한 눈에 보기') :
-                    st.dataframe(df[['종목명', '비중', '평가금액']].sort_values('비중', ascending=False)
+                    st.dataframe(comp_df[['종목명', '비중', '평가금액']].sort_values('비중', ascending=False)
                                 ,hide_index = True
                                 ,use_container_width=True)
                         

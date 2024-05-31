@@ -212,6 +212,9 @@ if search and type == 'ETF':
     similar_etf = load_similar_etf(code)
     col1, col2 = st.columns(2)
     with col1 :
+        fig = px.pie(ratio, values='비중', names='종목명')
+        fig.update_layout(template='plotly_white'
+                          , margin={'t': 10, 'b': 5})
         st.plotly_chart(fig
                         , theme="streamlit"
                         , use_container_width=True)

@@ -212,7 +212,7 @@ if search and type == 'ETF':
     similar_etf = load_similar_etf(code)
     col1, col2 = st.columns(2)
     with col1 :
-        tab1 = st.tabs([name])
+        tab = st.tabs([name])
         with tab :
             ratio = df.sort_values('비중', ascending=False)[['종목명', '비중']].head(10)
             ratio.loc['other', :] = ['기타', 100 - sum(ratio['비중'].astype(float))]

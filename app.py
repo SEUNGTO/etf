@@ -212,7 +212,7 @@ if search and type == 'ETF':
     similar_etf = load_similar_etf()
     col1, col2 = st.columns(2)
     with col1 :
-
+        st.write(similar_etf)
 
     with col2 :
         comp_nm = [codeList.loc[codeList['Symbol'] == comp_code, "Name"] for comp_code in similar_etf]

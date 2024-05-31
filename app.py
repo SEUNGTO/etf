@@ -212,20 +212,19 @@ if search and type == 'ETF':
     similar_etf = load_similar_etf(code)
     col1, col2 = st.columns(2)
     with col1 :
-        tab = st.tabs([name])
-        with tab :
-            ratio = df.sort_values('비중', ascending=False)[['종목명', '비중']].head(10)
-            ratio.loc['other', :] = ['기타', 100 - sum(ratio['비중'].astype(float))]
-            fig = px.pie(ratio, values='비중', names='종목명')
-            fig.update_layout(template='plotly_white'
-                              , margin={'t': 10, 'b': 5})
-            st.plotly_chart(fig
-                            , theme="streamlit"
-                            , use_container_width=True)
-            with st.expander(f'{name}의 보유종목 한 눈에 보기') :
-                st.dataframe(df[['종목명', '비중', '평가금액']].sort_values('비중', ascending=False)
-                            ,hide_index = True
-                            ,use_container_width=True)
+        st.write(f'{name}')
+        ratio = df.sort_values('비중', ascending=False)[['종목명', '비중']].head(10)
+        ratio.loc['other', :] = ['기타', 100 - sum(ratio['비중'].astype(float))]
+        fig = px.pie(ratio, values='비중', names='종목명')
+        fig.update_layout(template='plotly_white'
+                          , margin={'t': 10, 'b': 5})
+        st.plotly_chart(fig
+                        , theme="streamlit"
+                        , use_container_width=True)
+        with st.expander(f'{name}의 보유종목 한 눈에 보기') :
+            st.dataframe(df[['종목명', '비중', '평가금액']].sort_values('비중', ascending=False)
+                        ,hide_index = True
+                        ,use_container_width=True)
     with col2 :
         comp_nm_list = [codeList.loc[codeList['Symbol'] == comp_code, "Name"].values[0] for comp_code in similar_etf]
         for tab, comp_code in zip(st.tabs(comp_nm_list), similar_etf) :

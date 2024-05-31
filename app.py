@@ -212,7 +212,7 @@ if search and type == 'ETF':
     similar_etf = load_similar_etf(code)
     col1, col2 = st.columns(2)
     with col1 :
-        tab1 = st.tabs[name]
+        tab1 = st.tabs([name])
         with tab :
             fig = px.pie(ratio, values='비중', names='종목명')
             fig.update_layout(template='plotly_white'

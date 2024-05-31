@@ -208,6 +208,15 @@ if search and type == 'ETF':
     decrease = tmp[tmp['차이'] < 0].sort_values('차이', ascending=True)
     st.dataframe(decrease.head(10), use_container_width=True)
 
+    st.write(f'## 6. 📉 {name}와 유사한 종목들이에요.')
+    similar_etf = load_similar_etf()
+    col1, col2 = st.columns(2)
+    with col1 :
+
+
+    with col2 :
+        comp_nm = [codeList.loc[codeList['Symbol'] == comp_code, "Name"] for comp_code in similar_etf]
+    
     with st.expander('모든 ETF종목 비교') :
         entire = merge_data(type_dict)
         st.dataframe(entire)

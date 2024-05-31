@@ -317,7 +317,7 @@ elif search and type == 'Stock' :
     fig.update_layout(
         xaxis_title='날짜',
         yaxis_title='가격',
-        margin={'t': 10, 'b': 10, 'l' : 0, 'r' 0},
+        margin={'t': 10, 'b': 10, 'l' : 0, 'r': 0},
         xaxis=dict(type='category', tickangle=45),
         xaxis_rangeslider_visible=False
     )

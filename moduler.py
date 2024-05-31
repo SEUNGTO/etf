@@ -157,3 +157,9 @@ def merge_data(type_dict) :
     entire.fillna(0, inplace = True)
 
     return entire
+
+def load_similar_etf() :
+    url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/similar.json'
+    sim_data = pd.DataFrame(requests.get(url).json())
+    sim_list = sim_data[code].values.tolist()
+    return sim_list

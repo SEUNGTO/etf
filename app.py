@@ -227,24 +227,25 @@ if search and type == 'ETF':
                             ,hide_index = True
                             ,use_container_width=True)
     with col2 :
-        comp_nm_list = [codeList.loc[codeList['Symbol'] == comp_code, "Name"].values[0] for comp_code in similar_etf]
-        for tab, comp_code in zip(st.tabs(comp_nm_list), similar_etf) :
-            with tab :
-                comp_df = load_etf_data('new', comp_code)  
-                comp_df['비중'] = round(comp_df['비중'], 2)
-                comp_ratio = comp_df.sort_values('비중', ascending=False)[['종목명', '비중']].head(10)
-                comp_ratio.loc['other', :] = ['기타', 100 - sum(comp_ratio['비중'].astype(float))]
-
-                fig = px.pie(comp_ratio, values='비중', names='종목명')
-                fig.update_layout(template='plotly_white'
-                                  , margin={'t': 10, 'b': 5})
-                st.plotly_chart(fig
-                                , theme="streamlit"
-                                , use_container_width=True)
-                with st.expander(f'보유종목 한 눈에 보기') :
-                    st.dataframe(comp_df[['종목명', '비중', '평가금액']].sort_values('비중', ascending=False)
-                                ,hide_index = True
-                                ,use_container_width=True)
+        with st.container(border = True):
+            comp_nm_list = [codeList.loc[codeList['Symbol'] == comp_code, "Name"].values[0] for comp_code in similar_etf]
+            for tab, comp_code in zip(st.tabs(comp_nm_list), similar_etf) :
+                with tab :
+                    comp_df = load_etf_data('new', comp_code)  
+                    comp_df['비중'] = round(comp_df['비중'], 2)
+                    comp_ratio = comp_df.sort_values('비중', ascending=False)[['종목명', '비중']].head(10)
+                    comp_ratio.loc['other', :] = ['기타', 100 - sum(comp_ratio['비중'].astype(float))]
+    
+                    fig = px.pie(comp_ratio, values='비중', names='종목명')
+                    fig.update_layout(template='plotly_white'
+                                      , margin={'t': 10, 'b': 5})
+                    st.plotly_chart(fig
+                                    , theme="streamlit"
+                                    , use_container_width=True)
+                    with st.expander(f'보유종목 한 눈에 보기') :
+                        st.dataframe(comp_df[['종목명', '비중', '평가금액']].sort_values('비중', ascending=False)
+                                    ,hide_index = True
+                                    ,use_container_width=True)
                         
                 ############################################
                 # 상위 10

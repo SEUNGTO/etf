@@ -11,6 +11,11 @@ import time
 import pytz
 from datetime import datetime, timedelta
 
+def load_ewm_data() :
+    url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
+    ewm_data = requests.get(url).json()
+    return ewm_data
+
 def load_etf_target_price(code) :
     url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/etf_target_price.json'
     response = requests.get(url)

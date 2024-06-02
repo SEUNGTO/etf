@@ -274,7 +274,15 @@ if search and type == 'ETF':
     
     with st.expander('모든 ETF종목 비교') :
         entire = merge_data(type_dict)
-        st.dataframe(entire)
+        tab1, tab2, tab3 = st.tabs(['모든 종목', 'ETF가 새로 담은 종목', 'ETF가 모두 정리한 종목'])
+        with tab1 :
+            st.dataframe(entire)
+        with tab2 :
+            ind = (entire['보유량(기준일)'] =! 0) & (entire['보유량(기준일)'] == 0)
+            st.dataframe(entire.loc[ind, :])
+        with tab3 :
+            ind = (entire['보유량(기준일)'] == 0) & (entire['보유량(기준일)'] =! 0)
+            st.dataframe(entire.loc[ind, :])
 
 
 

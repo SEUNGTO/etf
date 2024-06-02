@@ -394,7 +394,7 @@ elif search and type == 'Stock' :
 
         fig.add_trace(go.Scatter(
             x = [idx[-5:] for idx in ewm_data.index],
-            y = ewm_data.values,
+            y = standardize(ewm_data.values),
             mode='lines', 
             name='목표가', 
             yaxis='y2',

@@ -178,5 +178,7 @@ def merge_data(type_dict) :
 def load_similar_etf(code) :
     url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/similar.json'
     sim_data = pd.DataFrame(requests.get(url).json())
-    sim_list = sim_data[code].values.tolist()
-    return sim_list
+
+    if code in sim_data.keys() :
+        sim_list = sim_data[code].values.tolist()
+        return sim_list

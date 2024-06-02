@@ -168,7 +168,7 @@ def merge_data(type_dict) :
     new = load_entire_etf_data(type_dict['new'])
     old = load_entire_etf_data(type_dict['old'])
 
-    entire = pd.merge(new, old.drop('종목명', axis = 1), on = ['ETF코드', '종목코드'], suffixes=['(기준일)', '(비교일)'])
+    entire = pd.merge(new, old.drop('종목명', axis = 1), how = 'left', on = ['ETF코드', '종목코드'], suffixes=['(기준일)', '(비교일)'])
 
     etf_list = fdr.StockListing('ETF/KR')
     etf_list = etf_list.loc[:, ['Name', 'Symbol']]

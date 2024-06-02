@@ -490,17 +490,20 @@ elif search and type == 'Stock' :
                      hide_index=True)
 
 
+
+    st.dataframe(tmp.fillna(0))
     col3, col4 = st.columns(2)
     with col3 :
-
-        st.dataframe(tmp.fillna(0))
 
         st.write(f'### 🆕 포트폴리오에 추가했어요.')
 
         new = None
-
         new = tmp[tmp.fillna(0)['기준일 비중'] == 0]
-        if new is not None :
+
+        if new.shape[0] == 0 or new is None : 
+            st.info(f'{name}을 새롭게 추가한 ETF는 없어요.')
+
+        elif new.shape[0] != 0 or new is not None:
 
             st.write(f'**총 {len(new)}개의 ETF**에서 {name}를 처음으로 담았어요.')
 
@@ -511,8 +514,7 @@ elif search and type == 'Stock' :
             new.loc['평균', :] = new.mean()
 
             st.dataframe(new, use_container_width=True)
-        else :
-            st.info(f'{name}을 새롭게 추가한 ETF는 없어요.')
+        
 
 
     with col4 :

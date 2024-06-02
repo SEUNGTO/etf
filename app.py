@@ -164,7 +164,7 @@ if search and type == 'ETF':
         xaxis_title='날짜',
         xaxis=dict(type='category', tickangle=45),
         yaxis = dict(title = 'y1'),
-        yaxis2 = dict(title = 'y2', overlapping = 'y', side = 'right'),
+        yaxis2 = dict(title = 'y2', overlaying = 'y', side = 'right'),
         margin={'t': 10, 'b': 10},
         xaxis_rangeslider_visible=False
     )

@@ -497,7 +497,6 @@ elif search and type == 'Stock' :
 
         new = tmp[tmp.fillna(0)['기준일 비중'] == 0]
         if new.shape[0] > 0:
-            new = new.set_index('ETF')
 
             st.write(f'**총 {len(new)}개의 ETF**에서 {name}를 처음으로 담았어요.')
 
@@ -518,10 +517,8 @@ elif search and type == 'Stock' :
         
 
         drop = tmp[tmp.fillna(0)['비교일 비중'] == 0]
-        st.dataframe(drop)
-        if drop.shape[0] > 0 :
 
-            drop = drop.set_index('ETF')
+        if drop.shape[0] > 0 :
 
             st.write(f'**총 {len(drop)}개의 ETF**에서 {name}를 모두 정리했어요.')
             st.write(f'- 평균 **{drop["매도 금액"].mean():,.0f}**원만큼 팔았어요.')

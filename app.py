@@ -151,14 +151,13 @@ if search and type == 'ETF':
 
     etf_target = None
     etf_target = load_etf_target_price(code)
-    st.write(one_month_ago)
-    st.write(min(etf_target.index))
-    cutoff_date = max(one_month_ago, min(etf_target.index))
-    st.write(cutoff_date)
 
+    cutoff_date = max(one_month_ago, min(etf_target.index))
     if etf_target is not None :
         etf_target = etf_target[etf_target.index >= cutoff_date]
         st.dataframe(etf_target)
+        st.write([idx[-5:] for idx in etf_target.index])
+        st.write(standardize(etf_target).values)
         fig.add_trace(go.Scatter(
                 x = [idx[-5:] for idx in etf_target.index],
                 y = standardize(etf_target).values,

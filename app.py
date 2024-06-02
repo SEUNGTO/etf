@@ -151,7 +151,9 @@ if search and type == 'ETF':
 
     etf_target = None
     etf_target = load_etf_target_price(code)
-    cutoff_date = max(one_month_ago, min(price['Date'].values))
+
+    stock_min_period = min(price['Date'].apply(lambda x : x.strftime('%Y-%m-%d')))
+    cutoff_date = max(one_month_ago, stock_min_period)
 
     if etf_target is not None :
         etf_target = etf_target[etf_target.index >= cutoff_date]

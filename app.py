@@ -491,7 +491,6 @@ elif search and type == 'Stock' :
 
 
 
-    st.dataframe(tmp.fillna(0))
     col3, col4 = st.columns(2)
     with col3 :
 

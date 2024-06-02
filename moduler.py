@@ -11,6 +11,23 @@ import time
 import pytz
 from datetime import datetime, timedelta
 
+def load_etf_target_price(code) :
+    url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/etf_target_price.json'
+    response = requests.get(url)
+    data = pd.DataFrame(response.json())
+    if code in data.columns :
+        return data[code]
+
+def standardize(data) :
+    _med = data.median()
+    centered = data - _med
+
+    _max = centered.max()
+    _min = centered.min()
+
+    _stdData = 2*(centered - _min)/(_max - _min) - 1
+    return _stdData
+
 def load_etf_data(type, code) :
 
     if type == 'old' :

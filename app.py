@@ -307,6 +307,8 @@ elif search and type == 'Stock' :
                 st.write(f' 증권사의 평균 목표가는 **{tmp["목표가"].mean():,.0f}**원이에요.')
                 st.write(f'- 가장 높은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].max()]["증권사"].values[0]}의 {tmp["목표가"].max():,.0f}원이에요.')
                 st.write(f'- 가장 낮은 목표가는 {tmp[tmp["목표가"] == tmp["목표가"].min()]["증권사"].values[0]}의 {tmp["목표가"].min():,.0f}원이에요.')
+            else :
+                st.info("증권사에서 제시된 목표가가 없어요.")
             st.dataframe(tmp.reset_index(drop=True),
                          column_config= {'링크' : st.column_config.LinkColumn(display_text='\U0001F517')},
                          use_container_width=True,

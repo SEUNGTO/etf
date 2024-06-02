@@ -388,6 +388,9 @@ elif search and type == 'Stock' :
     if code in ewm_data.keys() : 
         ewm_data = pd.Series(ewm_data[code])
         ewm_data = ewm_data[ewm_data.index >= one_month_ago]
+        
+        st.dataframe(ewm_data)
+
         fig.add_trace(go.Scatter(
             x = [idx[-5:] for idx in ewm_data.index],
             y = ewm_data.values,

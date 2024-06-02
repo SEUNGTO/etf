@@ -492,11 +492,13 @@ elif search and type == 'Stock' :
 
     col3, col4 = st.columns(2)
     with col3 :
+
         st.write(f'### 🆕 포트폴리오에 추가했어요.')
 
+        new = None
 
         new = tmp[tmp.fillna(0)['기준일 비중'] == 0]
-        if new.shape[0] > 0:
+        if new is not None :
 
             st.write(f'**총 {len(new)}개의 ETF**에서 {name}를 처음으로 담았어요.')
 
@@ -514,11 +516,12 @@ elif search and type == 'Stock' :
     with col4 :
 
         st.write(f'### ❎ 포트폴리오에서 제외했어요.')
-        
 
+        st.dataframe(tmp)
+
+        drop = None
         drop = tmp[tmp.fillna(0)['비교일 비중'] == 0]
-
-        if drop.shape[0] > 0 :
+        if drop is not None :
 
             st.write(f'**총 {len(drop)}개의 ETF**에서 {name}를 모두 정리했어요.')
             st.write(f'- 평균 **{drop["매도 금액"].mean():,.0f}**원만큼 팔았어요.')

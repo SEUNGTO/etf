@@ -166,8 +166,8 @@ if search and type == 'ETF':
     fig.update_layout(
         xaxis_title='날짜',
         xaxis=dict(type='category', tickangle=45),
-        yaxis = dict(title = 'y1'),
-        yaxis2 = dict(title = 'y2', overlaying = 'y', side = 'right'),
+        yaxis = dict(title = f'{name}'),
+        yaxis2 = dict(title = '목표가', overlaying = 'y', side = 'right'),
         margin={'t': 10, 'b': 10},
         xaxis_rangeslider_visible=False
     )

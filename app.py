@@ -493,7 +493,7 @@ elif search and type == 'Stock' :
     col3, col4 = st.columns(2)
     with col3 :
 
-        st.dataframe(tmp)
+        st.dataframe(tmp.fillna(0))
 
         st.write(f'### 🆕 포트폴리오에 추가했어요.')
 

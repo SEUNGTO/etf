@@ -150,16 +150,17 @@ if search and type == 'ETF':
         name = f'{name}')])
 
     etf_target = load_etf_target_price(code)
-    etf_target = etf_target[etf_target.index >= one_month_ago]
-    fig.add_trace(go.Scatter(
-            x = [idx[-5:] for idx in etf_target.index],
-            y = standardize(etf_target).values,
-            mode='lines', 
-            name='목표가', 
-            yaxis='y2',
-            line=dict(dash='dash', color = 'black')
-        ))
-
+    if etf_target.shape[0] != 0 :
+        etf_target = etf_target[etf_target.index >= one_month_ago]
+        fig.add_trace(go.Scatter(
+                x = [idx[-5:] for idx in etf_target.index],
+                y = standardize(etf_target).values,
+                mode='lines', 
+                name='목표가', 
+                yaxis='y2',
+                line=dict(dash='dash', color = 'black')
+            ))
+    
     fig.update_layout(
         xaxis_title='날짜',
         xaxis=dict(type='category', tickangle=45),

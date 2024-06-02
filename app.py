@@ -151,7 +151,7 @@ if search and type == 'ETF':
 
     etf_target = None
     etf_target = load_etf_target_price(code)
-    
+    st.dataframe(etf_target)
     if etf_target is not None :
         etf_target = etf_target[etf_target.index >= one_month_ago]
         fig.add_trace(go.Scatter(

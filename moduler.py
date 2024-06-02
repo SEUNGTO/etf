@@ -26,7 +26,7 @@ def standardize(data) :
     _min = centered.min()
 
     _stdData = 2*(centered - _min)/(_max - _min) - 1
-    return _stdData
+    return _stdData * 100
 
 def load_etf_data(type, code) :
 

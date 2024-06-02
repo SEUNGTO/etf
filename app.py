@@ -507,12 +507,12 @@ elif search and type == 'Stock' :
 
             st.write(f'**총 {len(new)}개의 ETF**에서 {name}를 처음으로 담았어요.')
 
-            st.write(f'- 평균적으로 **{new["매수 금액"].mean():,.0f}**원만큼 샀어요.')
-            st.write(f'- 가장 크게 비중을 늘린 ETF는 **{new["보유 비중"].max():,.2f}**%만큼 늘린 **{new.index[new["보유 비중"].argmax()]}**이에요.')
-            st.write(f'- 가장 큰 금액을 산 ETF는 **{new["매수 금액"].max():,.0f}**원을 매수한 **{new.index[new["매수 금액"].argmax()]}**이에요.')
+            # st.write(f'- 평균적으로 **{new["매수 금액"].mean():,.0f}**원만큼 샀어요.')
+            # st.write(f'- 가장 크게 비중을 늘린 ETF는 **{new["보유 비중"].max():,.2f}**%만큼 늘린 **{new.index[new["보유 비중"].argmax()]}**이에요.')
+            # st.write(f'- 가장 큰 금액을 산 ETF는 **{new["매수 금액"].max():,.0f}**원을 매수한 **{new.index[new["매수 금액"].argmax()]}**이에요.')
 
-            new.loc['평균', :] = new.mean()
-
+            # new.loc['평균', :] = new.mean()
+            new['차이'] = new['기준일 비중'] - new['비교일 비중']
             st.dataframe(new, use_container_width=True)
         
 
@@ -529,9 +529,11 @@ elif search and type == 'Stock' :
         elif drop.shape[0] != 0 or drop is not None :
 
             st.write(f'**총 {len(drop)}개의 ETF**에서 {name}를 모두 정리했어요.')
-            st.write(f'- 평균 **{drop["매도 금액"].mean():,.0f}**원만큼 팔았어요.')
-            st.write(f'- 가장 크게 비중을 줄인 ETF는 **{drop["원래 비중"].max():,.2f}**%의 비중을 정리한 **{drop.index[drop["원래 비중"].argmax()]}**이에요.')
-            st.write(f'- 가장 큰 금액을 판 ETF는 **{drop["매도 금액"].max():,.0f}**원을 매도한 **{drop.index[drop["매도 금액"].argmax()]}**이에요.')
 
-            drop.loc['평균', :] = drop.mean()
+            # st.write(f'- 평균 **{drop["매도 금액"].mean():,.0f}**원만큼 팔았어요.')
+            # st.write(f'- 가장 크게 비중을 줄인 ETF는 **{drop["원래 비중"].max():,.2f}**%의 비중을 정리한 **{drop.index[drop["원래 비중"].argmax()]}**이에요.')
+            # st.write(f'- 가장 큰 금액을 판 ETF는 **{drop["매도 금액"].max():,.0f}**원을 매도한 **{drop.index[drop["매도 금액"].argmax()]}**이에요.')
+            # drop.loc['평균', :] = drop.mean()
+
+            drop['차이'] = drop['기준일 비중'] - drop['비교일 비중']
             st.dataframe(drop, use_container_width=True)

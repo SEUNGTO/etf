@@ -156,6 +156,35 @@ if search and type == 'ETF':
         xaxis=dict(type='category', tickangle=45),
         xaxis_rangeslider_visible=False
     )
+    
+    def load_etf_target_price(code) :
+        url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/etf_target_price.json'
+        response = requests.get(url)
+        data = pd.DataFrame(response.json())
+        if code in data.columns :
+            return data[code]
+
+    def standardize(data) :
+        _med = data.median()
+        centered = data - _med
+        
+        _max = centered.max()
+        _min = centered.min()
+        
+        _stdData = 2*(centered - _min)/(_max - _min) - 1
+        return _stdData
+        
+
+    etf_target = load_etf_target_price(code)
+    etf_target = etf_target[etf_target.index >= one_month_ago]
+    fig.add_trace(go.Scatter(
+            x = [idx[-5:] for idx in etf_target.index],
+            y = standardize(etf_target).values,
+            mode='lines', 
+            name='목표가', 
+            yaxis='y2',
+            line=dict(dash='dash', color = 'black')
+        ))
 
 
     tmp3 = df[['종목코드', '평가금액', '보유량']]

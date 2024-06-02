@@ -383,14 +383,11 @@ elif search and type == 'Stock' :
     )
     
     fig.update_layout(yaxis2=dict(title='목표가', overlaying='y', side='right'))
-    url = 'https://raw.githubusercontent.com/SEUNGTO/ETFdata/main/ewm_data.json'
-    ewm_data = requests.get(url).json()
+    ewm_data = load_ewm_data()
     
     if code in ewm_data.keys() : 
         ewm_data = pd.Series(pd.Series(ewm_data[code]).values, index = pd.Series(ewm_data['Date']))
         ewm_data = ewm_data[ewm_data.index >= one_month_ago]
-        
-        st.dataframe(ewm_data)
 
         fig.add_trace(go.Scatter(
             x = [idx[-5:] for idx in ewm_data.index],

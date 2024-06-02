@@ -149,14 +149,6 @@ if search and type == 'ETF':
         close=price['Close'],
         name = f'{name}')])
 
-    fig.update_layout(
-        xaxis_title='날짜',
-        yaxis_title='가격',
-        margin={'t': 10, 'b': 10},
-        xaxis=dict(type='category', tickangle=45),
-        xaxis_rangeslider_visible=False
-    )
-
     etf_target = load_etf_target_price(code)
     etf_target = etf_target[etf_target.index >= one_month_ago]
     fig.add_trace(go.Scatter(
@@ -167,6 +159,15 @@ if search and type == 'ETF':
             yaxis='y2',
             line=dict(dash='dash', color = 'black')
         ))
+
+    fig.update_layout(
+        xaxis_title='날짜',
+        xaxis=dict(type='category', tickangle=45),
+        yaxis = dict(title = 'y1'),
+        yaxis2 = dict(title = 'y2', overlapping = 'y', side = 'right'),
+        margin={'t': 10, 'b': 10},
+        xaxis_rangeslider_visible=False
+    )
 
 
     tmp3 = df[['종목코드', '평가금액', '보유량']]

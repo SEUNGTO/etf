@@ -278,10 +278,10 @@ if search and type == 'ETF':
         with tab1 :
             st.dataframe(entire)
         with tab2 :
-            ind = entire['비중(기준일)'] =! 0 & entire['비중(비교일)'] == 0
+            ind = entire['비중(기준일)'] != 0 & entire['비중(비교일)'] == 0
             st.dataframe(entire.loc[ind, :])
         with tab3 :
-            ind = entire['비중(기준일)'] == 0 & entire['비중(비교일)'] =! 0
+            ind = entire['비중(기준일)'] == 0 & entire['비중(비교일)'] != 0
             st.dataframe(entire.loc[ind, :])
 
 

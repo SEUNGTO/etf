@@ -499,6 +499,7 @@ elif search and type == 'Stock' :
 
         new = None
         new = tmp[tmp.fillna(0)['비교일 비중'] == 0]
+        new.fillna(0, inplace = True)
 
         if new.shape[0] == 0 or new is None : 
             st.info(f'{name}을 새롭게 추가한 ETF는 없어요.')
@@ -523,6 +524,7 @@ elif search and type == 'Stock' :
 
         drop = None
         drop = tmp[tmp.fillna(0)['기준일 비중'] == 0]
+        drop.fillna(0, inplace = True)
 
         if drop.shape[0] == 0 or drop is None :
             st.info(f'{name}을 모두 정리한 ETF는 없어요.')

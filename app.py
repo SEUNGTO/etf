@@ -517,7 +517,9 @@ elif search and type == 'Stock' :
 
             # new.loc['평균', :] = new.mean()
             new['차이'] = new['기준일 비중'] - new['비교일 비중']
-            st.dataframe(new, use_container_width=True)
+            st.dataframe(new.reset_index(), 
+                         use_container_width=True,
+                        hide_index = True)
         
 
 
@@ -541,4 +543,6 @@ elif search and type == 'Stock' :
             # drop.loc['평균', :] = drop.mean()
 
             drop['차이'] = drop['기준일 비중'] - drop['비교일 비중']
-            st.dataframe(drop, use_container_width=True)
+            st.dataframe(drop.reset_index(), 
+                         use_container_width=True,
+                        hide_index = True)

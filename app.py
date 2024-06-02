@@ -204,6 +204,7 @@ if search and type == 'ETF':
         
     
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+    st.caption("ETF 목표가는 구성종목의 목표가와 비중을 가중평균한 결과에요.")
 
 
     # 최근 내역 비교

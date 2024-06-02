@@ -151,6 +151,8 @@ if search and type == 'ETF':
 
     etf_target = None
     etf_target = load_etf_target_price(code)
+    st.write(one_month_ago)
+    st.write(min(etf_target.index))
     cuttof_date = max(one_month_ago, min(etf_target.index))
 
     if etf_target is not None :

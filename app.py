@@ -25,7 +25,7 @@ one_month_ago = one_month_ago.strftime('%Y-%m-%d')
 st.title('ETF 관상가')
 
 name = search_bar(codeList)
-with st.expander('모든 ETF종목 비교') :
+with st.expander(✅️모든 ETF의 포트폴리오') :
     entire = merge_data(type_dict)
     tab1, tab2, tab3 = st.tabs(['모든 종목', 'ETF가 새로 담은 종목', 'ETF가 모두 정리한 종목'])
     with tab1 :
@@ -282,18 +282,7 @@ if search and type == 'ETF':
         st.error('유사한 ETF를 찾을 수 없어요.')
 
                 
-    
-    with st.expander('모든 ETF종목 비교') :
-        entire = merge_data(type_dict)
-        tab1, tab2, tab3 = st.tabs(['모든 종목', 'ETF가 새로 담은 종목', 'ETF가 모두 정리한 종목'])
-        with tab1 :
-            st.dataframe(entire)
-        with tab2 :
-            ind = (entire['비중(기준일)'] != 0) & (entire['비중(비교일)'] == 0)
-            st.dataframe(entire.loc[ind, :])
-        with tab3 :
-            ind = (entire['비중(기준일)'] == 0) & (entire['비중(비교일)'] != 0)
-            st.dataframe(entire.loc[ind, :])
+   
 
 
 

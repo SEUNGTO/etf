@@ -516,7 +516,9 @@ elif search and type == 'Stock' :
         st.write(f'### 🆕 포트폴리오에 추가했어요.')
 
         new = None
-        new = tmp[tmp.fillna(0)['비교일 비중'] == 0]
+        con1 = tmp.fillna(0)['기준일 비중'] != 0
+        con2 = tmp.fillna(0)['비교일 비중'] == 0
+        new = tmp[con1 & con2]
         new.fillna(0, inplace = True)
 
         if new.shape[0] == 0 or new is None : 
@@ -543,7 +545,9 @@ elif search and type == 'Stock' :
         st.write(f'### ❎ 포트폴리오에서 제외했어요.')
 
         drop = None
-        drop = tmp[tmp.fillna(0)['기준일 비중'] == 0]
+        con1 = tmp.fillna(0)['기준일 비중'] == 0
+        con2 = tmp.fillna(0)['비교일 비중'] != 0
+        drop = tmp[con1 & con2]
         drop.fillna(0, inplace = True)
 
         if drop.shape[0] == 0 or drop is None :

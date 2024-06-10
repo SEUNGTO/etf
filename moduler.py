@@ -162,7 +162,6 @@ def load_entire_etf_data(url) :
 
     return tmp
 
-@st.cache
 def merge_data(type_dict) :
 
     new = load_entire_etf_data(type_dict['new'])

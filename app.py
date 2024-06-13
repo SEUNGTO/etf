@@ -35,7 +35,7 @@ with st.expander('✅️모든 ETF의 포트폴리오') :
         st.dataframe(entire.loc[ind, :].drop([col for col in entire.columns if '비교' in col], axis = 1))
     with tab3 :
         ind = (entire['비중(기준일)'] == 0) & (entire['비중(비교일)'] != 0)
-        st.dataframe(entire.loc[ind, :])
+        st.dataframe(entire.loc[ind, :].drop([col for col in entire.columns if '기준일' in col], axis = 1))
 
 search = ~st.session_state['search']
 code = st.session_state['code']

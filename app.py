@@ -35,7 +35,7 @@ with st.expander('✅️모든 ETF의 포트폴리오') :
         st.dataframe(entire.loc[ind, :].drop([col for col in entire.columns if '비교' in col], axis = 1).rename(columns = {'보유량(기준일)':'수량', '평가금액(기준일)':'금액', '비중(기준일)':'비중'}))
     with tab3 :
         ind = (entire['비중(기준일)'] == 0) & (entire['비중(비교일)'] != 0)
-        st.dataframe(entire.loc[ind, :].drop([col for col in entire.columns if '기준일' in col], axis = 1))
+        st.dataframe(entire.loc[ind, :].drop([col for col in entire.columns if '기준일' in col], axis = 1).rename(columns = {'보유량(비교일)':'수량', '평가금액(비교일)':'금액', '비중(비교일)':'비중'}))
 
 search = ~st.session_state['search']
 code = st.session_state['code']

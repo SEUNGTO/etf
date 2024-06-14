@@ -27,7 +27,7 @@ st.title('ETF 관상가')
 name = search_bar(codeList)
 with st.expander('✅️모든 ETF의 포트폴리오') :
     entire = merge_data(type_dict)
-    tab1, tab2, tab3 = st.tabs(['모든 종목', 'ETF가 새로 담은 종목', 'ETF가 모두 정리한 종목'])
+    tab1, tab2, tab3 = st.tabs(['모든 종목', 'ETF가 새로 산 종목', 'ETF가 모두 판 종목'])
     with tab1 :
         st.dataframe(entire)
     with tab2 :

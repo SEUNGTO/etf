@@ -27,14 +27,21 @@ st.title('ETF 관상가')
 name = search_bar(codeList)
 with st.expander('✅️모든 ETF의 포트폴리오') :
     entire = merge_data(type_dict)
-    tab1, tab2, tab3 = st.tabs(['모든 종목', 'ETF가 새로 산 종목', 'ETF가 모두 판 종목'])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(['모든 종목', 'ETF가 새로 산 종목', '액티브ETF가 새로 산 종목', 'ETF가 모두 판 종목', '액티브ETF가 모두 판 종목'])
     with tab1 :
         st.dataframe(entire)
     with tab2 :
         ind = (entire['비중(기준일)'] != 0) & (entire['비중(비교일)'] == 0)
         st.dataframe(entire.loc[ind, :].drop([col for col in entire.columns if '비교' in col], axis = 1).rename(columns = {'보유량(기준일)':'수량', '평가금액(기준일)':'금액', '비중(기준일)':'비중'}),use_container_width = True)
     with tab3 :
+        ind = (entire['비중(기준일)'] != 0) & (entire['비중(비교일)'] == 0) & (entire['ETF'].str.contains('액티브'))
+        st.dataframe(entire.loc[ind, :].drop([col for col in entire.columns if '비교' in col], axis = 1).rename(columns = {'보유량(기준일)':'수량', '평가금액(기준일)':'금액', '비중(기준일)':'비중'}),use_container_width = True)
+    with tab4 :
         ind = (entire['비중(기준일)'] == 0) & (entire['비중(비교일)'] != 0)
+        st.dataframe(entire.loc[ind, :].drop([col for col in entire.columns if '기준일' in col], axis = 1).rename(columns = {'보유량(비교일)':'수량', '평가금액(비교일)':'금액', '비중(비교일)':'비중'}), use_container_width = True)
+
+    with tab5 :
+        ind = (entire['비중(기준일)'] == 0) & (entire['비중(비교일)'] != 0)& (entire['ETF'].str.contains('액티브'))
         st.dataframe(entire.loc[ind, :].drop([col for col in entire.columns if '기준일' in col], axis = 1).rename(columns = {'보유량(비교일)':'수량', '평가금액(비교일)':'금액', '비중(비교일)':'비중'}), use_container_width = True)
 
 search = ~st.session_state['search']
